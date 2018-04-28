@@ -19,7 +19,7 @@ function theme_enqueue_styles() {
 function get_data(){
 	global $wpdb;
 
-	$table = $wpdb->prefix . "my_table_test1";
+	$table = $wpdb->prefix . "program_table";
 
 //get_results for the whole table
 	$result = $wpdb->get_results("SELECT * FROM $table");
@@ -50,7 +50,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 	function send_data(){
 		global $wpdb;
 
-		$table = $wpdb->prefix . "my_table_test1";
+		$table = $wpdb->prefix . "program_table";
 
 //Create Table if it doesn't exist
 		$charset_collate = $wpdb->get_charset_collate();
@@ -136,14 +136,14 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 	function load_js_page_form_testing() {
 		//program form page
     if( is_page( 284 ) ) {
-        wp_enqueue_script('js_form_functions', get_template_directory_uri() . '/js/temp_functions.js');
-				wp_enqueue_script('jQuery_form_functions', get_template_directory_uri() . '/js/jquery_form_functions.js', array( 'jquery' ), '1.0.0', true );
+        wp_enqueue_script('js_form_functions', get_stylesheet_directory_uri() . '/js/temp_functions.js');
+				wp_enqueue_script('jQuery_form_functions', get_stylesheet_directory_uri() . '/js/jquery_form_functions.js', array( 'jquery' ), '1.0.0', true );
     }
 
 		//page-display.php
-		if(is_page( array(282, 151, 149) ) ) {
-			wp_enqueue_script('js_display_functions', get_template_directory_uri() . '/js/display_functions.js');
-			wp_enqueue_script('jQuery_form_functions', get_template_directory_uri() . '/js/jquery_form_functions.js', array( 'jquery' ), '1.0.0', true );
+		if(is_page( array(282, 280) ) ) {
+			wp_enqueue_script('js_display_functions', get_stylesheet_directory_uri() . '/js/display_functions.js', array( 'jquery' ), '1.0.0');
+			wp_enqueue_script('jQuery_form_functions', get_stylesheet_directory_uri() . '/js/jquery_form_functions.js', array( 'jquery' ), '1.0.0', true );
 		}
 
 
