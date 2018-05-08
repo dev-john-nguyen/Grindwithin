@@ -1,8 +1,215 @@
 /*
-Theme Name:     TESSERACT-Child
-Description:    Tesseract Child Theme
-Author:         nguyening20
-Template:       TESSERACT
-
-(optional values you can add: Theme URI, Author URI, Version, License, License URI, Tags, Text Domain)
+Theme Name: TESSERACT Child
+Theme URI: http://tesseracttheme.com/
+Author: Tesseract Theme
+Author URI: http://tesseracttheme.com/theme-details/
+Description: Tesseract is a beautiful theme from the fourth dimension. Tesseract makes it easy to create a website that you are proud to show off to the world. It is responsive, has simple and useful navigation, an amazing featured image with buttons and is simple to use.
+Version: 3.8.5
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tesseract
+Tags: custom-background, custom-header, custom-menu, editor-style, one-column, two-columns, featured-images, full-width-template, left-sidebar, threaded-comments, translation-ready, microformats
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
+
+#spacer_header {
+  display: block;
+clear: both;
+height: 0px;
+padding-top: 160px;
+border-top-width: 0px;
+border-bottom-width: 0px;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Roboto;
+	color: #fdfdfd;
+}
+
+.home .site-header, #page .site-header {
+	position: fixed;
+}
+
+td, th {
+	  padding: 4px 10px;
+    text-align: left;
+    color: #fdfdfd;
+    font-family: roboto;
+    border: #fdfdfd solid 2px;
+    font-weight: bold;
+}
+
+#title {
+	font-size: large;
+}
+
+.entry-content select {
+    width: initial;
+}
+
+.widget select {
+    max-width: 100%;
+    margin-bottom: initial;
+}
+.max_inputs {
+	width: 50%;
+}
+input[name = "back squat"], input[name = "hang clean"], input[name = "power clean"], input[name = "snatch"], input[name = "front squat"], input[name = "bench"] {
+    width: 50% !important;
+}
+
+select, textarea, input:not([type]), input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+	width: 100%;
+}
+
+.entry-content input[type=text], .entry-content input[type=email], .entry-content input[type=tel], .entry-content input[type=password], .entry-content input[type=date], .entry-content input[type=datetime-local], .entry-content input[type=file], .entry-content input[type=reset], .entry-content input[type=search], .entry-content input[type=url] {
+	width: 100%;
+}
+
+#frm0, #frm1, #frm2, #frm3, #frm4, #frm5 {
+	display: table-cell;
+}
+
+button:disabled, .button:disabled, .site-header .button:disabled,
+.site-header button:disabled, .woocommerce a.button:disabled,
+.woocommerce-page a.button:disabled, input[type="reset"]:disabled,
+input[type="submit"]:disabled, input[type="button"]:disabled {
+	background-color: grey;
+}
+
+#primary {
+	float: left;
+	width: 100%;
+}
+
+
+h4 {
+  font-style: italic;
+}
+
+
+body {
+	background-color: #fdfdfd;
+	line-height: 8;
+}
+.primary-button {
+	background-color: #33485b;
+}
+
+#header-right-menu ul li > a {
+    font-weight: 300;
+		font-family: Roboto;
+		color: #fdfdfd;
+}
+
+strong {
+	color: #fdfdfd;
+}
+
+.site-footer {
+		background-color: #2a2a2a;
+}
+
+#footer-banner #horizontal-menu-wrap {
+	position: absolute;
+}
+
+#footer-banner {
+	max-width: 1100px !important;
+}
+
+#pg-6-1> .panel-row-style{
+	padding-bottom: 25px;
+}
+
+.home .site-header, #page .site-header {
+	   background-color: #2a2a2a !important;
+    opacity: .95 !important;
+}
+
+.home .site-footer, .home .site-footer {
+	    background-color: #2a2a2a !important;
+}
+
+h2 {
+	line-height: 0;
+	color: #fdfdfd;
+	font-style: italic;
+}
+
+h3 {
+	color: #fdfdfd;
+	font-size: 30px;
+	font-style: italic;
+}
+
+.text-home-pictures {
+	  width: 70%;
+    margin-left: 15%;
+    transform: translateY(30%);
+}
+
+.pdata {
+    display: table-cell;
+    padding: 10px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+form {
+	line-height: 3;
+}
+
+.page-id-7 #primary {
+    line-height: 3;
+}
+
+@media (max-width: 1023px){
+
+      h2 {
+        line-height: initial !important;
+        font-size: large;
+      }
+
+      h1 {
+        font-size: xx-large;
+      }
+
+      button, .button, input[type="reset"], input[type="submit"], input[type="button"]{
+        padding: 10px 20px;
+      }
+
+      .footer-menu {
+        display: none;
+      }
+
+      body {
+        line-height: 6 !important;
+      }
+
+      .widget {
+        position: relative;
+        top: 50px;
+      }
+
+      #masthead_TesseractTheme {
+          padding-top: 0px;
+          padding-bottom: 0px;
+      }
+
+      /* Start Page css mobile View */
+      .max_inputs {
+        width: auto !important;
+      }
+
+      #display_table {
+        overflow: auto;
+      }
+
+      #spacer_header {
+        padding-top: 70px;
+      }
+}

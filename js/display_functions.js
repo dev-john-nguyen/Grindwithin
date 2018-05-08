@@ -15,11 +15,13 @@ jQuery(document).ready(function() {
     jQuery('.max_inputs').append(input);
   }
   //Creating header text
-  var title = document.createElement('div');
-  title.innerHTML = "<h2>OPTIONAL</h2><br><p>Fill the form to the best of your ability. " +
+  var subTitle = document.createElement('h4');
+  subTitle.innerHTML = "Fill the form to the best of your ability. " +
    "The form will calculate your weights associated with the lift. " +
-   "The weight will default to 0 if the max is not filled.";
-  jQuery('.title_inputs').append(title);
+   "The weight will default to 0 if the max is not filled. " +
+   "Then use the drop down menus to select the day of the program. ";
+
+  jQuery('.title_inputs').append(subTitle);
 
 
 
@@ -98,7 +100,7 @@ for(j = 0; j < itemMain.length; j++){
 }
 //If there is not match then display error alert
 if(position === ""){
-  alert(week + " and " + day + " in " + program + " is unavailable right now. Thank you for your patience!");
+  alert(week + " and " + day + " is unavailable right now. Thank you for your patience!");
   return false;
 }
 
@@ -138,7 +140,11 @@ for (var i = 0; i <= lengthArray; i++) {
   //creating row with tr
     var tr = document.createElement('tr');
   //giving row an attribute id
-      tr.setAttribute("id", "fuckboy");
+  if ( i == 0 ){
+    tr.setAttribute("id", "title");
+  }else {
+    tr.setAttribute("id", itemMain[position][4][i-1][0]);
+  }
 
 
     for (var j = 0; j < 5; j++) {

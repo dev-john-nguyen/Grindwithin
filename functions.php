@@ -3,14 +3,20 @@
 // Recommended way to include parent theme styles.
 //  (Please see http://codex.wordpress.org/Child_Themes#How_to_Create_a_Child_Theme)
 //
-add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
-function theme_enqueue_styles() {
-    wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+function my_theme_enqueue_styles() {
+
+    $parent_style = 'Tesseract-style'; // This is 'twentyfifteen-style' for the Twenty Fifteen theme.
+
+    wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
+    wp_enqueue_style( $parent_style, get_template_directory_uri() . '/css/site-banner.css' );
     wp_enqueue_style( 'child-style',
         get_stylesheet_directory_uri() . '/style.css',
-        array('parent-style')
+        array( $parent_style ),
+        wp_get_theme()->get('Version')
     );
+
 }
+add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles', PHP_INT_MAX);
 //
 // Your code goes below
 //
@@ -141,7 +147,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
     }
 
 		//page-display.php
-		if(is_page( array(282, 280) ) ) {
+		if(is_page( array(282, 728) ) ) {
 			wp_enqueue_script('js_display_functions', get_stylesheet_directory_uri() . '/js/display_functions.js', array( 'jquery' ), '1.0.0');
 			wp_enqueue_script('jQuery_form_functions', get_stylesheet_directory_uri() . '/js/jquery_form_functions.js', array( 'jquery' ), '1.0.0', true );
 		}

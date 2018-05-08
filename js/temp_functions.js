@@ -291,12 +291,12 @@ function delete_row(){
 
 //Function Adds Rows
 function add_row(row) {
+var formName = document.getElementById("frm0");
+var formlength = formName.getElementsByTagName("input").length + 1;
 
     for (i = 0; i <= 5 ; i++){
     var form_data = document.getElementById("frm" + i);
     var input = document.createElement('input');
-
-    var formlength = form_data.getElementsByTagName("input").length + 1;
 
     //Switch Statement for Input Placeholder and Type
       switch (i){
@@ -341,10 +341,9 @@ function add_row(row) {
 					form_data.appendChild(input);
           break;
 				case 5:
-						var selectListLength = document.getElementsByTagName("select").length-1;
 						var selectList = document.createElement("select");
-						selectList.id = "select" + selectListLength;
-						selectList.name = "select" + selectListLength;
+						selectList.id = "select" + formlength;
+						selectList.name = "select" + formlength;
 
 						for (p = 0; p < selectListElements.length; p++){
 							var option = document.createElement("option");
