@@ -110,7 +110,7 @@ strong {
 }
 
 .site-footer {
-		background-color: #2a2a2a;
+		background-color: #2a2a2a !important;
 }
 
 #footer-banner #horizontal-menu-wrap {
@@ -167,13 +167,48 @@ form {
     line-height: 3;
 }
 
+.page-id-7 .site-content {
+  max-width: 100%;
+}
+
+.blog-items{
+  width: 70%;
+margin: 0 auto;
+position: relative;
+bottom: 100px;
+}
+
 .post-item {
-    background-position: center center;
-    background-size: cover;
-    width: 40%;
-    height: 300px;
+    width: 300px;
+    height: auto;
     float: left;
     margin: 20px;
+    border: solid 3px #eee;
+box-shadow: 1px 1px 10px #717070;
+text-align: center;
+line-height: 1.5;
+}
+
+.post-content {
+  padding: 10px;
+}
+
+p {
+  font-family: Times New Roman;
+  font-size: medium;
+}
+
+h1 a, h2 a, h3 a, h4 a {
+  color: #353535;
+  font-family: Times New Roman;
+  font-size: larger;
+  font-style: initial;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+img.thumbnail_images.wp-post-image {
+    border: solid 3px #eee;
 }
 
 @media (max-width: 1023px){

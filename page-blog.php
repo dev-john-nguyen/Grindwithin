@@ -63,15 +63,20 @@ get_header();
 
 
 		</main><!-- #main -->
+
+		<div class = "blog-items">
 		<?php
 		$myposts = get_posts('');
 		foreach($myposts as $post) :
 		setup_postdata($post);
-		$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), "large" );
 
+		$size = array(300,300);
+
+		$count ++;
 		?>
-		  <div class="post-item" style = "background-image: url(<?php echo $thumbnail[0] ?>);">
+		  <div class="post-item">
 		    <div class="post-info">
+					 <a id = "thumbnail_image" href="<?php the_permalink() ?>"><?php the_post_thumbnail($size, 'class=thumbnail_images'); ?></a>
 		      <h2 class="post-title">
 		      <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>">
 		      <?php the_title(); ?>
@@ -83,6 +88,7 @@ get_header();
 		    </div>
 		  </div>
 		<?php endforeach; wp_reset_postdata(); ?>
+</div>
 	</div><!-- #primary -->
 
 <style type="text/css">

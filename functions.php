@@ -9,14 +9,9 @@ function my_theme_enqueue_styles() {
 
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/css/site-banner.css' );
-    wp_enqueue_style( 'child-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        array( $parent_style ),
-        wp_get_theme()->get('Version')
-    );
 
 }
-add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles', PHP_INT_MAX);
+add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 //
 // Your code goes below
 //
