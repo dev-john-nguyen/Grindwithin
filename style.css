@@ -167,6 +167,15 @@ form {
     line-height: 3;
 }
 
+.post-item {
+    background-position: center center;
+    background-size: cover;
+    width: 40%;
+    height: 300px;
+    float: left;
+    margin: 20px;
+}
+
 @media (max-width: 1023px){
 
       h2 {
