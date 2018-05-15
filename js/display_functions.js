@@ -131,7 +131,10 @@ jQuery.each(maxItems, function(i, el){
 //Create table and style
 var tbl = document.createElement('table');
 tbl.style.width = '100%';
-tbl.style.height = '100px'
+tbl.style.height = 'auto'
+tbl.style.borderWidth = '1px';
+tbl.style.borderStyle = 'solid';
+tbl.style.borderColor = 'white';
 tbl.setAttribute('border', '1');
 var tbdy = document.createElement('tbody');
 
@@ -172,6 +175,9 @@ for (var i = 0; i <= lengthArray; i++) {
                         var td = document.createElement('td');
                         td.appendChild(document.createTextNode(itemMainValue));
                         tr.appendChild(td);
+                        tr.style.borderBottomWidth = "2px";
+                        tr.style.borderBottomColor = "White";
+                        tr.style.borderBottomStyle = "solid";
                         tbdy.appendChild(tr);
                   //End if
                   }else if(itemMainName == selectIndex){
@@ -354,11 +360,4 @@ for (var i = 0; i <= lengthArray; i++) {
 
 return false;
 
-}
-
-
-
-function populateColumnTable(){
-
-//End function
 }

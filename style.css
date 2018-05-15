@@ -117,6 +117,13 @@ td, th {
 
 #title {
 	font-size: large;
+  border: 2px solid #33485b;
+  background-color: white;
+}
+
+tr#title td {
+    border: solid 2px #33485b;
+    color: #33485b;
 }
 
 .entry-content select {
@@ -287,6 +294,11 @@ img.thumbnail_images.wp-post-image {
 }
 
 @media (max-width: 1023px){
+
+    .header-content {
+      position: relative;
+      bottom: 40px;
+    }
 
       h2 {
         line-height: initial !important;
