@@ -161,7 +161,7 @@
      <div class = "logo" style="float: left; width: 33%; position: relative; top: 10px;"><a href="http://localhost/Efitprogram/?customize_changeset_uuid=9b4c6bfe-d301-4d96-acac-61632be7e657&amp;customize_messenger_channel=preview-0" rel="home" target="_self"><img src="http://localhost/Efitprogram/wp-content/uploads/2018/02/Main-logo.png" alt="logo" style="height: 40px;"></a></div>
 
 
-<div class = "footer-menu" style="float: left; padding-left: 3%; font-family: roboto;">
+<div class = "footer-menu" style="float: left; padding-left: 1%; font-family: roboto;">
 <a href="http://localhost/Efitprogram/" target="_self">Home</a>
        <a> | </a>
 <a href="http://localhost/Efitprogram/intermediate" target="_self">Intermediate</a>

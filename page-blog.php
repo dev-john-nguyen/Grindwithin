@@ -70,7 +70,7 @@ get_header();
 		foreach($myposts as $post) :
 		setup_postdata($post);
 
-		$size = array(300,300);
+		$size = 'full';
 
 		$count ++;
 		?>

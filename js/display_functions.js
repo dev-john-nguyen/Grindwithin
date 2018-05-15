@@ -16,6 +16,7 @@ jQuery(document).ready(function() {
   }
   //Creating header text
   var subTitle = document.createElement('h4');
+  subTitle.style.color = "black";
   subTitle.innerHTML = "Fill the form to the best of your ability. " +
    "The form will calculate your weights associated with the lift. " +
    "The weight will default to 0 if the max is not filled. " +

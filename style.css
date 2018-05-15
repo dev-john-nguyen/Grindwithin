@@ -14,6 +14,78 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
+
+button#display {
+    background-color: #33485b;
+}
+
+#display_table {
+  overflow: auto;
+  background-color: #33485b;
+}
+
+div#pg-6-1 {
+    margin-bottom: 40px !important;
+}
+#pg-6-0, #pg-6-1, #pl-6 .so-panel {
+    margin-bottom: 25px !important;
+}
+
+.home.transparent-footer .site-footer {
+    position: initial !important;
+}
+
+#blogpost_title {
+    text-align: center;
+    position: relative;
+    top: 200px;
+}
+
+
+.single .entry-content, .single #comments {
+    margin-bottom: 0;
+    width: 70%;
+    margin: 0 auto;
+    position: relative;
+}
+
+#blogpost_title h1.entry-title {
+    color: #fdfdfdfd !important;
+    font-family: roboto;
+    font-size: 48px;
+}
+#pg-242-0, #pg-242-1, #pl-242 .so-panel {
+    margin-bottom: 25px;
+}
+
+div#pg-242-1 {
+    margin-bottom: 45px;
+}
+
+.single form, #comments {
+  display: none;
+}
+
+a.entry-post-thumbnail.below img {
+    display: none;
+}
+
+.single-post .entry-header {
+  padding-top: 1px;
+  background-position: center center;
+  background-size: cover;
+  height: 600px;
+}
+
+.single-post .site-content {
+    max-width: 100%;
+    padding: 0 !important;
+}
+
+.footer-menu {
+  margin-bottom: 0px;
+}
+
 #spacer_header {
   display: block;
 clear: both;
@@ -38,7 +110,8 @@ td, th {
     text-align: left;
     color: #fdfdfd;
     font-family: roboto;
-    border: #fdfdfd solid 2px;
+    border: none;
+    border-right: #fdfdfd solid 1px;
     font-weight: bold;
 }
 
@@ -179,14 +252,14 @@ bottom: 100px;
 }
 
 .post-item {
-    width: 300px;
-    height: auto;
-    float: left;
-    margin: 20px;
-    border: solid 3px #eee;
-box-shadow: 1px 1px 10px #717070;
-text-align: center;
-line-height: 1.5;
+  max-width: 300px;
+  min-height: auto;
+  margin: 10px;
+  border: solid 3px #eee;
+  box-shadow: 1px 1px 10px #717070;
+  text-align: center;
+  line-height: 1.5;
+  display: inline-block;
 }
 
 .post-content {
@@ -209,6 +282,8 @@ h1 a, h2 a, h3 a, h4 a {
 
 img.thumbnail_images.wp-post-image {
     border: solid 3px #eee;
+    height: 200px;
+    width: auto;
 }
 
 @media (max-width: 1023px){
@@ -251,6 +326,7 @@ img.thumbnail_images.wp-post-image {
 
       #display_table {
         overflow: auto;
+        background-color: #33485b;
       }
 
       #spacer_header {
