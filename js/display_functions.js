@@ -11,12 +11,21 @@ jQuery(document).ready(function() {
     var input = document.createElement('input');
     input.name = selectListElements[i];
     input.type = "number";
-    input.placeholder = selectListElements[i].toUpperCase() + " MAX";
+    input.placeholder = selectListElements[i] + " max";
     jQuery('.max_inputs').append(input);
   }
+
+  //Create Title Of Form
+  var titleForm = document.createElement('h2');
+  titleForm.style.color = "#324658";
+  titleForm.innerHTML = "Program Form";
+  titleForm.style.fontSize = "30px";
+  titleForm.style.fontWeight = "bold";
+  jQuery('.title_inputs').append(titleForm);
+
   //Creating header text
   var subTitle = document.createElement('h4');
-  subTitle.style.color = "black";
+  subTitle.style.color = "#324658";
   subTitle.innerHTML = "Fill the form to the best of your ability. " +
    "The form will calculate your weights associated with the lift. " +
    "The weight will default to 0 if the max is not filled. " +
@@ -130,12 +139,6 @@ jQuery.each(maxItems, function(i, el){
 
 //Create table and style
 var tbl = document.createElement('table');
-tbl.style.width = '100%';
-tbl.style.height = 'auto'
-tbl.style.borderWidth = '1px';
-tbl.style.borderStyle = 'solid';
-tbl.style.borderColor = 'white';
-tbl.setAttribute('border', '1');
 var tbdy = document.createElement('tbody');
 
 var selectName;

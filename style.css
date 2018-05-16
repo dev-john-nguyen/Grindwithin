@@ -20,8 +20,6 @@ button#display {
 }
 
 #display_table {
-  overflow: auto;
-  background-color: #33485b;
 }
 
 div#pg-6-1 {
@@ -112,18 +110,17 @@ td, th {
     font-family: roboto;
     border: none;
     border-right: #fdfdfd solid 1px;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 #title {
-	font-size: large;
-  border: 2px solid #33485b;
-  background-color: white;
+	font-size: x-large;
+  background: linear-gradient(to right, #fdfdfd, grey);
 }
 
 tr#title td {
-    border: solid 2px #33485b;
     color: #33485b;
+    font-weight: bold;
 }
 
 .entry-content select {
@@ -138,11 +135,14 @@ tr#title td {
 	width: 50%;
 }
 input[name = "back squat"], input[name = "hang clean"], input[name = "power clean"], input[name = "snatch"], input[name = "front squat"], input[name = "bench"] {
-    width: 50% !important;
+    width: 200px !important;
+    margin: 10px 10px 0px 0px;
 }
 
 select, textarea, input:not([type]), input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
 	width: 100%;
+  font-size: 14px;
+  text-transform: capitalize;
 }
 
 .entry-content input[type=text], .entry-content input[type=email], .entry-content input[type=tel], .entry-content input[type=password], .entry-content input[type=date], .entry-content input[type=datetime-local], .entry-content input[type=file], .entry-content input[type=reset], .entry-content input[type=search], .entry-content input[type=url] {
@@ -247,9 +247,36 @@ form {
     line-height: 3;
 }
 
-.page-id-7 .site-content {
+.page-id-7 .site-content, .page-id-728 .site-content, .page-id-282 .site-content {
   max-width: 100%;
 }
+
+.title_inputs {
+  width: 50%;
+}
+
+.display_header {
+  padding-left: 20px;
+}
+
+.lift_program {
+  padding-left: 20px;
+}
+
+#display_table table {
+  height: auto;
+  width: 98%;
+  background: url(http://localhost/Efitprogram/wp-content/uploads/2018/03/Logomakr_6i0BZz.png);
+  background-position: center center;
+  background-size: cover;
+  margin: auto;
+}
+
+#display_table tbody {
+  background: linear-gradient(to right, #334857, grey);
+  opacity: .97;
+}
+
 
 .blog-items{
   width: 70%;
@@ -293,6 +320,10 @@ img.thumbnail_images.wp-post-image {
     width: auto;
 }
 
+button, .button, input[type="reset"], input[type="submit"], input[type="button"]{
+  font-size: 14px;
+}
+
 @media (max-width: 1023px){
 
     .header-content {
@@ -311,6 +342,7 @@ img.thumbnail_images.wp-post-image {
 
       button, .button, input[type="reset"], input[type="submit"], input[type="button"]{
         padding: 10px 20px;
+        font-size: initial;
       }
 
       .footer-menu {
