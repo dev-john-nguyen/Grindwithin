@@ -303,6 +303,10 @@ for (var i = 0; i <= lengthArray; i++) {
                                 weightTd.appendChild(document.createTextNode(weightValue));
                                 videoTd.appendChild(iframe);
 
+                                //need to rowspan to fill up the extra blank space in the table
+                                //Get the length from the percent array that contains all the percentages in the workout
+                                videoTd.rowSpan = resultSplitPercent.length;
+
                                 tr.appendChild(percentTd);
                                 tr.appendChild(weightTd);
                                 tr.appendChild(repTd);
@@ -325,9 +329,6 @@ for (var i = 0; i <= lengthArray; i++) {
                                         trPercent.appendChild(percentTd);
                                         trPercent.appendChild(weightTd);
                                         trPercent.appendChild(repTd);
-                                        var tdBlank = document.createElement('td');
-                                        tdBlank.appendChild(document.createTextNode(""));
-                                        trPercent.appendChild(tdBlank);
                                         tbdy.appendChild(trPercent);
                                   //End Else
                                     }
