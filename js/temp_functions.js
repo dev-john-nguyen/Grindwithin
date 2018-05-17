@@ -9,7 +9,7 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 			var form_name;
 			//var selectListElements = ["none", "back squat", "hang clean", "power clean", "snatch", "front squat", "bench"];
 
-			jQuery("#frm0, #frm1, #frm2, #frm3, #frm4, #frm5").empty();
+			jQuery("#frm0, #frm1, #frm2, #frm3, #frm4, #frm5, #frm6").empty();
 
 			//Determine What array by checking Week and Day
 
@@ -100,7 +100,7 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 							input.required = true;
 							form_name.appendChild(input);
 				}else if (itemMainName.includes("select")){
-					form_name = document.getElementById("frm" +5);
+					form_name = document.getElementById("frm" + 5);
 					var selectList = document.createElement("select");
 					selectList.id = itemMainName;
 					selectList.name = itemMainName;
@@ -118,6 +118,14 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 
 					}
 
+				}else if (itemMainName.includes("video")){
+					form_name = document.getElementById("frm" + 6);
+					input.type = "text";
+					input.id = itemMainName;
+					input.name = itemMainName;
+					input.value = itemMainValue;
+					input.required = true;
+					form_name.appendChild(input);
 				}else{
 					return alert("Error Loading all of the data");
 				}
@@ -137,7 +145,7 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 
 			for (i = 0; i <= lengthArray; i++){
 
-				 for (j = 0; j <= 5; j++){
+				 for (j = 0; j <= 6; j++){
 
 			var form_name = document.getElementById("frm" + j);
 			var input = document.createElement('input');
@@ -198,6 +206,14 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 								form_name.appendChild(selectList);
 
 							}
+							break;
+						case 6:
+							input.type = "text";
+							input.placeholder = "video embedded address"
+							input.id = "video" + (i + 1);
+							input.name = "video" + (i + 1);
+							input.required = true;
+							form_name.appendChild(input);
 					}
 
 				}
@@ -291,12 +307,12 @@ function delete_row(){
 
 //Function Adds Rows
 function add_row(row) {
-var formName = document.getElementById("frm0");
-var formlength = formName.getElementsByTagName("input").length + 1;
 
     for (i = 0; i <= 5 ; i++){
     var form_data = document.getElementById("frm" + i);
     var input = document.createElement('input');
+
+    var formlength = form_data.getElementsByTagName("input").length + 1;
 
     //Switch Statement for Input Placeholder and Type
       switch (i){
@@ -341,9 +357,10 @@ var formlength = formName.getElementsByTagName("input").length + 1;
 					form_data.appendChild(input);
           break;
 				case 5:
+						var selectListLength = document.getElementsByTagName("select").length-1;
 						var selectList = document.createElement("select");
-						selectList.id = "select" + formlength;
-						selectList.name = "select" + formlength;
+						selectList.id = "select" + selectListLength;
+						selectList.name = "select" + selectListLength;
 
 						for (p = 0; p < selectListElements.length; p++){
 							var option = document.createElement("option");

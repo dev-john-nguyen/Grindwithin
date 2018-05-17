@@ -154,7 +154,7 @@ for (var i = 0; i <= lengthArray; i++) {
   }
 
 
-    for (var j = 0; j < 5; j++) {
+    for (var j = 0; j < 6; j++) {
       switch (j){
         case 0:
         //if statement to enter in the title of the table
@@ -243,17 +243,22 @@ for (var i = 0; i <= lengthArray; i++) {
                       //Compare the current position value to the groupIndex to find needed current value
                       if(itemMainName == groupIndex){
 
-                        //For loop through the array again to grab rep values
+                        //For loop through the array again to grab rep values AND video src
                         for (w = 0; w <= lengthArray; w++){
                           var itemMainName2 = itemMain[position][4][w][0];
                           var itemMainValue2 = itemMain[position][4][w][1];
                           var repIndex = "reps" + i;
+                          var videoGroupIndex = "video" + i;
                           //put the rep string into an array
                             if(itemMainName2 == repIndex){
                               var resultSplitRep = itemMainValue2.split(",");
+                            }else if(itemMainName2 == videoGroupIndex){
+                              //get the video src by looping through the array
+                              //videoValue Declared
+                              var videoValue = itemMainValue2;
                             }
                       //End for Loop
-                        }
+                    }
 
                         //Splitting percent string and putting it into resultSplitPercent Array
                             var resultSplitPercent = itemMainValue.split(",");
@@ -287,15 +292,21 @@ for (var i = 0; i <= lengthArray; i++) {
                               var weightTd = document.createElement('td');
                               //selectName is declared in Case 0 by collecting the initial group
                               weightTd.id = selectName;
+                              //Create video cell
+                              var videoTd = document.createElement('td');
+                              var iframe = document.createElement("iframe");
+                              iframe.src = videoValue;
                               //Taking the first percent value and positioning it in the original tr (row)
                               if (u == 0){
                                 percentTd.appendChild(document.createTextNode(percentValue + "%"));
                                 repTd.appendChild(document.createTextNode(resultSplitRep[u]));
                                 weightTd.appendChild(document.createTextNode(weightValue));
+                                videoTd.appendChild(iframe);
 
                                 tr.appendChild(percentTd);
                                 tr.appendChild(weightTd);
                                 tr.appendChild(repTd);
+                                tr.appendChild(videoTd);
                                 tbdy.appendChild(tr);
 
                               }else{
@@ -314,6 +325,9 @@ for (var i = 0; i <= lengthArray; i++) {
                                         trPercent.appendChild(percentTd);
                                         trPercent.appendChild(weightTd);
                                         trPercent.appendChild(repTd);
+                                        var tdBlank = document.createElement('td');
+                                        tdBlank.appendChild(document.createTextNode(""));
+                                        trPercent.appendChild(tdBlank);
                                         tbdy.appendChild(trPercent);
                                   //End Else
                                     }
@@ -349,6 +363,15 @@ for (var i = 0; i <= lengthArray; i++) {
                     tr.appendChild(td);
                     tbdy.appendChild(tr);
                   }
+
+                  break;
+          case 5:
+                    if (i == 0){
+                      var td = document.createElement('td');
+                      td.appendChild(document.createTextNode("Video"));
+                      tr.appendChild(td);
+                      tbdy.appendChild(tr);
+                    }
     //End Switch Statement
             }
       //End For Loop for Columns

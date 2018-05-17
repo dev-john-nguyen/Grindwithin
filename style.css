@@ -149,7 +149,7 @@ select, textarea, input:not([type]), input[type="text"], input[type="password"],
 	width: 100%;
 }
 
-#frm0, #frm1, #frm2, #frm3, #frm4, #frm5 {
+#frm0, #frm1, #frm2, #frm3, #frm4, #frm5, #frm6 {
 	display: table-cell;
 }
 
