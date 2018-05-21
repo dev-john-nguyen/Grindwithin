@@ -66,13 +66,46 @@ get_header();
 
 		<div class = "blog-items">
 		<?php
+		global $more;
 		$myposts = get_posts('');
+		$count = $index1 = $index2 = $index3 = 0;
+		$array1 = array();
+		$array2 = array();
+		$array3 = array();
 		foreach($myposts as $post) :
-		setup_postdata($post);
+			setup_postdata($post);
+		$count ++;
+		if ($count % 3 == 0){
+			$array1[$index1] = $post;
+			$index1 ++;
+		}else if ($count % 2 == 0){
+			$array2[$index2] = $post;
+			$index2 ++;
+		}else{
+			$array3[$index3] = $post;
+			$index3 ++;
+		}
 
+	endforeach;
+
+	$currentArray = array();
+
+	for ($i = 1; $i <= 3; $i++){
+
+	?> <div class = "div-blog-items <?php echo $i; ?>" > <?php
+
+	if ($i == 1){
+		$currentArray = $array1;
+	}else if ($i == 2){
+		$currentArray = $array2;
+	}else {
+		$currentArray = $array3;
+	}
+	foreach($currentArray as $post) :
+		setup_postdata($post);
+		$more = 0;
 		$size = 'full';
 
-		$count ++;
 		?>
 		  <div class="post-item">
 		    <div class="post-info">
@@ -84,10 +117,10 @@ get_header();
 		      </h2>
 		    </div>
 		    <div class="post-content">
-		    <?php the_content(); ?>
+		    <?php the_content('read more ...'); ?>
 		    </div>
 		  </div>
-		<?php endforeach; wp_reset_postdata(); ?>
+		<?php endforeach; wp_reset_postdata(); ?> </div> <?php } ?>
 </div>
 	</div><!-- #primary -->
 

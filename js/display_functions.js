@@ -21,6 +21,7 @@ jQuery(document).ready(function() {
   titleForm.innerHTML = "Program Form";
   titleForm.style.fontSize = "30px";
   titleForm.style.fontWeight = "bold";
+  titleForm.style.textDecoration = "underline";
   jQuery('.title_inputs').append(titleForm);
 
   //Creating header text

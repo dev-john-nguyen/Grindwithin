@@ -14,6 +14,33 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
+.blog-sub-header {
+  color: #33485b;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.blog-widget {
+  border: solid 3px #eee;
+  box-shadow: 1px 1px 10px #717070;
+  padding: 20px;
+}
+
+.blog-content {
+  color: #33485b;
+  text-align: center;
+}
+
+  .header_program {
+    width: 40%;
+    border: solid 3px #eee;
+    box-shadow: 1px 1px 10px #717070;
+    text-align: center;
+    margin: auto auto 20px;
+    padding: 20px;
+}
 
 button#display {
     background-color: #33485b;
@@ -105,7 +132,7 @@ h1, h2, h3, h4, h5, h6 {
 
 td, th {
 	  padding: 4px 10px;
-    text-align: left;
+    text-align: center;
     color: #fdfdfd;
     font-family: roboto;
     border: none;
@@ -131,9 +158,7 @@ tr#title td {
     max-width: 100%;
     margin-bottom: initial;
 }
-.max_inputs {
-	width: 50%;
-}
+
 input[name = "back squat"], input[name = "hang clean"], input[name = "power clean"], input[name = "snatch"], input[name = "front squat"], input[name = "bench"] {
     width: 200px !important;
     margin: 10px 10px 0px 0px;
@@ -251,10 +276,6 @@ form {
   max-width: 100%;
 }
 
-.title_inputs {
-  width: 50%;
-}
-
 .display_header {
   padding-left: 20px;
 }
@@ -270,6 +291,7 @@ form {
   background-position: center center;
   background-size: cover;
   margin: auto;
+  box-shadow: 1px 1px 10px #717070;
 }
 
 #display_table tbody {
@@ -285,7 +307,12 @@ position: relative;
 bottom: 100px;
 }
 
-.post-item {
+.div-blog-items {
+    float: left;
+    display: grid;
+}
+
+.post-item{
   max-width: 300px;
   min-height: auto;
   margin: 10px;
@@ -306,12 +333,13 @@ p {
 }
 
 h1 a, h2 a, h3 a, h4 a {
-  color: #353535;
+  color: #33485b;
   font-family: Times New Roman;
   font-size: larger;
   font-style: initial;
   font-weight: bold;
   text-transform: capitalize;
+  text-decoration: underline;
 }
 
 img.thumbnail_images.wp-post-image {
