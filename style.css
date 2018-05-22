@@ -14,6 +14,12 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
+
+.entry-meta, .entry-footer, .logged-in-as {
+    font-size: 13px;
+    display: initial;
+}
+
 .blog-sub-header {
   color: #33485b;
   font-size: 30px;
@@ -68,10 +74,13 @@ div#pg-6-1 {
 
 
 .single .entry-content, .single #comments {
-    margin-bottom: 0;
     width: 70%;
     margin: 0 auto;
-    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    line-height: 2;
+    box-shadow: 1px 1px 10px #717070;
 }
 
 #blogpost_title h1.entry-title {
@@ -143,6 +152,7 @@ td, th {
 #title {
 	font-size: x-large;
   background: linear-gradient(to right, #fdfdfd, grey);
+  background: #fdfdfd;
 }
 
 tr#title td {
@@ -287,15 +297,14 @@ form {
 #display_table table {
   height: auto;
   width: 98%;
-  background: url(http://localhost/Efitprogram/wp-content/uploads/2018/03/Logomakr_6i0BZz.png);
-  background-position: center center;
-  background-size: cover;
   margin: auto;
   box-shadow: 1px 1px 10px #717070;
+  border-collapse: separate;
 }
 
 #display_table tbody {
   background: linear-gradient(to right, #334857, grey);
+  background: #334857;
   opacity: .97;
 }
 
