@@ -115,7 +115,7 @@ get_header();
 		      <?php the_title(); ?>
 		      </a>
 		      </h2>
-					<p class="post-meta">Posted by <?php the_author(); ?></p>
+					<p class="post-meta">Posted by <?php the_author(); ?> <br> Date: <?php the_date(); ?></p>
 		    </div>
 		    <div class="post-content">
 		    <?php the_content('read more ...'); ?>

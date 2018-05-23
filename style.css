@@ -14,6 +14,9 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
+form {
+  line-height: 1 !important;
+}
 
 .entry-meta, .entry-footer, .logged-in-as {
     font-size: 13px;
@@ -37,6 +40,7 @@ Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automatt
 .blog-content {
   color: #33485b;
   text-align: center;
+  line-height: 2;
 }
 
   .header_program {
@@ -152,7 +156,6 @@ td, th {
 #title {
 	font-size: x-large;
   background: linear-gradient(to right, #fdfdfd, grey);
-  background: #fdfdfd;
 }
 
 tr#title td {
@@ -287,11 +290,10 @@ form {
 }
 
 .display_header {
-  padding-left: 20px;
 }
 
 .lift_program {
-  padding-left: 20px;
+  padding-left: initial;
 }
 
 #display_table table {
@@ -304,7 +306,6 @@ form {
 
 #display_table tbody {
   background: linear-gradient(to right, #334857, grey);
-  background: #334857;
   opacity: .97;
 }
 
@@ -362,6 +363,24 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
 }
 
 @media (max-width: 1023px){
+
+  .single .entry-content, .single #comments {
+      width: 90%;
+  }
+
+  h1.program-header-title {
+    position: relative;
+    top: 70px;
+}
+
+  .header_program {
+    width: auto;
+    border: solid 3px #eee;
+    box-shadow: 1px 1px 10px #717070;
+    text-align: center;
+    margin: auto auto 20px;
+    padding: 20px;
+}
 
     .header-content {
       position: relative;
