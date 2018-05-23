@@ -14,10 +14,6 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
-form {
-  line-height: 1 !important;
-}
-
 .entry-meta, .entry-footer, .logged-in-as {
     font-size: 13px;
     display: initial;
@@ -278,7 +274,11 @@ h3 {
 }
 
 form {
-	line-height: 3;
+	line-height: 1;
+}
+
+div#lift_program #main_form {
+    line-height: 3;
 }
 
 .page-id-7 #primary {
