@@ -17,16 +17,18 @@ jQuery(document).ready(function() {
 
   //Create Title Of Form
   var titleForm = document.createElement('h2');
-  titleForm.style.color = "#324658";
+  // titleForm.style.color = "#324658";
   titleForm.innerHTML = "Program Form";
-  titleForm.style.fontSize = "30px";
-  titleForm.style.fontWeight = "bold";
-  titleForm.style.textDecoration = "underline";
+  titleForm.id = "program-title";
+  // titleForm.style.fontSize = "30px";
+  // titleForm.style.fontWeight = "bold";
+  // titleForm.style.textDecoration = "underline";
   jQuery('.title_inputs').append(titleForm);
 
   //Creating header text
   var subTitle = document.createElement('h4');
-  subTitle.style.color = "#324658";
+  //subTitle.style.color = "#324658";
+  subTitle.id = "program-subTitle";
   subTitle.innerHTML = "Fill the form to the best of your ability. " +
    "The form will calculate your weights associated with the lift. " +
    "The weight will default to 0 if the max is not filled. " +
@@ -179,9 +181,6 @@ for (var i = 0; i <= lengthArray; i++) {
                         var td = document.createElement('td');
                         td.appendChild(document.createTextNode(itemMainValue));
                         tr.appendChild(td);
-                        tr.style.borderBottomWidth = "2px";
-                        tr.style.borderBottomColor = "White";
-                        tr.style.borderBottomStyle = "solid";
                         tbdy.appendChild(tr);
                   //End if
                   }else if(itemMainName == selectIndex){
@@ -244,19 +243,19 @@ for (var i = 0; i <= lengthArray; i++) {
                       //Compare the current position value to the groupIndex to find needed current value
                       if(itemMainName == groupIndex){
 
-                        //For loop through the array again to grab rep values AND video src
+                        //For loop through the array again to grab rep values AND description src
                         for (w = 0; w <= lengthArray; w++){
                           var itemMainName2 = itemMain[position][4][w][0];
                           var itemMainValue2 = itemMain[position][4][w][1];
                           var repIndex = "reps" + i;
-                          var videoGroupIndex = "video" + i;
+                          var descriptionGroupIndex = "description" + i;
                           //put the rep string into an array
                             if(itemMainName2 == repIndex){
                               var resultSplitRep = itemMainValue2.split(",");
-                            }else if(itemMainName2 == videoGroupIndex){
-                              //get the video src by looping through the array
-                              //videoValue Declared
-                              var videoValue = itemMainValue2;
+                            }else if(itemMainName2 == descriptionGroupIndex){
+                              //get the description src by looping through the array
+                              //descriptionValue Declared
+                              var descriptionValue = itemMainValue2;
                             }
                       //End for Loop
                     }
@@ -293,25 +292,30 @@ for (var i = 0; i <= lengthArray; i++) {
                               var weightTd = document.createElement('td');
                               //selectName is declared in Case 0 by collecting the initial group
                               weightTd.id = selectName;
-                              //Create video cell
-                              var videoTd = document.createElement('td');
-                              var iframe = document.createElement("iframe");
-                              iframe.src = videoValue;
+                              //Create description cell
+                              var descriptionTd = document.createElement('td');
+                              jQuery(descriptionTd).hover(function(){
+                                jQuery(this).css("background-color", "lightgrey");
+                              }, function(){
+                                jQuery(this).css("background-color", "white");
+                              });
+                              //var iframe = document.createElement("iframe");
+                              //iframe.src = descriptionValue;
                               //Taking the first percent value and positioning it in the original tr (row)
                               if (u == 0){
                                 percentTd.appendChild(document.createTextNode(percentValue + "%"));
                                 repTd.appendChild(document.createTextNode(resultSplitRep[u]));
                                 weightTd.appendChild(document.createTextNode(weightValue));
-                                videoTd.appendChild(iframe);
+                                descriptionTd.appendChild(document.createTextNode(descriptionValue));
 
                                 //need to rowspan to fill up the extra blank space in the table
                                 //Get the length from the percent array that contains all the percentages in the workout
-                                videoTd.rowSpan = resultSplitPercent.length;
+                                descriptionTd.rowSpan = resultSplitPercent.length;
 
                                 tr.appendChild(percentTd);
                                 tr.appendChild(weightTd);
                                 tr.appendChild(repTd);
-                                tr.appendChild(videoTd);
+                                tr.appendChild(descriptionTd);
                                 tbdy.appendChild(tr);
 
                               }else{
@@ -370,7 +374,7 @@ for (var i = 0; i <= lengthArray; i++) {
           case 5:
                     if (i == 0){
                       var td = document.createElement('td');
-                      td.appendChild(document.createTextNode("Video"));
+                      td.appendChild(document.createTextNode("Description"));
                       tr.appendChild(td);
                       tbdy.appendChild(tr);
                     }

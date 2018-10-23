@@ -118,7 +118,7 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 
 					}
 
-				}else if (itemMainName.includes("video")){
+				}else if (itemMainName.includes("description")){
 					form_name = document.getElementById("frm" + 6);
 					input.type = "text";
 					input.id = itemMainName;
@@ -209,9 +209,9 @@ var selectListElements = ["none", "back squat", "hang clean", "power clean", "sn
 							break;
 						case 6:
 							input.type = "text";
-							input.placeholder = "video embedded address"
-							input.id = "video" + (i + 1);
-							input.name = "video" + (i + 1);
+							input.placeholder = "Description"
+							input.id = "description" + (i + 1);
+							input.name = "description" + (i + 1);
 							input.required = true;
 							form_name.appendChild(input);
 					}
@@ -274,7 +274,7 @@ function delete_row(){
 
 
   //Loop to Delete Row
-  for (i = 0; i <= 5; i++){
+  for (i = 0; i <= 6; i++){
 
     switch (i) {
       case 0:
@@ -295,6 +295,9 @@ function delete_row(){
 			case 5:
 				jQuery("#select" + formlength).remove();
 				break;
+			case 6:
+				jQuery("#description" + formlength).remove();
+				break;
     }
 
   }
@@ -307,12 +310,12 @@ function delete_row(){
 
 //Function Adds Rows
 function add_row(row) {
+	var form = document.getElementById("frm0");
+	var formlength = form.getElementsByTagName("input").length + 1;
 
-    for (i = 0; i <= 5 ; i++){
+    for (i = 0; i <= 6 ; i++){
     var form_data = document.getElementById("frm" + i);
     var input = document.createElement('input');
-
-    var formlength = form_data.getElementsByTagName("input").length + 1;
 
     //Switch Statement for Input Placeholder and Type
       switch (i){
@@ -359,8 +362,8 @@ function add_row(row) {
 				case 5:
 						var selectListLength = document.getElementsByTagName("select").length-1;
 						var selectList = document.createElement("select");
-						selectList.id = "select" + selectListLength;
-						selectList.name = "select" + selectListLength;
+						selectList.id = "select" + formlength;
+						selectList.name = "select" + formlength;
 
 						for (p = 0; p < selectListElements.length; p++){
 							var option = document.createElement("option");
@@ -373,6 +376,14 @@ function add_row(row) {
 							form_data.appendChild(selectList);
 
 						}
+					break;
+				case 6:
+					input.type = "text";
+					input.placeholder = "Description";
+					input.id = "description" + formlength;
+					input.name = "description" + formlength;
+					input.required = true;
+					form_data.appendChild(input);
       }
 
     }

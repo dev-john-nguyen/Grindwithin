@@ -19,6 +19,25 @@ Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automatt
     display: initial;
 }
 
+.archive #primary article, .search #primary article {
+  line-height: 2;
+}
+
+#bloglist_title h2.entry-title a {
+  color: #33485b;
+}
+
+#program-subTitle {
+  color: #324658;
+}
+
+#program-title {
+  color: #324658;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .blog-sub-header {
   color: #33485b;
   font-size: 30px;
@@ -52,7 +71,8 @@ button#display {
     background-color: #33485b;
 }
 
-#display_table {
+#display_table table{
+  border-collapse: separate;
 }
 
 div#pg-6-1 {
@@ -88,16 +108,13 @@ div#pg-6-1 {
     font-family: roboto;
     font-size: 48px;
 }
+
 #pg-242-0, #pg-242-1, #pl-242 .so-panel {
     margin-bottom: 25px;
 }
 
 div#pg-242-1 {
     margin-bottom: 45px;
-}
-
-.single form, #comments {
-  display: none;
 }
 
 a.entry-post-thumbnail.below img {
@@ -133,6 +150,14 @@ border-bottom-width: 0px;
 h1, h2, h3, h4, h5, h6 {
 	font-family: Roboto;
 	color: #fdfdfd;
+  hyphens: none;
+}
+
+h1, h2, h3, h4, h5, h6, .header-content, tr, td {
+  -moz-hyphens: none;
+-ms-hyphens: none;
+-webkit-hyphens: none;
+hyphens: none;
 }
 
 .home .site-header, #page .site-header {
@@ -140,23 +165,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 td, th {
-	  padding: 4px 10px;
-    text-align: center;
-    color: #fdfdfd;
-    font-family: roboto;
-    border: none;
-    border-right: #fdfdfd solid 1px;
-    font-weight: normal;
+      padding: 4px 10px;
+      text-align: center;
+      color: #33485b;
+      font-family: roboto;
+      border: none;
+      border-right: #fdfdfd solid 1px;
+      font-weight: normal;
+}
+
+tr:hover {
+  background-color: lightgrey;
 }
 
 #title {
-	font-size: x-large;
-  background: linear-gradient(to right, #fdfdfd, grey);
+  font-size: x-large;
+  background: #33485b;
+  box-shadow: 1px 1px 10px #717070;
 }
 
 tr#title td {
-    color: #33485b;
-    font-weight: bold;
+  color: #fdfdfd;
+  font-weight: bold;
+  width: fit-content;
 }
 
 .entry-content select {
@@ -173,10 +204,14 @@ input[name = "back squat"], input[name = "hang clean"], input[name = "power clea
     margin: 10px 10px 0px 0px;
 }
 
-select, textarea, input:not([type]), input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+select, textarea, input:not([type]), input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
 	width: 100%;
   font-size: 14px;
   text-transform: capitalize;
+}
+
+input[type = "email"] {
+  font-size: 14px;
 }
 
 .entry-content input[type=text], .entry-content input[type=email], .entry-content input[type=tel], .entry-content input[type=password], .entry-content input[type=date], .entry-content input[type=datetime-local], .entry-content input[type=file], .entry-content input[type=reset], .entry-content input[type=search], .entry-content input[type=url] {
@@ -301,12 +336,6 @@ div#lift_program #main_form {
   width: 98%;
   margin: auto;
   box-shadow: 1px 1px 10px #717070;
-  border-collapse: separate;
-}
-
-#display_table tbody {
-  background: linear-gradient(to right, #334857, grey);
-  opacity: .97;
 }
 
 
@@ -364,6 +393,28 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
 
 @media (max-width: 1023px){
 
+  #program-subTitle, .blog-content {
+    font-size: medium;
+  }
+
+  #program-title, .blog-sub-header {
+    font-size: x-large;
+  }
+
+  button, .button, input[type="reset"], input[type="submit"], input[type="button"] {
+    padding: 5px 15px;
+    font-size: initial;
+}
+
+  #site-banner .site-logo img {
+    height: 60px !important;
+    margin-top: 20px !important;
+}
+
+.mobile-menu-collaps-button {
+    top: 20px !important;
+}
+
   .single .entry-content, .single #comments {
       width: 90%;
   }
@@ -387,18 +438,32 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
       bottom: 40px;
     }
 
+    .header-content p {
+      line-height: 3;
+    }
+
       h2 {
         line-height: initial !important;
-        font-size: large;
+        font-size: medium;
+      }
+
+      h3 {
+        font-size: medium;
       }
 
       h1 {
         font-size: xx-large;
       }
 
-      button, .button, input[type="reset"], input[type="submit"], input[type="button"]{
-        padding: 10px 20px;
-        font-size: initial;
+      h1, h2, h3, h4, .header-content, tr, td {
+        -moz-hyphens: none;
+-ms-hyphens: none;
+-webkit-hyphens: none;
+hyphens: none;
+      }
+
+      .text-home-pictures p {
+        line-height: 3;
       }
 
       .footer-menu {
@@ -415,8 +480,8 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
       }
 
       #masthead_TesseractTheme {
-          padding-top: 0px;
-          padding-bottom: 0px;
+          padding-top: 0px !important;
+          padding-bottom: 0px !important;
       }
 
       /* Start Page css mobile View */
@@ -426,7 +491,13 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
 
       #display_table {
         overflow: auto;
-        background-color: #33485b;
+        height: auto;
+        margin: auto;
+        box-shadow: 1px 1px 10px #717070;
+      }
+
+      #display_table table {
+        width: auto;
       }
 
       #spacer_header {

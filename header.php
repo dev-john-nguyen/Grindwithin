@@ -792,8 +792,19 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 
           <nav id="site-navigation" class="<?php echo $mmdClass; ?> main-navigation top-navigation <?php echo $hmenusize_class; ?>" role="navigation">
 
+		<?php if(!isset($_SESSION["login"])){ ?>
+
             <?php tesseract_output_menu( FALSE, FALSE, 'primary', 0 );  ?>
 
+		<?php }else{ ?>
+
+						<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url( '/profile' ) ); ?>">Profile</a></li>
+<li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a href="<?php echo esc_url( home_url( '/calendar' ) ); ?>">Calendar</a></li>
+<li id="menu-item-761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-761"><a href="<?php echo esc_url( home_url( '/feed' ) ); ?>">Feed</a></li>
+<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>">Contact</a></li>
+<li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="<?php echo esc_url( home_url( '/settings' ) ); ?>">Settings</a></li>
+</ul>
+<?php } ?>
           </nav>
 
           <!-- #site-navigation -->
@@ -806,7 +817,17 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 
       </div>
 
-      <?php get_template_part( 'content', 'header-rightcontent' ); ?>
+			<!-- #Member login header -->
+		<?php if(!isset($_SESSION["login"])){ ?>
+
+			<form id = "header-login" name = "header-login" method = "post" >
+				<input type = "text" id = "username-login" placeholder="username"/ required>
+				<input type = "password" id = "password-login" placeholder="password"/ required>
+				<input type = "submit" name = "submit-login" id = "submit-login"/>
+			</form>
+		<?php }else{ ?>
+			<button type="button" id = "btnLogout">log out</button>
+		<?php } ?>
 
     </div>
 

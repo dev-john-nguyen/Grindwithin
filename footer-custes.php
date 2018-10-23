@@ -153,23 +153,23 @@
        <div class = "socialicons" style="float: right;">
        <ul class="hm-social">
 
-         <li><a title="Follow Us on Facebook" href="http://Facebook.com" target="_blank" class="customize-unpreviewable"><img src="http://localhost/Efitprogram/wp-content/uploads/2018/02/Logomakr_87cH2U.png" width="75" height="75" alt="Facebook icon"></a></li><li><a title="Follow Us on Instagram" href="https://www.instagram.com/livin_thejourney/" target="_blank" class="customize-unpreviewable"><img src="http://localhost/Efitprogram/wp-content/uploads/2018/02/Logomakr_1mxgLX.png" width="75" height="75" alt="Instagram icon"></a></li><li><a title="Follow Us on Youtube" href="http://youtube.com" target="_blank" class="customize-unpreviewable"><img src="http://localhost/Efitprogram/wp-content/uploads/2018/02/Logomakr_57gzHU.png" width="75" height="75" alt="Youtube icon"></a></li><li><a title="Follow Us on Twitter" href="http://twitter.com" target="_blank" class="customize-unpreviewable"><img src="http://localhost/Efitprogram/wp-content/uploads/2018/02/Logomakr_0Mvvee.png" width="75" height="75" alt="Twitter icon"></a></li>
+         <li><a title="Follow Us on Facebook" href="http://Facebook.com" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_87cH2U.png" width="75" height="75" alt="Facebook icon"></a></li><li><a title="Follow Us on Instagram" href="https://www.instagram.com/livin_thejourney/" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_1mxgLX.png" width="75" height="75" alt="Instagram icon"></a></li><li><a title="Follow Us on Youtube" href="http://youtube.com" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_57gzHU.png" width="75" height="75" alt="Youtube icon"></a></li><li><a title="Follow Us on Twitter" href="http://twitter.com" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_0Mvvee.png" width="75" height="75" alt="Twitter icon"></a></li>
            </ul>
 </div>
 
 
-     <div class = "logo" style="float: left; width: 33%; position: relative; top: 10px;"><a href="http://localhost/Efitprogram/?customize_changeset_uuid=9b4c6bfe-d301-4d96-acac-61632be7e657&amp;customize_messenger_channel=preview-0" rel="home" target="_self"><img src="http://localhost/Efitprogram/wp-content/uploads/2018/02/Main-logo.png" alt="logo" style="height: 40px;"></a></div>
+     <div class = "logo" style="float: left; width: 33%; position: relative; top: 10px;"><a href="http://efitprogram.com" rel="home" target="_self"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Main-logo.png" alt="logo" style="height: 40px;"></a></div>
 
 
 <div class = "footer-menu" style="float: left; padding-left: 1%; font-family: roboto;">
-<a href="http://localhost/Efitprogram/" target="_self">Home</a>
+<a href="http://efitprogram.com" target="_self">Home</a>
        <a> | </a>
-<a href="http://localhost/Efitprogram/intermediate" target="_self">Intermediate</a>
+<a href="http://efitprogram.com/intermediate" target="_self">Intermediate</a>
      <a> | </a>
-<a href="http://localhost/Efitprogram/experienced" target="_self">Experienced</a>
+<a href="http://efitprogram.com/experienced" target="_self">Experienced</a>
    <a> | </a>
-<a href="http://localhost/Efitprogram/blog" target="_self">Blog</a> |
-<a href="http://localhost/Efitprogram/about-us" target="_self">About Us</a>
+<a href="http://efitprogram.com/blog" target="_self">Blog</a> |
+<a href="http://efitprogram.com/about-us" target="_self">About Us</a>
 </div>
 
          <!-- right footer content End -->
