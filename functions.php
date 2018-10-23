@@ -18,14 +18,14 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 
 
 function logout_user(){
-
+wp_die();
 }
 add_action('wp_ajax_logout_user', 'logout_user');
 add_action('wp_ajax_nopriv_logout_user', 'logout_user');
 
 
 function authenticate_user(){
-
+wp_die();
 }
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
 add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
@@ -40,18 +40,26 @@ function store_new_account(){
   $password = $_POST['password'];
   $goal = $_POST['goal'];
 
-  //Validate if username is not taken
-
   $table = $wpdb->prefix . "bitches";
+
+  //check if username exist
+
+  	$result = $wpdb->get_results("SELECT t.username FROM $table t Where t.username = '$username'");
+
+    if(!empty($result)){
+      exit("Username is already taken. Please try again.");
+    }
 
 //Create Table if it doesn't exist
   $charset_collate = $wpdb->get_charset_collate();
   $sql = "CREATE TABLE IF NOT EXISTS $table (
       `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `program` text NOT NULL,
-  `week` text NOT NULL,
-  `day` text NOT NULL,
-      `lift` text NOT NULL,
+  `fName` text NOT NULL,
+  `lName` text NOT NULL,
+  `email` text NOT NULL,
+  `username` text NOT NULL,
+  `damn` text NOT NULL,
+  `goal` text NOT NULL,
   UNIQUE (`id`)
   ) $charset_collate;";
   require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -61,9 +69,28 @@ function store_new_account(){
 
   if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
     exit("Please enter valid characters for First Name and Last Name");
-  }
+  }else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  exit("Invalid email format");
+}
+
+$hashPass = wp_hash_password( $password );
 
 
+$result = $wpdb->insert(
+      $table,
+      array(
+    'fName' => $fName,
+    'lName' => $lName,
+    'email' => $email,
+    'username' => $username,
+    'damn' => $hashPass,
+    'goal' => $goal
+      )
+  );
+
+  echo $result;
+
+wp_die();
 
 }
 add_action('wp_ajax_store_new_account', 'store_new_account');
@@ -191,6 +218,12 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 
 //Functions of Javascript Files Attached to pages
 	function load_js_page_form_testing() {
+
+    //create.php
+    if (is_page(874)){
+      wp_enqueue_script('js_new_account', get_stylesheet_directory_uri() . '/js/create/new_account.js', array( 'jquery' ), '1.0.0', true );
+    }
+
 		//program form page
     if( is_page( 284 ) ) {
         wp_enqueue_script('js_form_functions', get_stylesheet_directory_uri() . '/js/temp_functions.js');

@@ -48,7 +48,13 @@
 								goal: goal
               }),
               success: function (response){
-                window.location.replace("http://localhost/Efitprogram/member-home");
+								console.log(response);
+							// 	if(!response){
+							// 		alert("I apologize, we are having issues submitting your information. Please contact us directly via email." +
+							// 		"Thank you for your understanding.");
+							// 	}else{
+              //   window.location.replace("http://localhost/Efitprogram/member-home");
+							// ``}
               }
             });
 
