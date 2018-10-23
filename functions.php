@@ -88,7 +88,14 @@ $result = $wpdb->insert(
       )
   );
 
-  echo $result;
+  if(!$result > 0 || !$result){
+    echo "I apologize, we are having issues submitting your information. Please contact us directly via email." .
+    "Thank you for your understanding.";
+  }else{
+    session_start();
+    $_SESSION["member"] = $username;
+    echo 1;
+  }
 
 wp_die();
 
