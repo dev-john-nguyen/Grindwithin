@@ -25,6 +25,33 @@ add_action('wp_ajax_nopriv_logout_user', 'logout_user');
 
 
 function authenticate_user(){
+global $wpdb;
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+$table = $wpdb->prefix . "bitches";
+
+$result = $wpdb->get_results("SELECT t.username, t.damn FROM $table t Where t.username = '$username'");
+
+if(empty($result)){
+  echo "Incorrect username or password. Please try again.";
+}else{
+  foreach($result as $item){
+    $password_hashed = $item->damn;
+    $usernameSes = $item->username;
+
+      if(wp_check_password($password, $password_hashed)){
+        session_start();
+        $_SESSION["member"] = $usernameSes;
+        echo 1;
+      }else{
+        echo "Incorrect username or password. Please try again.";
+      }
+    }
+  }
+
+
 wp_die();
 }
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
@@ -41,6 +68,13 @@ function store_new_account(){
   $goal = $_POST['goal'];
 
   $table = $wpdb->prefix . "bitches";
+
+  //validate input
+  if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
+    exit("Please enter valid characters for First Name and Last Name");
+  }else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  exit("Invalid email format");
+}
 
   //check if username exist
 
@@ -65,13 +99,6 @@ function store_new_account(){
   require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
   dbDelta( $sql );
 
-
-
-  if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
-    exit("Please enter valid characters for First Name and Last Name");
-  }else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  exit("Invalid email format");
-}
 
 $hashPass = wp_hash_password( $password );
 
@@ -220,6 +247,9 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 	add_action('wp_ajax_nopriv_send_data', 'send_data');
 
 //Javascript Files Attached to all Pages
+
+  //Header Login Authentication
+  wp_enqueue_script('js_header_login', get_stylesheet_directory_uri() . '/js/header_login.js', array( 'jquery' ), '1.0.0', true );
 
 
 

@@ -33,6 +33,7 @@ jQuery(document).ready(function(jQuery) {
           return;
         }
 
+
 							//Call Ajax To send Data
   				jQuery.ajax({
   				      type: "POST",
@@ -46,7 +47,7 @@ jQuery(document).ready(function(jQuery) {
                   if (data == 1){
                     window.location.replace("http://localhost/Efitprogram/member-home");
                   }else{
-                    alert("username and/or password is incorrect. Please try again.");
+                    alert(data);
                   }
   				      }
   				    });
