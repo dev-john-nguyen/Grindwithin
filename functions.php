@@ -20,7 +20,7 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 function logout_user(){
 
   session_start();
-  unset($_SESSION["member"]);
+  unset($_SESSION['member']);
   session_destroy();
 
 wp_die();
@@ -32,12 +32,13 @@ add_action('wp_ajax_nopriv_logout_user', 'logout_user');
 function authenticate_user(){
 global $wpdb;
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = esc_sql($_POST['username']);
+$password = esc_sql($_POST['password']);
 
 $table = $wpdb->prefix . "bitches";
 
-$result = $wpdb->get_results("SELECT t.username, t.damn FROM $table t Where t.username = '$username'");
+$sql = $wpdb->prepare("SELECT t.username, t.damn FROM $table t Where t.username = %s", array($username));
+$result = $wpdb->get_results($sql);
 
 if(empty($result)){
   echo "Incorrect username or password. Please try again.";
@@ -50,7 +51,7 @@ if(empty($result)){
 
       if(wp_check_password($password, $password_hashed)){
         session_start();
-        $_SESSION["member"] = $usernameSes;
+        $_SESSION['member'] = $usernameSes;
         echo 1;
       }else{
         echo "Incorrect username or password. Please try again1.";
@@ -67,12 +68,12 @@ add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
 function store_new_account(){
   global $wpdb;
 
-  $fName = $_POST['fName'];
-  $lName = $_POST['lName'];
-  $email = $_POST['email'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
-  $goal = $_POST['goal'];
+  $fName = esc_sql($_POST['fName']);
+  $lName = esc_sql($_POST['lName']);
+  $email = esc_sql($_POST['email']);
+  $username = esc_sql($_POST['username']);
+  $password = esc_sql($_POST['password']);
+  $goal = esc_sql($_POST['goal']);
 
   $table = $wpdb->prefix . "bitches";
 
@@ -129,7 +130,7 @@ $result = $wpdb->insert(
     "Thank you for your understanding.";
   }else{
     session_start();
-    $_SESSION["member"] = $username;
+    $_SESSION['member'] = $username;
     echo 1;
   }
 

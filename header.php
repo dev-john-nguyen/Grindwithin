@@ -792,7 +792,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 
           <nav id="site-navigation" class="<?php echo $mmdClass; ?> main-navigation top-navigation <?php echo $hmenusize_class; ?>" role="navigation">
 
-		<?php if(!isset($_SESSION["login"])){ ?>
+		<?php if(!isset($_SESSION["member"])){ ?>
 
             <?php tesseract_output_menu( FALSE, FALSE, 'primary', 0 );  ?>
 
@@ -818,7 +818,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
       </div>
 
 			<!-- #Member login header -->
-		<?php if(!isset($_SESSION["login"])){ ?>
+		<?php if(!isset($_SESSION["member"])){ ?>
 
 			<form id = "header-login" name = "header-login" method = "post" >
 				<input type = "text" id = "username-login" placeholder="username"/ required>

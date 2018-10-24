@@ -3,16 +3,32 @@
 session_start();
 
 
-if(!isset($_SESSION["login"]) ){
+if(!isset($_SESSION['member']) ){
     header("location: http://localhost/Efitprogram/create/");
+    session_destroy();
     exit();
 }
 
 global $wpdb;
 
-$table = $wpdb->prefix . "new_bitches1";
+$username = $_SESSION['member'];
 
-$result = $wpdb->get_results("SELECT t.main_bitch FROM $table t where t.username = '$username'");
+$table = $wpdb->prefix . "bitches";
+
+$result = $wpdb->get_results("SELECT t.fName, t.lName, t.goal FROM $table t where t.username = '$username'");
+
+foreach ($result as $item){
+
+  $_SESSION['firstName'] = $item->fName;
+  $_SESSION['lastName'] = $item->lName;
+  $_SESSION['goal'] = $item->goal;
+
+}
+
+$firstName = $_SESSION['firstName'];
+$lastName = $_SESSION['lastName'];
+$goal = $_SESSION['goal'];
+
 
 /**
 
@@ -38,7 +54,7 @@ $result = $wpdb->get_results("SELECT t.main_bitch FROM $table t where t.username
 
 
 
-get_header("member");
+get_header();
 
 ?>
 
@@ -78,6 +94,7 @@ get_header("member");
 
 		</main><!-- #main -->
 
+    <h1 style = "color: black;"><?php echo $username ?></h1>
 
 
 

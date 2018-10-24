@@ -3,7 +3,7 @@
 session_start();
 
 
-if(!isset($_SESSION["login"]) ){
+if(!isset($_SESSION["member"]) ){
     header("location: http://localhost/Efitprogram/create/");
     exit();
 }
