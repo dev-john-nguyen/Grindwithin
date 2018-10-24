@@ -18,6 +18,11 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 
 
 function logout_user(){
+
+  session_start();
+  unset($_SESSION["member"]);
+  session_destroy();
+
 wp_die();
 }
 add_action('wp_ajax_logout_user', 'logout_user');
@@ -41,12 +46,14 @@ if(empty($result)){
     $password_hashed = $item->damn;
     $usernameSes = $item->username;
 
+    //$password_hashed = apply_filters( 'salt', $password_hashed, 'bitch ass nigga!');
+
       if(wp_check_password($password, $password_hashed)){
         session_start();
         $_SESSION["member"] = $usernameSes;
         echo 1;
       }else{
-        echo "Incorrect username or password. Please try again.";
+        echo "Incorrect username or password. Please try again1.";
       }
     }
   }
@@ -101,7 +108,9 @@ function store_new_account(){
 
 
 $hashPass = wp_hash_password( $password );
-
+// $salt = wp_salt($hashPass);
+//
+// $hashPass = $salt;
 
 $result = $wpdb->insert(
       $table,
