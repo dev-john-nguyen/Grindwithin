@@ -3,16 +3,15 @@
 session_start();
 
 
-if(!isset($_SESSION["member"]) ){
-    header("location: http://localhost/Efitprogram/create/");
-    exit();
+if(isset($_SESSION['member']) ){
+  require_once('members/member-contact.php');
+}else if (isset($_SESSION['trainer'])){
+  require_once('trainers/trainer-contact.php');
+}else{
+  header("location: http://localhost/main/");
+  session_destroy();
+  exit();
 }
-
-global $wpdb;
-
-$table = $wpdb->prefix . "new_bitches1";
-
-$result = $wpdb->get_results("SELECT t.main_bitch FROM $table t where t.username = '$username'");
 
 /**
 

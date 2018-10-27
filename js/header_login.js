@@ -45,7 +45,7 @@ jQuery(document).ready(function(jQuery) {
   				      }),
   				      success: function (data){
                   if (data == 1){
-                    window.location.replace("http://localhost/Efitprogram/member-home");
+                    window.location.replace("http://localhost/main/home");
                   }else{
                     alert(data);
                   }

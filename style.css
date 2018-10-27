@@ -207,7 +207,6 @@ input[name = "back squat"], input[name = "hang clean"], input[name = "power clea
 select, textarea, input:not([type]), input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
 	width: 100%;
   font-size: 14px;
-  text-transform: capitalize;
 }
 
 input[type = "email"] {

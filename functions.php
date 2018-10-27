@@ -16,14 +16,57 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+if(isset($_POST['submit-member-settings'])){
+  $file = $_FILES['file-member'];
+  $fileName = $_FILES['file-member']['name'];
+  $fileTmpName = $_FILES['file-member']['tmp_name'];
+  $fileSize = $_FILES['file-member']['size'];
+  $fileError = $_FILES['file-member']['error'];
+  $fileType = $_FILES['file-member']['type'];
+
+  $fileExt = explode('.', $fileName);
+
+  $fileActualExt = strtolower(end($fileExt));
+
+  $allowed = array('jpg','jpeg','png','pdf');
+
+  if(in_array($fileActualExt, $allowed)){
+    if ($fileError === 0){
+      if($fileSize < 100000000){
+        $base = wp_upload_dir();
+        $basedir = $base['basedir'];
+        $fileDestination = $basedir . '/' . $fileName;
+          if (move_uploaded_file($fileTmpName, $fileDestination)){
+
+          }else{
+
+          }
+
+      }else{
+        echo "your file is too big!";
+      }
+
+    }else{
+      echo "There was an error uploading your file!";
+    }
+
+  }else{
+    echo "You cannot upload files of this type!";
+  }
+
+
+}
 
 function logout_user(){
 
   session_start();
   unset($_SESSION['member']);
+  unset($_SESSION['trainer']);
+  unset($_SESSION['firstName']);
+  unset($_SESSION['lastName']);
+  unset($_SESSION['goal']);
   session_destroy();
 
-wp_die();
 }
 add_action('wp_ajax_logout_user', 'logout_user');
 add_action('wp_ajax_nopriv_logout_user', 'logout_user');
@@ -35,9 +78,9 @@ global $wpdb;
 $username = esc_sql($_POST['username']);
 $password = esc_sql($_POST['password']);
 
-$table = $wpdb->prefix . "bitches";
+$table = $wpdb->prefix . "bitches2";
 
-$sql = $wpdb->prepare("SELECT t.username, t.damn FROM $table t Where t.username = %s", array($username));
+$sql = $wpdb->prepare("SELECT t.username, t.damn, t.type FROM $table t Where t.username = %s", array($username));
 $result = $wpdb->get_results($sql);
 
 if(empty($result)){
@@ -46,17 +89,31 @@ if(empty($result)){
   foreach($result as $item){
     $password_hashed = $item->damn;
     $usernameSes = $item->username;
+    $type = $item->type;
 
     //$password_hashed = apply_filters( 'salt', $password_hashed, 'bitch ass nigga!');
-
-      if(wp_check_password($password, $password_hashed)){
-        session_start();
-        $_SESSION['member'] = $usernameSes;
-        echo 1;
+      if($type == "c"){
+          if(wp_check_password($password, $password_hashed)){
+            session_start();
+            $_SESSION['member'] = $usernameSes;
+            echo 1;
+          }else{
+            echo "Incorrect username or password. Please try again1.";
+          }
+      }else if ($type == "t"){
+          if(wp_check_password($password, $password_hashed)){
+            session_start();
+            $_SESSION['trainer'] = $usernameSes;
+            echo 1;
+          }else{
+            echo "Incorrect username or password. Please try again1.";
+          }
       }else{
-        echo "Incorrect username or password. Please try again1.";
+        echo "I apologize, we are having problems accessing your information. Please contact us directly.";
       }
+
     }
+
   }
 
 
@@ -75,7 +132,7 @@ function store_new_account(){
   $password = esc_sql($_POST['password']);
   $goal = esc_sql($_POST['goal']);
 
-  $table = $wpdb->prefix . "bitches";
+  $table = $wpdb->prefix . "bitches2";
 
   //validate input
   if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
@@ -98,6 +155,7 @@ function store_new_account(){
       `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `fName` text NOT NULL,
   `lName` text NOT NULL,
+  `type` text NOT NULL,
   `email` text NOT NULL,
   `username` text NOT NULL,
   `damn` text NOT NULL,
@@ -113,11 +171,14 @@ $hashPass = wp_hash_password( $password );
 //
 // $hashPass = $salt;
 
+$type = "c";
+
 $result = $wpdb->insert(
       $table,
       array(
     'fName' => $fName,
     'lName' => $lName,
+    'type' => $type,
     'email' => $email,
     'username' => $username,
     'damn' => $hashPass,
@@ -265,6 +326,11 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 
 //Functions of Javascript Files Attached to pages
 	function load_js_page_form_testing() {
+
+    //trainer-settings.php and member-settings.php
+    if (is_page('settings')){
+        wp_enqueue_script('js_members_settings', get_stylesheet_directory_uri() . '/js/members/settings.js', array( 'jquery' ), '1.0.0', true );
+    }
 
     //create.php
     if (is_page(874)){

@@ -60,7 +60,7 @@ get_header();
 
 		</main><!-- #main -->
 
-		<div class = "new-account-form" style = "padding-top: 200px;">
+		<div class = "new-account-form">
 
 		<form id = "new-account" name = "new-account" method = "post" >
 				<input type = "text" id = "fName" placeholder="First Name"/>
