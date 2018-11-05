@@ -16,7 +16,35 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+function get_member_profile(){
+  global $wpdb;
+
+  $table = $wpdb->prefix . "profile";
+
+  $username = $_SESSION['member'];
+
+  $sql = $wpdb->prepare("SELECT t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
+      t.purpose, t.description FROM $table t Where t.username = %s", array($username));
+  $result = $wpdb->get_results($sql);
+
+  return $result;
+
+  wp_die();
+
+}
+
 if(isset($_POST['submit-member-settings'])){
+  // Creating an array with all the form fields
+  // $settingFields = array('file-member', 'member', 'fName','lName','birthday','height','weight','purpose','goal','description');
+  // check_settings_input($settingFields);
+  // exit("hello");
+
+  if(empty($_FILES['file-member'])){
+    header("Location: ?empty");
+    exit();
+  }
+
+
   $file = $_FILES['file-member'];
   $fileName = $_FILES['file-member']['name'];
   $fileTmpName = $_FILES['file-member']['tmp_name'];
@@ -36,32 +64,150 @@ if(isset($_POST['submit-member-settings'])){
         $base = wp_upload_dir();
         $basedir = $base['basedir'];
         $fileDestination = $basedir . '/' . $fileName;
+        $fileDestinationStore = 'wp-content/uploads/' . $fileName;
           if (move_uploaded_file($fileTmpName, $fileDestination)){
+            //Successfully moved to file destination
+
+            $result = update_to_profile($fileDestinationStore);
+
+            if(!$result > 0 || !$result){
+              header("Location: ?failed-99");
+              exit();
+            }else if($result > 1){
+              //email myself to notify that there are multiple users with the same username
+              header("Location: ?Duplicate");
+              exit();
+            }else{
+              header("Location: ?success");
+              exit();
+            }
 
           }else{
-
+            //Unable to move the image to the file folder
+            $message = "I apologize, but we are having issues uploading your picture.";
+                header("Location: ?failed-04");
+                exit();
           }
 
       }else{
-        echo "your file is too big!";
+        //Size is too big
+        $message = "I apologize, but your image is too big. Please less than 100000000 bytes.";
+        header("Location: ?failed-03");
+        exit();
       }
 
     }else{
-      echo "There was an error uploading your file!";
+      //There is something wrong with the image itself
+      $message = "Whoops, something went wrong.";
+        header("Location: ?failed-02");
+        exit();
     }
 
   }else{
-    echo "You cannot upload files of this type!";
+    //Error not a qualified image
+    $message = "Please only jpg, jpeg, png, and pdf.";
+        header("Location: ?failed-01");
+        exit();
   }
 
 
 }
 
+function check_settings_input($item){
+  //   echo '<script type="text/javascript">',
+  // 'if ( window.history.replaceState ) {',
+  // 'window.history.replaceState( null, null, window.location.href );}',
+  // '</script>';
+  // sleep(1);
+
+  foreach($item as $itemPos){
+    if(!isset($_POST[$itemPos]) || empty($_POST[$itemPos])) {
+        header("Location: ?empty");
+        exit();
+    }
+  }
+
+
+}
+
+function update_to_profile($fileDestination){
+  global $wpdb;
+
+  $table = $wpdb->prefix . "profile";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+      `username` text NOT NULL,
+      `birthday` date,
+      `imagePath` text,
+      `heightFeet` int,
+      `heightInch` int,
+      `weight` int,
+      `purpose` text,
+      `goal` text NOT NULL,
+      `description` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    $imagePath = $fileDestination;
+    $username = $_POST['member'];
+    $birthday = $_POST['birthday'];
+    $heightFeet = $_POST['height-feet'];
+    $heightInch = $_POST['height-inch'];
+    $weight = $_POST['weight'];
+    $purpose = $_POST['purpose'];
+    $goal = $_POST['goal'];
+    $description = $_POST['description'];
+
+
+
+  $result =  $wpdb->update(
+    $table,
+      array(
+        'birthday' => $birthday,
+        'heightFeet' => $heightFeet,
+        'heightInch' => $heightInch,
+        'weight' => $weight,
+        'purpose' => $purpose,
+        'goal' => $goal,
+        'description' => $description,
+        'imagePath' => $imagePath
+      ),
+      array(
+        'username' => $username
+        )
+    );
+
+    // $result = $wpdb->insert(
+    //       $table,
+    //       array(
+    //     'fName' => $fName,
+    //     'lName' => $lName,
+    //     'birthday' => $birthday,
+    //     'height' => $height,
+    //     'weight' => $weight,
+    //     'username' => $username,
+    //     'purpose' => $purpose,
+    //     'goal' => $goal,
+    //     'description' => $description,
+    //     'imagePath' => $imagePath
+    //       )
+    //   );
+
+      return $result;
+      wp_die();
+
+}
+
+
 function logout_user(){
 
   session_start();
   unset($_SESSION['member']);
-  unset($_SESSION['trainer']);
   unset($_SESSION['firstName']);
   unset($_SESSION['lastName']);
   unset($_SESSION['goal']);
@@ -92,18 +238,18 @@ if(empty($result)){
     $type = $item->type;
 
     //$password_hashed = apply_filters( 'salt', $password_hashed, 'bitch ass nigga!');
-      if($type == "c"){
+      if($type == "customer"){
           if(wp_check_password($password, $password_hashed)){
             session_start();
             $_SESSION['member'] = $usernameSes;
             echo 1;
           }else{
-            echo "Incorrect username or password. Please try again1.";
+            echo "Incorrect username or password. Please try again.";
           }
-      }else if ($type == "t"){
+      }else if ($type == "trainer"){
           if(wp_check_password($password, $password_hashed)){
             session_start();
-            $_SESSION['trainer'] = $usernameSes;
+            $_SESSION['member'] = $usernameSes;
             echo 1;
           }else{
             echo "Incorrect username or password. Please try again1.";
@@ -122,15 +268,52 @@ wp_die();
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
 add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
 
+function store_new_profile($fName, $lName, $username, $goal){
+
+  global $wpdb;
+
+  $table = $wpdb->prefix . "profile";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+    `username` text NOT NULL,
+    `birthday` date,
+    `imagePath` text,
+    `heightFeet` int,
+    `heightInch` int,
+    `weight` int,
+    `purpose` text,
+    `goal` text NOT NULL,
+    `description` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    $result = $wpdb->insert(
+          $table,
+          array(
+        'username' => $username,
+        'goal' => $goal
+          )
+      );
+
+      return $result;
+
+wp_die();
+}
+
 function store_new_account(){
   global $wpdb;
 
-  $fName = esc_sql($_POST['fName']);
-  $lName = esc_sql($_POST['lName']);
-  $email = esc_sql($_POST['email']);
-  $username = esc_sql($_POST['username']);
-  $password = esc_sql($_POST['password']);
-  $goal = esc_sql($_POST['goal']);
+  $fName = $_POST['fName'];
+  $lName = $_POST['lName'];
+  $email = $_POST['email'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $goal = $_POST['goal'];
 
   $table = $wpdb->prefix . "bitches2";
 
@@ -171,7 +354,7 @@ $hashPass = wp_hash_password( $password );
 //
 // $hashPass = $salt;
 
-$type = "c";
+$type = "customer";
 
 $result = $wpdb->insert(
       $table,
@@ -190,6 +373,11 @@ $result = $wpdb->insert(
     echo "I apologize, we are having issues submitting your information. Please contact us directly via email." .
     "Thank you for your understanding.";
   }else{
+    //create profile
+    store_new_profile($fName, $lName, $username, $goal);
+    //create workout
+
+
     session_start();
     $_SESSION['member'] = $username;
     echo 1;

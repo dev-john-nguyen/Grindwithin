@@ -49,7 +49,7 @@
               }),
               success: function (response){
 								if(response == 1){
-									window.location.replace("http://localhost/Efitprogram/member-home");
+									window.location.replace("http://localhost/Efitprogram/home");
 								}else{
 									alert(response);
 								}

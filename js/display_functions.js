@@ -389,7 +389,6 @@ for (var i = 0; i <= lengthArray; i++) {
   tbl.appendChild(tbdy);
   divName.appendChild(tbl);
 
-
 return false;
 
 }
