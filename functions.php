@@ -22,28 +22,29 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 
 function image_crop($url, $name){
 
-  $image = wp_get_image_editor( $url );
+      $image = wp_get_image_editor( $url );
 
-if ( ! is_wp_error( $image ) ) {
+    if ( ! is_wp_error( $image ) ) {
 
-  $image->resize( 100, 100, true );
+      $image->resize( 150, 150, true );
 
-  $data = $image->save($url);
+      $data = $image->save($url);
+
+    }
+
+    if( ! is_wp_error( $data )  )
+    {
+
+        return "updated";
+
+    }else{
+
+        return "image-crop-error";
+
+    }
 
 }
 
-if( ! is_wp_error( $data )  )
-{
-
-    return "saved";
-
-}else{
-
-    return "error";
-
-}
-
-}
 
 function get_member_profile(){
   global $wpdb;
@@ -76,6 +77,7 @@ if(isset($_POST['submit-member-settings'])){
   $fileSize = $_FILES['file-member']['size'];
   $fileError = $_FILES['file-member']['error'];
   $fileType = $_FILES['file-member']['type'];
+  // $fileName = $_POST['member'];
 
   $fileExt = explode('.', $fileName);
 
@@ -95,22 +97,24 @@ if(isset($_POST['submit-member-settings'])){
 
             $result = update_to_profile($fileDestinationStore);
 
-            if(!$result > 0 || !$result){
-              header("Location: ?failed-99");
+            if($result === false){
+              //If the query fails
+              header("Location: ?failed-update");
+              exit();
+            }elseif(!$result){
+              //No changes were made but still updated
+              $imageCResults = image_crop($fileDestination, $fileName);
+              header("Location: ?$imageCResults");
               exit();
             }else if($result > 1){
-              //email myself to notify that there are multiple users with the same username
-              header("Location: ?Duplicate");
-              exit();
+                  //email myself to notify that there are multiple users with the same username
+                  header("Location: ?Duplicates");
+                  exit();
             }else{
-              $imageCResults = image_crop($fileDestination, $fileName);
-              if($imageCResults == "error"){
-                header("Location: ?image$imageCResults");
-                exit();
-              }else{
-                header("Location: ?success$imageCResults");
-                exit();
-              }
+              //Changes were made and updated
+                  $imageCResults = image_crop($fileDestination, $fileName);
+                  header("Location: ?$imageCResults");
+                  exit();
             }
 
           }else{
@@ -212,22 +216,6 @@ function update_to_profile($fileDestination){
         'username' => $username
         )
     );
-
-    // $result = $wpdb->insert(
-    //       $table,
-    //       array(
-    //     'fName' => $fName,
-    //     'lName' => $lName,
-    //     'birthday' => $birthday,
-    //     'height' => $height,
-    //     'weight' => $weight,
-    //     'username' => $username,
-    //     'purpose' => $purpose,
-    //     'goal' => $goal,
-    //     'description' => $description,
-    //     'imagePath' => $imagePath
-    //       )
-    //   );
 
       return $result;
       wp_die();
@@ -512,7 +500,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 																		)
 																);
 
-																			if ($resultInsert == false){
+																			if ($resultInsert === false){
 																				echo "Failed to Update or Create $weekVal and $dayVal to $programVal in the database!";
 																			}else{
 																			echo "Successfully inserted $weekVal and $dayVal to $programVal in the database!";
@@ -523,7 +511,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 										}
 
 //if update query is false it means that the query did not execute!
-				}else if ($resultUpdate == false) {
+      }else if ($resultUpdate === false) {
 					echo "Failed to Execute ERROR!";
 				}else{
 					echo "Failed to Execute ERROR!";

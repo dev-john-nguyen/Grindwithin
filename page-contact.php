@@ -3,14 +3,12 @@
 session_start();
 
 
-if(isset($_SESSION['member']) ){
-  require_once('members/member-contact.php');
-}else if (isset($_SESSION['trainer'])){
-  require_once('trainers/trainer-contact.php');
-}else{
+if(!isset($_SESSION['member']) ){
   header("location: http://localhost/main/");
   session_destroy();
   exit();
+}else{
+
 }
 
 /**
