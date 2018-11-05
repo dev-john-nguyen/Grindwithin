@@ -16,6 +16,35 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+
+
+
+
+function image_crop($url, $name){
+
+  $image = wp_get_image_editor( $url );
+
+if ( ! is_wp_error( $image ) ) {
+
+  $image->resize( 100, 100, true );
+
+  $data = $image->save($url);
+
+}
+
+if( ! is_wp_error( $data )  )
+{
+
+    return "saved";
+
+}else{
+
+    return "error";
+
+}
+
+}
+
 function get_member_profile(){
   global $wpdb;
 
@@ -34,10 +63,6 @@ function get_member_profile(){
 }
 
 if(isset($_POST['submit-member-settings'])){
-  // Creating an array with all the form fields
-  // $settingFields = array('file-member', 'member', 'fName','lName','birthday','height','weight','purpose','goal','description');
-  // check_settings_input($settingFields);
-  // exit("hello");
 
   if(empty($_FILES['file-member'])){
     header("Location: ?empty");
@@ -78,8 +103,14 @@ if(isset($_POST['submit-member-settings'])){
               header("Location: ?Duplicate");
               exit();
             }else{
-              header("Location: ?success");
-              exit();
+              $imageCResults = image_crop($fileDestination, $fileName);
+              if($imageCResults == "error"){
+                header("Location: ?image$imageCResults");
+                exit();
+              }else{
+                header("Location: ?success$imageCResults");
+                exit();
+              }
             }
 
           }else{
