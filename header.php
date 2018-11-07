@@ -792,7 +792,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 
           <nav id="site-navigation" class="<?php echo $mmdClass; ?> main-navigation top-navigation <?php echo $hmenusize_class; ?>" role="navigation">
 
-		<?php if(isset($_SESSION['trainer']) || isset($_SESSION['member'])){ ?>
+		<?php if(isset($_SESSION['member'])){ ?>
 
 			<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url( '/home' ) ); ?>">Profile</a></li>
 <li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a href="<?php echo esc_url( home_url( '/calendar' ) ); ?>">Calendar</a></li>
@@ -822,10 +822,8 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
       </div>
 
 			<!-- #Member login header -->
-		<?php if(isset($_SESSION['trainer'])){ ?>
+		<?php if(isset($_SESSION['member'])){ ?>
 				<button type="button" id = "btnLogout">log out</button>
-		<?php }else if(isset($_SESSION['member'])){ ?>
-						<button type="button" id = "btnLogout">log out</button>
 		<?php }else{ ?>
 			<form id = "header-login" name = "header-login" method = "post" >
 				<input type = "text" id = "username-login" placeholder="username"/ required>

@@ -17,7 +17,17 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 //
 
 
-
+function GetAge($dob)
+{
+        $dob=explode("-",$dob);
+        $curMonth = date("m");
+        $curDay = date("j");
+        $curYear = date("Y");
+        $age = $curYear - $dob[0];
+        if($curMonth<$dob[1] || ($curMonth==$dob[1] && $curDay<$dob[2]))
+                $age--;
+        return $age;
+}
 
 
 function image_crop($url, $name){
@@ -46,15 +56,15 @@ function image_crop($url, $name){
 }
 
 
-function get_member_profile(){
+function get_member_profile($tableType){
   global $wpdb;
 
-  $table = $wpdb->prefix . "profile";
+  $table = $wpdb->prefix . $tableType . "s";
 
   $username = $_SESSION['member'];
 
   $sql = $wpdb->prepare("SELECT t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
-      t.purpose, t.description FROM $table t Where t.username = %s", array($username));
+      t.purpose, t.description, t.goal FROM $table t Where t.username = %s", array($username));
   $result = $wpdb->get_results($sql);
 
   return $result;
@@ -75,9 +85,29 @@ if(isset($_POST['submit-member-settings'])){
   $fileName = $_FILES['file-member']['name'];
   $fileTmpName = $_FILES['file-member']['tmp_name'];
   $fileSize = $_FILES['file-member']['size'];
+  //check if file is empty
+  if($fileSize == 0){
+    $blankImage = false;
+    $result = update_to_profile($blankImage);
+
+    if($result === false){
+      //If the query fails
+      header("Location: ?failed-update");
+      exit();
+    }elseif($result > 1){
+          //email myself to notify that there are multiple users with the same username
+          header("Location: ?duplicates");
+          exit();
+    }else{
+      //Changes were made and updated
+          header("Location: ?updated");
+          exit();
+    }
+
+  }
   $fileError = $_FILES['file-member']['error'];
   $fileType = $_FILES['file-member']['type'];
-  // $fileName = $_POST['member'];
+  $memberName = $_POST['member'];
 
   $fileExt = explode('.', $fileName);
 
@@ -85,13 +115,15 @@ if(isset($_POST['submit-member-settings'])){
 
   $allowed = array('jpg','jpeg','png','pdf');
 
+  $fileNameStore = "profile/" . $memberName . "." . $fileActualExt;
+
   if(in_array($fileActualExt, $allowed)){
     if ($fileError === 0){
       if($fileSize < 100000000){
         $base = wp_upload_dir();
         $basedir = $base['basedir'];
-        $fileDestination = $basedir . '/' . $fileName;
-        $fileDestinationStore = 'wp-content/uploads/' . $fileName;
+        $fileDestination = $basedir . '/' . $fileNameStore;
+        $fileDestinationStore = 'wp-content/uploads/' . $fileNameStore;
           if (move_uploaded_file($fileTmpName, $fileDestination)){
             //Successfully moved to file destination
 
@@ -103,7 +135,7 @@ if(isset($_POST['submit-member-settings'])){
               exit();
             }elseif(!$result){
               //No changes were made but still updated
-              $imageCResults = image_crop($fileDestination, $fileName);
+              $imageCResults = image_crop($fileDestination, $fileNameStore);
               header("Location: ?$imageCResults");
               exit();
             }else if($result > 1){
@@ -112,7 +144,7 @@ if(isset($_POST['submit-member-settings'])){
                   exit();
             }else{
               //Changes were made and updated
-                  $imageCResults = image_crop($fileDestination, $fileName);
+                  $imageCResults = image_crop($fileDestination, $fileNameStore);
                   header("Location: ?$imageCResults");
                   exit();
             }
@@ -148,45 +180,29 @@ if(isset($_POST['submit-member-settings'])){
 
 }
 
-function check_settings_input($item){
-  //   echo '<script type="text/javascript">',
-  // 'if ( window.history.replaceState ) {',
-  // 'window.history.replaceState( null, null, window.location.href );}',
-  // '</script>';
-  // sleep(1);
-
-  foreach($item as $itemPos){
-    if(!isset($_POST[$itemPos]) || empty($_POST[$itemPos])) {
-        header("Location: ?empty");
-        exit();
-    }
-  }
-
-
-}
+// function check_settings_input($item){
+//   //   echo '<script type="text/javascript">',
+//   // 'if ( window.history.replaceState ) {',
+//   // 'window.history.replaceState( null, null, window.location.href );}',
+//   // '</script>';
+//   // sleep(1);
+//
+//   foreach($item as $itemPos){
+//     if(!isset($_POST[$itemPos]) || empty($_POST[$itemPos])) {
+//         header("Location: ?empty");
+//         exit();
+//     }
+//   }
+//
+//
+// }
 
 function update_to_profile($fileDestination){
   global $wpdb;
 
-  $table = $wpdb->prefix . "profile";
+  $tableType = $_POST['type'];
 
-  //Create Table if it doesn't exist
-    $charset_collate = $wpdb->get_charset_collate();
-    $sql = "CREATE TABLE IF NOT EXISTS $table (
-        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-      `username` text NOT NULL,
-      `birthday` date,
-      `imagePath` text,
-      `heightFeet` int,
-      `heightInch` int,
-      `weight` int,
-      `purpose` text,
-      `goal` text NOT NULL,
-      `description` text,
-    UNIQUE (`id`)
-    ) $charset_collate;";
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql );
+  $table = $wpdb->prefix . $tableType . "s";
 
     $imagePath = $fileDestination;
     $username = $_POST['member'];
@@ -198,8 +214,23 @@ function update_to_profile($fileDestination){
     $goal = $_POST['goal'];
     $description = $_POST['description'];
 
-
-
+if(!$imagePath){
+  $result =  $wpdb->update(
+    $table,
+      array(
+        'birthday' => $birthday,
+        'heightFeet' => $heightFeet,
+        'heightInch' => $heightInch,
+        'weight' => $weight,
+        'purpose' => $purpose,
+        'goal' => $goal,
+        'description' => $description
+      ),
+      array(
+        'username' => $username
+        )
+    );
+}else{
   $result =  $wpdb->update(
     $table,
       array(
@@ -216,6 +247,7 @@ function update_to_profile($fileDestination){
         'username' => $username
         )
     );
+  }
 
       return $result;
       wp_die();
@@ -229,7 +261,6 @@ function logout_user(){
   unset($_SESSION['member']);
   unset($_SESSION['firstName']);
   unset($_SESSION['lastName']);
-  unset($_SESSION['goal']);
   session_destroy();
 
 }
@@ -243,7 +274,7 @@ global $wpdb;
 $username = esc_sql($_POST['username']);
 $password = esc_sql($_POST['password']);
 
-$table = $wpdb->prefix . "bitches2";
+$table = $wpdb->prefix . "members";
 
 $sql = $wpdb->prepare("SELECT t.username, t.damn, t.type FROM $table t Where t.username = %s", array($username));
 $result = $wpdb->get_results($sql);
@@ -257,30 +288,17 @@ if(empty($result)){
     $type = $item->type;
 
     //$password_hashed = apply_filters( 'salt', $password_hashed, 'bitch ass nigga!');
-      if($type == "customer"){
           if(wp_check_password($password, $password_hashed)){
             session_start();
             $_SESSION['member'] = $usernameSes;
+            $_SESSION['type'] = $type;
             echo 1;
           }else{
             echo "Incorrect username or password. Please try again.";
           }
-      }else if ($type == "trainer"){
-          if(wp_check_password($password, $password_hashed)){
-            session_start();
-            $_SESSION['member'] = $usernameSes;
-            echo 1;
-          }else{
-            echo "Incorrect username or password. Please try again1.";
-          }
-      }else{
-        echo "I apologize, we are having problems accessing your information. Please contact us directly.";
       }
 
     }
-
-  }
-
 
 wp_die();
 }
@@ -291,15 +309,22 @@ function store_new_profile($fName, $lName, $username, $goal){
 
   global $wpdb;
 
-  $table = $wpdb->prefix . "profile";
+  $table = $wpdb->prefix . "clients";
+
+  //default image
+  $defaultImage = "wp-content/uploads/profile/default.png";
 
   //Create Table if it doesn't exist
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE IF NOT EXISTS $table (
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
     `username` text NOT NULL,
+    `fName` text NOT NULL,
+    `lName` text NOT NULL,
+    `trainer` text,
+    `annoucement` text,
     `birthday` date,
-    `imagePath` text,
+    `imagePath` text NOT NULL,
     `heightFeet` int,
     `heightInch` int,
     `weight` int,
@@ -314,8 +339,11 @@ function store_new_profile($fName, $lName, $username, $goal){
     $result = $wpdb->insert(
           $table,
           array(
+        'fName' => $fName,
+        'lName' => $lName,
         'username' => $username,
-        'goal' => $goal
+        'goal' => $goal,
+        'imagePath' => $defaultImage
           )
       );
 
@@ -323,6 +351,157 @@ function store_new_profile($fName, $lName, $username, $goal){
 
 wp_die();
 }
+
+function store_new_workout_profile($username){
+  global $wpdb;
+
+  $table = $wpdb->prefix . "workouts";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+    `username` text NOT NULL,
+    `trainer` text,
+    `type` text,
+    `week` text,
+    `day` text,
+    `workout` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    $result = $wpdb->insert(
+          $table,
+          array(
+        'username' => $username
+          )
+      );
+
+      return $result;
+
+wp_die();
+}
+
+function store_new_trainer_profile($fName, $lName, $username, $goal){
+  global $wpdb;
+
+  $table = $wpdb->prefix . "trainers";
+
+  //default image
+  $defaultImage = "wp-content/uploads/profile/default.png";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+    `username` text NOT NULL,
+    `fName` text NOT NULL,
+    `lName` text NOT NULL,
+    `birthday` date,
+    `imagePath` text NOT NULL,
+    `heightFeet` int,
+    `heightInch` int,
+    `weight` int,
+    `purpose` text,
+    `goal` text NOT NULL,
+    `description` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    $result = $wpdb->insert(
+          $table,
+          array(
+        'fName' => $fName,
+        'lName' => $lName,
+        'username' => $username,
+        'goal' => $goal,
+        'imagePath' => $defaultImage
+          )
+      );
+
+      return $result;
+
+  wp_die();
+}
+
+function store_trainer_account(){
+  global $wpdb;
+
+  $fName = $_POST['fName'];
+  $lName = $_POST['lName'];
+  $email = $_POST['email'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+  $goal = $_POST['goal'];
+
+  $table = $wpdb->prefix . "members";
+
+  //validate input
+  if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
+    exit("Please enter valid characters for First Name and Last Name");
+  }else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  exit("Invalid email format");
+}
+
+  //check if username exist
+
+  	$sql = $wpdb->prepare("SELECT t.username FROM $table t Where t.username = %s", array($username));
+    $result = $wpdb->get_results($sql);
+
+    if(!empty($result)){
+      exit("Username is already taken. Please try again.");
+    }
+
+
+$currentDate = current_time( 'mysql' );
+
+$hashPass = wp_hash_password( $password );
+// $salt = wp_salt($hashPass);
+//
+// $hashPass = $salt;
+
+$type = "trainer";
+
+$result = $wpdb->insert(
+      $table,
+      array(
+    'fName' => $fName,
+    'lName' => $lName,
+    'type' => $type,
+    'email' => $email,
+    'username' => $username,
+    'damn' => $hashPass,
+    'created' => $currentDate
+      )
+  );
+
+  if(!$result > 0 || !$result || $result === false){
+    exit("I apologize, we are having issues submitting your information. Please contact us directly via email." .
+    "Thank you for your understanding.");
+  }else{
+    //create profile
+    $result = store_new_trainer_profile($fName, $lName, $username, $goal);
+
+    if(!$result > 0 || !$result || $result === false){
+      exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
+      "Thank you for your understanding.");
+    }
+
+    session_start();
+    $_SESSION['member'] = $username;
+    $_SESSION['type'] = $type;
+    echo 1;
+  }
+
+wp_die();
+
+}
+add_action('wp_ajax_store_trainer_account', 'store_trainer_account');
+add_action('wp_ajax_nopriv_store_trainer_account', 'store_trainer_account');
 
 function store_new_account(){
   global $wpdb;
@@ -334,7 +513,7 @@ function store_new_account(){
   $password = $_POST['password'];
   $goal = $_POST['goal'];
 
-  $table = $wpdb->prefix . "bitches2";
+  $table = $wpdb->prefix . "members";
 
   //validate input
   if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
@@ -345,7 +524,8 @@ function store_new_account(){
 
   //check if username exist
 
-  	$result = $wpdb->get_results("SELECT t.username FROM $table t Where t.username = '$username'");
+  $sql = $wpdb->prepare("SELECT t.username FROM $table t Where t.username = %s", array($username));
+  $result = $wpdb->get_results($sql);
 
     if(!empty($result)){
       exit("Username is already taken. Please try again.");
@@ -355,25 +535,26 @@ function store_new_account(){
   $charset_collate = $wpdb->get_charset_collate();
   $sql = "CREATE TABLE IF NOT EXISTS $table (
       `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `created` date NOT NULL,
   `fName` text NOT NULL,
   `lName` text NOT NULL,
   `type` text NOT NULL,
   `email` text NOT NULL,
   `username` text NOT NULL,
   `damn` text NOT NULL,
-  `goal` text NOT NULL,
   UNIQUE (`id`)
   ) $charset_collate;";
   require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
   dbDelta( $sql );
 
+$currentDate = current_time( 'mysql' );
 
 $hashPass = wp_hash_password( $password );
 // $salt = wp_salt($hashPass);
 //
 // $hashPass = $salt;
 
-$type = "customer";
+$type = "client";
 
 $result = $wpdb->insert(
       $table,
@@ -384,21 +565,35 @@ $result = $wpdb->insert(
     'email' => $email,
     'username' => $username,
     'damn' => $hashPass,
-    'goal' => $goal
+    'created' => $currentDate
       )
   );
 
-  if(!$result > 0 || !$result){
-    echo "I apologize, we are having issues submitting your information. Please contact us directly via email." .
-    "Thank you for your understanding.";
+  if(!$result > 0 || !$result || $result === false){
+    exit("I apologize, we are having issues submitting your information. Please contact us directly via email." .
+    "Thank you for your understanding.");
   }else{
     //create profile
-    store_new_profile($fName, $lName, $username, $goal);
-    //create workout
+    $result = store_new_profile($fName, $lName, $username, $goal);
+
+    if(!$result > 0 || !$result || $result === false){
+      exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
+      "Thank you for your understanding.");
+    }
+
+      //create workout
+    $result = store_new_workout_profile($username);
+
+    if(!$result > 0 || !$result || $result === false){
+      exit("I apologize, we are having issues submitting your information. Please contact us directly via email." .
+      "Thank you for your understanding.");
+    }
+
 
 
     session_start();
     $_SESSION['member'] = $username;
+    $_SESSION['type'] = $type;
     echo 1;
   }
 
@@ -420,7 +615,7 @@ function get_data(){
 //Store the variables to a two dm array
 	foreach($result as $item) {
 		$liftunserial = unserialize($item->lift);
-		$itemMain[] = array($item->id, $item->program, $item->week, $item->day, $liftunserial);
+		$itemMain[] = array($item->id, $item->type, $item->week, $item->day, $liftunserial);
 	}
 
 
@@ -449,7 +644,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 		$charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE IF NOT EXISTS $table (
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-		`program` text NOT NULL,
+		`type` text NOT NULL,
 		`week` text NOT NULL,
 		`day` text NOT NULL,
         `lift` text NOT NULL,
@@ -476,7 +671,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 					array(
 							'week' =>  $weekVal,
 							'day' => $dayVal,
-							'program' => $programVal
+							'type' => $programVal
 						)
 				);
 
@@ -487,13 +682,13 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 
 //If update Query === 0 then the table is not in the database OR the user didn't update any variables
 
-										$result = $wpdb->get_results("SELECT * FROM $table WHERE program = '$programVal' and week = '$weekVal' and day = '$dayVal'");
+										$result = $wpdb->get_results("SELECT * FROM $table WHERE type = '$programVal' and week = '$weekVal' and day = '$dayVal'");
 
 										if($result == null){
 															$resultInsert = $wpdb->insert(
 																		$table,
 																		array(
-																	'program' => $programVal,
+																	'type' => $programVal,
 																	'week' => $weekVal,
 																	'day' => $dayVal,
 																				'lift' => $final
@@ -539,8 +734,13 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
         wp_enqueue_script('js_members_settings', get_stylesheet_directory_uri() . '/js/members/settings.js', array( 'jquery' ), '1.0.0', true );
     }
 
-    //create.php
-    if (is_page(874)){
+    if (is_page('home')){
+      wp_enqueue_script('js_trainer_home', get_stylesheet_directory_uri() . '/js/members/trainer_home.js', array( 'jquery' ), '1.0.0', true );
+
+    }
+
+    //signup.php and signup-trainer.php
+    if (is_page( array(874, 897) ) ){
       wp_enqueue_script('js_new_account', get_stylesheet_directory_uri() . '/js/create/new_account.js', array( 'jquery' ), '1.0.0', true );
     }
 

@@ -1,0 +1,54 @@
+****images not having a source is causing the sessions to crash I think?****
+
+
+
+
+<div id="primary" class="content-area sidebar-left" style = "background-color: black;">
+  <div id = "header-info" class = "header-info">
+
+    <div id = "profile-info" class = "profile-info">
+
+      <h2><?php echo $_SESSION['firstName'] . " " .   $_SESSION['lastName']; ?> </h2>
+      <h2><?php echo GetAge($birthday); ?></h2>
+      <img src = "<?php echo site_url($imagePath); ?>"/>
+      <h2><?php echo $description ?></h2>
+
+    </div>
+
+
+
+    <div id = "entry-header" class = "entry-header">
+      <h1>Welcome <?php echo $_SESSION['member']; ?>!</h1>
+      <h2>Goal: <?php echo stripslashes($goal); ?></h2>
+      <h2>EFP: Need to add this attribute to trainers</h2>
+    </div>
+  </div>
+</div>
+
+
+/// settings
+
+
+<h1 name = 'member' id = 'member' style = "color: black;"> <?php echo $_SESSION['member'] ?> </h1>
+<form id = "member-settings" name = "member-settings" method = "post" enctype="multipart/form-data">
+<input type = "text" name = "member" id = "member" value = "<?php echo stripslashes($_SESSION['member']); ?>" readonly hidden/>
+<input type ="date" name = "birthday" id = "birthday" placeholder="ddmmyyyy" value = "<?php echo $birthday ?>"/>
+<input type ="number" name = "height-feet" id = "height-feet" max = '8' value = "<?php echo $heightFeet ?>"/>
+<input type ="number" name = "height-inch" id = "height-inch" max = '11' value = "<?php echo $heightInch ?>"/>
+<input type ="number" name = "weight" id = "weight" placeholder = "weight" value = "<?php echo $weight ?>"/>
+<input type = "file" name  = "file-member" id = "file-member"/>
+<img src = "<?php echo site_url($imagePath); ?>"/>
+<input type = "text" name = "purpose" id = "purpose" placeholder = "purpose" value = "<?php echo $purpose ?>"/>
+<input type ="text" name = "goal" id = "goal" placeholder="goal" value = "<?php echo stripslashes($_SESSION['goal']); ?>" />
+<input type ="text" name = "description" id = "description" placeholder="Description" value = "<?php echo $description ?>"/>
+<input type = "submit" name = "submit-member-settings" id = "submit-member-settings"/>
+</form>
+
+
+//Below is causing the session crashes
+<?php
+$fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+if(strpos($fullUrl, "empty") == true) {
+  echo "<p>fuckboy</p>";
+}
+?>
