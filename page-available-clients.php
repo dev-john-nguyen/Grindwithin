@@ -1,4 +1,39 @@
 <?php
+
+session_start();
+
+
+if(!isset($_SESSION['member']) && !$_SESSION['type'] == 'trainer'){
+  header("location: http://localhost/main/");
+  session_destroy();
+  exit();
+}
+
+/**
+
+ * The template for displaying all pages.
+
+ *
+
+ * This is the template that displays all pages by default.
+
+ * Please note that this is the WordPress construct of pages
+
+ * and that other 'pages' on your WordPress site will use a
+
+ * different template.
+
+ *
+
+ * @package Tesseract
+
+ */
+
+ get_header();
+
+?>
+<div id="primary" class="content-area sidebar-left" style = "background-color: black;">
+<?php
 $table = $wpdb->prefix . "clients";
 $result = $wpdb->get_results("SELECT t.fName, t.lName, t.imagePath, t.goal, t.username, t.annoucement FROM $table t WHERE t.trainer = 'none'");
 
@@ -44,8 +79,7 @@ foreach($result as $item){
     </form>
 <?php } ?>
 
-<form id = "annoucement" name = "annoucement" method = "post">
-  <input type = "text" name = "trainer-username" id = "trainer-username" value = "<?php echo $_SESSION['member']; ?>" readonly hidden/>
-Make an Annoucement: <input type ="text" name = "annoucement-input" id = "annoucement-input" value = "<?php echo stripslashes($annoucement); ?>" />
-<input type = "submit" id = "annoucement-submit" name = "annoucement-submit">
-</form>
+</div>
+
+
+<?php get_footer('custes'); ?>

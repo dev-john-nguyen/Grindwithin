@@ -1,6 +1,42 @@
 ****images not having a source is causing the sessions to crash I think?****
 
+<!-- <?php
+$trainerUser = $_SESSION['member'];
+$result = $wpdb->get_results("SELECT * FROM $table t WHERE t.trainer = '$username'");
+foreach($result as $item){
 
+  $fName = $item->fName;
+  $lName = $item->lName;
+  $imagePath = $item->imagePath;
+  $username = $item->username;
+  $goal = $item->goal;
+  $birthday = $item->birthday;
+  $heightFeet = $item->heightFeet;
+  $heightInch = $item->heightInch;
+  $weight = $item->weight;
+  $purpose = $item->purpose;
+  $description = $item->description;
+
+
+  ?>
+      <tr>
+        <th><img src = "<?php echo site_url($imagePath); ?>"/></th>
+        <th><p> <?php echo $username; ?> </p></th>
+        <th><p> <?php echo $fName; ?> </p></th>
+        <th><p> <?php echo $lName; ?> </p></th>
+        <th><p> <?php echo $goal; ?> </p></th>
+      </tr>
+  <?php
+}
+?>
+    </table>
+    <input type = "submit" id = "available-clients-submit" name = "available-clients-submit">
+    </form>
+<?php } ?>
+
+?> -->
+
+///////////////////////////////////////////////////
 
 
 <div id="primary" class="content-area sidebar-left" style = "background-color: black;">

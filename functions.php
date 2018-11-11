@@ -16,6 +16,130 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+function update_client_reminder(){
+
+  // global $wpdb;
+  //
+  // $reminder = $_POST['reminder'];
+  //   $trainerUsername = $_POST['trainerUsername'];
+  //
+  // $table = $wpdb->prefix . "clients";
+  //
+  //
+  //   $result = $wpdb->update(
+  //     $table,
+  //     array('reminder' => $reminder),
+  //     array('trainer' => $trainerUsername)
+  //   );
+  //
+  //     if($result === false){
+  //       exit("Failed to update your selection. Please contact customer service");
+  //     }else if($result == 0){
+  //       exit("It looks like someone has already taken the user. I apologize for the inconvenience");
+  //     }else{
+  //       echo "Annoucement successfully updated!";
+  //     }
+  //
+  // wp_die();
+
+
+}
+
+function get_client_profile(){
+  global $wpdb;
+
+  $clientUsername = $_POST['clientUsername'];
+
+$table = $wpdb->prefix . "clients";
+
+  $sql = $wpdb->prepare("SELECT t.username, t.fName, t.lName, t.annoucement,
+    t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight, t.purpose, t.goal,
+    t.description FROM $table t WHERE t.username = %s", array($clientUsername));
+    $results = $wpdb->get_results($sql);
+
+    $error = 0;
+
+    if(empty($results)){
+      exit($error);
+    }else{
+      foreach($results as $item){
+        // $clientInfoArray[] = array($item->username, $item->fName, $item->lName, $item->annoucement,
+        // $item->birthday, $item->imagePath, $item->heightFeet, $item->heightInch, $item->weight,
+        // $item->purpose, $item->goal, $item->description);
+          foreach($item as $i){
+            $clientInfoArray[]  = $i;
+          }
+
+      }
+       echo json_encode($clientInfoArray);
+    }
+
+    wp_die();
+}
+add_action('wp_ajax_get_client_profile', 'get_client_profile');
+add_action('wp_ajax_nopriv_get_client_profile', 'get_client_profile');
+
+function update_client_annoucement(){
+  global $wpdb;
+
+  $annoucement = $_POST['annoucement'];
+    $trainerUsername = $_POST['trainerUsername'];
+
+  $table = $wpdb->prefix . "clients";
+
+
+    $result = $wpdb->update(
+      $table,
+      array('annoucement' => $annoucement),
+      array('trainer' => $trainerUsername)
+    );
+
+      if($result === false){
+        exit("Failed to update your selection. Please contact customer service");
+      }else if($result == 0){
+        exit("It looks like someone has already taken the user. I apologize for the inconvenience");
+      }else{
+        echo "Annoucement successfully updated!";
+      }
+
+  wp_die();
+}
+add_action('wp_ajax_update_client_annoucement', 'update_client_annoucement');
+add_action('wp_ajax_nopriv_update_client_annoucement', 'update_client_annoucement');
+
+function trainer_register_client(){
+  global $wpdb;
+
+  $clientArray = $_POST['clientArray'];
+  $trainerUsername = $_POST['trainerUsername'];
+
+  $table = $wpdb->prefix . "clients";
+
+  foreach($clientArray as $item){
+
+    $result = $wpdb->update(
+      $table,
+      array('trainer' => $trainerUsername),
+      array('username' => $item)
+    );
+
+      if($result === false){
+        exit("Failed to update your selection. Please contact customer service");
+      }else if($result == 0){
+        exit("It looks like someone has already taken the user. I apologize for the inconvenience");
+      }else{
+        $clientStr .= " " . $item . ",";
+      }
+
+  }
+
+  echo "$clientStr have been registerd under $trainerUsername";
+
+  wp_die();
+}
+add_action('wp_ajax_trainer_register_client', 'trainer_register_client');
+add_action('wp_ajax_nopriv_trainer_register_client', 'trainer_register_client');
+
 
 function GetAge($dob)
 {
@@ -321,8 +445,8 @@ function store_new_profile($fName, $lName, $username, $goal){
     `username` text NOT NULL,
     `fName` text NOT NULL,
     `lName` text NOT NULL,
-    `trainer` text,
-    `annoucement` text,
+    `trainer` text NOT NULL,
+    `annoucement` text NOT NULL,
     `birthday` date,
     `imagePath` text NOT NULL,
     `heightFeet` int,
@@ -336,6 +460,9 @@ function store_new_profile($fName, $lName, $username, $goal){
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql );
 
+    //General Annoucement For Customers
+    $annoucement = "Don't Wish For It Work For It!";
+
     $result = $wpdb->insert(
           $table,
           array(
@@ -343,7 +470,9 @@ function store_new_profile($fName, $lName, $username, $goal){
         'lName' => $lName,
         'username' => $username,
         'goal' => $goal,
-        'imagePath' => $defaultImage
+        'imagePath' => $defaultImage,
+        'trainer' => "none",
+        'annoucement' => $annoucement
           )
       );
 
@@ -362,7 +491,7 @@ function store_new_workout_profile($username){
     $sql = "CREATE TABLE IF NOT EXISTS $table (
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
     `username` text NOT NULL,
-    `trainer` text,
+    `trainer` text NOT NULL,
     `type` text,
     `week` text,
     `day` text,
@@ -375,7 +504,8 @@ function store_new_workout_profile($username){
     $result = $wpdb->insert(
           $table,
           array(
-        'username' => $username
+        'username' => $username,
+        'trainer' => "none"
           )
       );
 
@@ -729,13 +859,16 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 //Functions of Javascript Files Attached to pages
 	function load_js_page_form_testing() {
 
-    //trainer-settings.php and member-settings.php
-    if (is_page('settings')){
-        wp_enqueue_script('js_members_settings', get_stylesheet_directory_uri() . '/js/members/settings.js', array( 'jquery' ), '1.0.0', true );
+    if (is_page('available-clients')){
+        wp_enqueue_script('js_trainer_available_clients', get_stylesheet_directory_uri() . '/js/trainers/trainer_available_clients.js', array( 'jquery' ), '1.0.0', true );
+    }
+
+    if (is_page('my-clients')){
+        wp_enqueue_script('js_trainer_my_clients', get_stylesheet_directory_uri() . '/js/trainers/trainer_my_clients.js', array( 'jquery' ), '1.0.0', true );
     }
 
     if (is_page('home')){
-      wp_enqueue_script('js_trainer_home', get_stylesheet_directory_uri() . '/js/members/trainer_home.js', array( 'jquery' ), '1.0.0', true );
+      wp_enqueue_script('js_trainer_profile', get_stylesheet_directory_uri() . '/js/trainers/trainer_profile.js', array( 'jquery' ), '1.0.0', true );
 
     }
 
