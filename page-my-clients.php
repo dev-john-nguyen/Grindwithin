@@ -87,9 +87,27 @@ Send a Reminder: <input type ="text" name = "reminder-input" id = "reminder-inpu
 
 </div>
 
-<form id = "workout-form" name = "workout-form" method = "post">
-
-</form>
+<!-- <form id = "workout-form" name = "workout-form" method = "post">
+  <label for = "month-workout">Insert Month</label>
+  <input type = "number" min = "0" id = "input-month"/>
+  <label for="select-week">Select Week</label>
+  <select id="select-week" name="select-week">
+    <option value="week1">week 1</option>
+    <option value="week2">week 2</option>
+    <option value="week3">week 3</option>
+    <option value="week4">week 4</option>
+  </select>
+  <label for="select-day">Select Day</label>
+  <select id="select-day" name="select-day">
+    <option value="day1">day 1</option>
+    <option value="day2">day 2</option>
+    <option value="day3">day 3</option>
+    <option value="day4">day 4</option>
+    <option value="day5">day 5</option>
+    <option value="day6">day 6</option>
+    <option value="day7">day 7</option>
+  </select><button type="button" id="displayBtn">Display</button>
+</form> -->
 
 
 <?php get_footer('custes'); ?>

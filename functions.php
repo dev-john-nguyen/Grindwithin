@@ -45,6 +45,61 @@ function update_client_reminder(){
 
 }
 
+// function store_workout_image(){
+//
+//   $trainerUsername = $_POST['trainerUsername'];
+//   $imageName = $_POST['imageName'];
+//
+//     $file = $_FILES['file'];
+//     $fileName = $_FILES['file']['name'];
+//     $fileTmpName = $_FILES['file']['tmp_name'];
+//     $fileSize = $_FILES['file']['size'];
+//     $fileError = $_FILES['file']['error'];
+//     $fileType = $_FILES['file']['type'];
+//
+//     $fileExt = explode('.', $fileName);
+//
+//     $fileActualExt = strtolower(end($fileExt));
+//
+//     $allowed = array('jpg','jpeg','png','pdf');
+//
+//     $fileNameStore = "workout/" . $imageName . ".jpg";
+//
+//     if(in_array($fileActualExt, $allowed)){
+//       if ($fileError === 0){
+//         if($fileSize < 100000000){
+//           $base = wp_upload_dir();
+//           $basedir = $base['basedir'];
+//           $fileDestination = $basedir . '/' . $fileNameStore;
+//           $fileDestinationStore = 'wp-content/uploads/' . $fileNameStore;
+//             if (move_uploaded_file($fileTmpName, $fileDestination)){
+//
+//                 image_crop($fileDestination, $fileNameStore);
+//
+//                 exit($fileDestinationStore);
+//
+//             }else{
+//               exit("0");
+//             }
+//
+//         }else{
+//           //Size is too big
+//           exit("1");
+//         }
+//
+//       }else{
+//           exit("0");
+//       }
+//
+//     }else{
+//           exit("2");
+//     }
+//
+//
+// }
+// add_action('wp_ajax_store_workout_image', 'store_workout_image');
+// add_action('wp_ajax_nopriv_store_workout_image', 'store_workout_image');
+
 function get_client_profile(){
   global $wpdb;
 
@@ -151,6 +206,7 @@ function GetAge($dob)
         if($curMonth<$dob[1] || ($curMonth==$dob[1] && $curDay<$dob[2]))
                 $age--;
         return $age;
+
 }
 
 
@@ -173,7 +229,7 @@ function image_crop($url, $name){
 
     }else{
 
-        return "image-crop-error";
+        return "error";
 
     }
 
@@ -188,7 +244,7 @@ function get_member_profile($tableType){
   $username = $_SESSION['member'];
 
   $sql = $wpdb->prepare("SELECT t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
-      t.purpose, t.description, t.goal FROM $table t Where t.username = %s", array($username));
+      t.purpose, t.description, t.goal, t.athleteType, t.email, t.phoneNumber FROM $table t Where t.username = %s", array($username));
   $result = $wpdb->get_results($sql);
 
   return $result;
@@ -196,6 +252,7 @@ function get_member_profile($tableType){
   wp_die();
 
 }
+
 
 if(isset($_POST['submit-member-settings'])){
 
@@ -239,7 +296,7 @@ if(isset($_POST['submit-member-settings'])){
 
   $allowed = array('jpg','jpeg','png','pdf');
 
-  $fileNameStore = "profile/" . $memberName . "." . $fileActualExt;
+  $fileNameStore = "profile/" . $memberName . ".jpg";
 
   if(in_array($fileActualExt, $allowed)){
     if ($fileError === 0){
@@ -255,6 +312,7 @@ if(isset($_POST['submit-member-settings'])){
 
             if($result === false){
               //If the query fails
+              $message = "I apologize, but we had trouble resizing your image.";
               header("Location: ?failed-update");
               exit();
             }elseif(!$result){
@@ -304,23 +362,6 @@ if(isset($_POST['submit-member-settings'])){
 
 }
 
-// function check_settings_input($item){
-//   //   echo '<script type="text/javascript">',
-//   // 'if ( window.history.replaceState ) {',
-//   // 'window.history.replaceState( null, null, window.location.href );}',
-//   // '</script>';
-//   // sleep(1);
-//
-//   foreach($item as $itemPos){
-//     if(!isset($_POST[$itemPos]) || empty($_POST[$itemPos])) {
-//         header("Location: ?empty");
-//         exit();
-//     }
-//   }
-//
-//
-// }
-
 function update_to_profile($fileDestination){
   global $wpdb;
 
@@ -337,6 +378,9 @@ function update_to_profile($fileDestination){
     $purpose = $_POST['purpose'];
     $goal = $_POST['goal'];
     $description = $_POST['description'];
+    $email = $_POST['email'];
+    $phoneNumber = $_POST['phoneNumber'];
+    $athleteType = $_POST['athleteType'];
 
 if(!$imagePath){
   $result =  $wpdb->update(
@@ -348,7 +392,10 @@ if(!$imagePath){
         'weight' => $weight,
         'purpose' => $purpose,
         'goal' => $goal,
-        'description' => $description
+        'description' => $description,
+        'athleteType' => $athleteType,
+        'phoneNumber' => $phoneNumber,
+        'email' => $email
       ),
       array(
         'username' => $username
@@ -429,7 +476,7 @@ wp_die();
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
 add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
 
-function store_new_profile($fName, $lName, $username, $goal){
+function store_new_profile($fName, $lName, $username, $description, $currentDate, $athleteType, $email){
 
   global $wpdb;
 
@@ -442,19 +489,27 @@ function store_new_profile($fName, $lName, $username, $goal){
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE IF NOT EXISTS $table (
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-    `username` text NOT NULL,
-    `fName` text NOT NULL,
-    `lName` text NOT NULL,
-    `trainer` text NOT NULL,
-    `annoucement` text NOT NULL,
+    `accountCreated` date,
+    `username` text,
+    `email` text,
+    `fName` text,
+    `lName` text,
+    `phoneNumber` int,
+    `trainer` text,
+    `athleteType` text,
+    `annoucement` text,
     `birthday` date,
-    `imagePath` text NOT NULL,
+    `imagePath` text,
     `heightFeet` int,
     `heightInch` int,
     `weight` int,
     `purpose` text,
-    `goal` text NOT NULL,
+    `goal` text,
     `description` text,
+    `paymentPlan` text,
+    `status` text,
+    `startPayment` date,
+    `expirationPayment` date,
     UNIQUE (`id`)
     ) $charset_collate;";
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -469,10 +524,14 @@ function store_new_profile($fName, $lName, $username, $goal){
         'fName' => $fName,
         'lName' => $lName,
         'username' => $username,
-        'goal' => $goal,
+        'description' => $description,
+        'athleteType' => $athleteType,
         'imagePath' => $defaultImage,
         'trainer' => "none",
-        'annoucement' => $annoucement
+        'status' => 'active',
+        'annoucement' => $annoucement,
+        'accountCreated' => $currentDate,
+        'email' => $email
           )
       );
 
@@ -490,8 +549,8 @@ function store_new_workout_profile($username){
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE IF NOT EXISTS $table (
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-    `username` text NOT NULL,
-    `trainer` text NOT NULL,
+    `username` text,
+    `trainer` text,
     `type` text,
     `week` text,
     `day` text,
@@ -514,7 +573,7 @@ function store_new_workout_profile($username){
 wp_die();
 }
 
-function store_new_trainer_profile($fName, $lName, $username, $goal){
+function store_new_trainer_profile($fName, $lName, $username, $description, $type, $currentDate, $email){
   global $wpdb;
 
   $table = $wpdb->prefix . "trainers";
@@ -526,16 +585,21 @@ function store_new_trainer_profile($fName, $lName, $username, $goal){
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE IF NOT EXISTS $table (
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-    `username` text NOT NULL,
-    `fName` text NOT NULL,
-    `lName` text NOT NULL,
+    `accountCreated` date,
+    `status` text,
+    `username` text,
+    `email` text,
+    `fName` text,
+    `lName` text,
+    `athleteType` text,
+    `phoneNumber` int,
     `birthday` date,
-    `imagePath` text NOT NULL,
+    `imagePath` text,
     `heightFeet` int,
     `heightInch` int,
     `weight` int,
     `purpose` text,
-    `goal` text NOT NULL,
+    `goal` text,
     `description` text,
     UNIQUE (`id`)
     ) $charset_collate;";
@@ -545,11 +609,14 @@ function store_new_trainer_profile($fName, $lName, $username, $goal){
     $result = $wpdb->insert(
           $table,
           array(
+        'accountCreated' => $currentDate,
         'fName' => $fName,
         'lName' => $lName,
+        'athleteType' => $type,
         'username' => $username,
-        'goal' => $goal,
-        'imagePath' => $defaultImage
+        'description' => $description,
+        'imagePath' => $defaultImage,
+        'email' => $email
           )
       );
 
@@ -566,7 +633,7 @@ function store_trainer_account(){
   $email = $_POST['email'];
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $goal = $_POST['goal'];
+  $description = $_POST['description'];
 
   $table = $wpdb->prefix . "members";
 
@@ -614,7 +681,7 @@ $result = $wpdb->insert(
     "Thank you for your understanding.");
   }else{
     //create profile
-    $result = store_new_trainer_profile($fName, $lName, $username, $goal);
+    $result = store_new_trainer_profile($fName, $lName, $username, $description, $type, $currentDate, $email);
 
     if(!$result > 0 || !$result || $result === false){
       exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
@@ -641,7 +708,8 @@ function store_new_account(){
   $email = $_POST['email'];
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $goal = $_POST['goal'];
+  $description = $_POST['description'];
+  $athleteType = $_POST['athleteType'];
 
   $table = $wpdb->prefix . "members";
 
@@ -665,13 +733,13 @@ function store_new_account(){
   $charset_collate = $wpdb->get_charset_collate();
   $sql = "CREATE TABLE IF NOT EXISTS $table (
       `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `created` date NOT NULL,
-  `fName` text NOT NULL,
-  `lName` text NOT NULL,
-  `type` text NOT NULL,
-  `email` text NOT NULL,
-  `username` text NOT NULL,
-  `damn` text NOT NULL,
+  `created` date,
+  `fName` text,
+  `lName` text,
+  `type` text,
+  `email` text,
+  `username` text,
+  `damn` text,
   UNIQUE (`id`)
   ) $charset_collate;";
   require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -704,21 +772,12 @@ $result = $wpdb->insert(
     "Thank you for your understanding.");
   }else{
     //create profile
-    $result = store_new_profile($fName, $lName, $username, $goal);
+    $result = store_new_profile($fName, $lName, $username, $description, $currentDate, $athleteType, $email);
 
     if(!$result > 0 || !$result || $result === false){
       exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
       "Thank you for your understanding.");
     }
-
-      //create workout
-    $result = store_new_workout_profile($username);
-
-    if(!$result > 0 || !$result || $result === false){
-      exit("I apologize, we are having issues submitting your information. Please contact us directly via email." .
-      "Thank you for your understanding.");
-    }
-
 
 
     session_start();

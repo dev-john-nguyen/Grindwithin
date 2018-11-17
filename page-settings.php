@@ -20,6 +20,9 @@ if(!isset($_SESSION['member']) ){
     $purpose = $item->purpose;
     $description = $item->description;
     $goal = $item->goal;
+    $email = $item ->email;
+    $athleteType = $item->athleteType;
+    $phoneNumber = $item->phoneNumber;
   }
 
 }
@@ -55,9 +58,12 @@ if(!isset($_SESSION['member']) ){
   <form id = "member-settings" name = "member-settings" method = "post" enctype="multipart/form-data">
       <input type = "text" name = "member" id = "member" value = "<?php echo stripslashes($_SESSION['member']); ?>" readonly hidden/>
       <input type = "text" name = "type" id = "type" value = "<?php echo $tableType; ?>" readonly hidden/>
+      <input type = "email" name = "email" id = "email" placeholder = "email" value = "<?php echo $email ?>"/>
+      <input type = "number" name = "phoneNumber" id = "phoneNumber" placeholder = "Phone Number" value = "<?php echo $phoneNumber ?>"/>
+      <input type = "text" name = "athleteType" id = "athleteType" placeholder = "What type of athlete are you?" value = "<?php echo stripslashes($athleteType); ?>"/>
       <input type ="date" name = "birthday" id = "birthday" placeholder="ddmmyyyy" value = "<?php echo $birthday ?>"/>
-      <input type ="number" name = "height-feet" id = "height-feet" max = '8' value = "<?php echo $heightFeet ?>"/>
-      <input type ="number" name = "height-inch" id = "height-inch" max = '11' value = "<?php echo $heightInch ?>"/>
+      <input type ="number" name = "height-feet" id = "height-feet" max = '8' min = '0' value = "<?php echo $heightFeet ?>"/>
+      <input type ="number" name = "height-inch" id = "height-inch" max = '11' min = '0' value = "<?php echo $heightInch ?>"/>
       <input type ="number" name = "weight" id = "weight" placeholder = "weight" value = "<?php echo $weight ?>"/>
       <input type = "file" name  = "file-member" id = "file-member"/>
       <img name = "image" id = "image" src = "<?php echo site_url($imagePath); ?>"/>
@@ -70,5 +76,12 @@ if(!isset($_SESSION['member']) ){
 
 
 </div>
+
+<?php
+$fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+if(strpos($fullUrl, "failed") == true) {
+  echo "failed";
+}
+?>
 
 <?php get_footer('custes'); ?>

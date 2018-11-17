@@ -10,12 +10,13 @@
 					value = that.val();
 
 					if (!name == "submit"){
-							if (value.length === 0){
+							if (value == ""){
 								alert("Indicated an empty field. Please fill in the empty field.");
 								event.preventDefault();
 								return;
 							}
 					}
+
 		});
 
 		var fName = jQuery('#fName').val();
@@ -24,7 +25,8 @@
 		var username = jQuery('#username').val();
 		var password = jQuery('#password').val();
 		var repassword = jQuery('#re-password').val();
-		var goal = jQuery('#goal').val();
+		var description = jQuery('#description').val();
+		var athleteType = jQuery('#athleteType').val();
 
 		//check password length and match
 		if (password.length < 7){
@@ -45,7 +47,8 @@
 								email: email,
 								username: username,
 								password: password,
-								goal: goal
+								description: description,
+								athleteType: athleteType
               }),
               success: function (response){
 								if(response == 1){
@@ -86,7 +89,7 @@
 		var username = jQuery('#username').val();
 		var password = jQuery('#password').val();
 		var repassword = jQuery('#re-password').val();
-		var goal = jQuery('#goal').val();
+		var description = jQuery('#description').val();
 
 		//check password length and match
 		if (password.length < 7){
@@ -107,7 +110,7 @@
 								email: email,
 								username: username,
 								password: password,
-								goal: goal
+								description: description
               }),
               success: function (response){
 								if(response == 1){

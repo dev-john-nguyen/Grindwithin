@@ -69,7 +69,7 @@ get_header();
 				<input type = "text" id = "username" placeholder="Username"/>
 				<input type = "password" id = "password" placeholder="Password"/>
 				<input type = "password" id = "re-password" placeholder="Re-enter" Password/>
-				<input type = "text" id = "goal" placeholder="Goal"/>
+				<input type = "text" id = "description" placeholder="Tell us a little about yourself"/>
 				<input type = "submit" name = "submit" id = "submit"/>
 		</form>
 

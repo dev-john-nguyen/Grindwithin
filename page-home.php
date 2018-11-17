@@ -20,6 +20,9 @@ if(!isset($_SESSION['member']) ){
     $purpose = $item->purpose;
     $description = $item->description;
     $goal = $item->goal;
+    $phoneNumber = $item->$phoneNumber;
+    $email = $item->email;
+    $athleteType = $item->athleteType;
   }
 }
 
@@ -75,11 +78,12 @@ $lastName = $_SESSION['lastName'];
   <div id = "header-info" class = "header-info">
 
     <div id = "profile-info" class = "profile-info">
-
-      <h2><?php echo $firstName . " " .   $lastName; ?> </h2>
-      <h2><?php echo GetAge($birthday); ?></h2>
       <img src = "<?php echo site_url($imagePath); ?>"/>
-      <h2><?php echo $description; ?></h2>
+      <h2>Name: <?php echo $firstName . " " .   $lastName; ?> </h2>
+      <h2>Athlete: <?php echo stripslashes($athleteType); ?></h2>
+      <h2>Birthday: <?php echo GetAge($birthday); ?> years old</h2>
+      <h2>Height: <?php echo $heightFeet ?>'<?php echo $heightInch ?>"</h2>
+      <h2>Email: <?php echo $email ?> </h2>
 
     </div>
 
@@ -87,18 +91,16 @@ $lastName = $_SESSION['lastName'];
 
     <div id = "entry-header" class = "entry-header">
       <h1>Welcome <?php echo $_SESSION['member']; ?>!</h1>
+      <h2>Background: <?php echo stripslashes($description); ?></h2>
+      <h2>Purpose: <?php echo stripslashes($purpose); ?></h2>
       <h2>Goal: <?php echo stripslashes($goal); ?></h2>
-      <h2>EFP: Need to add this attribute to trainers</h2>
     </div>
 
   </div>
-  <?php if($tableType == "trainer"){
-    require('home-trainer.php');
-  }else if($tableType == "client"){
-    require('home-trainer.php');
-  }else{?>
-    <h1>We are having issues loading your information. Please contact us via email</h1>
-  <?php } ?>
+  <?php if($tableType == "client"){
+    //Add annoucement attribute
+    //Add trainer profile
+  }?>
 
 </div>
 
