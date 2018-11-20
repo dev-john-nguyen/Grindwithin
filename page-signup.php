@@ -1,5 +1,12 @@
 <?php
 
+if (empty($_POST)){
+header('Location: ' . site_url('purchase-options'));
+}else{
+require_once('charge.php');
+}
+
+
 /**
 
  * The template for displaying all pages.
@@ -26,46 +33,26 @@ get_header();
 
 ?>
 
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 	<div id="primary" class="content-area sidebar-left">
 
-		<main id="main" class="site-main" role="main">
+		<h1>Thank you for your purchase and Welcome!</h1>
+		<hr>
+		<p><?php echo $product; ?></p>
+		<p>Your transaction ID is <?php echo $tid; ?></p>
+		<p>Email receipt has been sent to your account</p>
 
+		<h2>Please DO NOT leave the page. To finish your registration</h2>
+		<h2>fill and submit the form below to create your account</h2>
 
-
-			<?php while ( have_posts() ) : the_post(); ?>
-
-
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-
-
-				<?php
-
-					// If comments are open or we have at least one comment, load up the comment template
-
-					if ( comments_open() || get_comments_number() ) :
-
-						comments_template();
-
-					endif;
-
-				?>
-
-
-
-			<?php endwhile; // end of the loop. ?>
-
-		</main><!-- #main -->
 
 		<div class = "new-account-form">
 
 		<form id = "new-account" name = "new-account" method = "post" >
-				<input type = "text" id = "fName" placeholder="First Name"/>
-				<input type = "text" id = "lName" placeholder="Last Name"/>
-				<input type = "email" id = "email" placeholder="Email"/>
+				<input type = "text" id = "fName" placeholder="First Name" value = "<?php echo $first_name; ?>" hidden readonly/>
+				<input type = "text" id = "lName" placeholder="Last Name" value = "<?php echo $last_name; ?>" hidden readonly/>
+				<input type = "email" id = "email" placeholder="Email" value = "<?php echo $email; ?>" hidden readonly/>
 				<input type = "text" id = "username" placeholder="Username"/>
 				<input type = "password" id = "password" placeholder="Password"/>
 				<input type = "password" id = "re-password" placeholder="Re-enter" Password/>

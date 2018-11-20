@@ -506,10 +506,8 @@ function store_new_profile($fName, $lName, $username, $description, $currentDate
     `purpose` text,
     `goal` text,
     `description` text,
-    `paymentPlan` text,
+    `sessionAmount` int,
     `status` text,
-    `startPayment` date,
-    `expirationPayment` date,
     UNIQUE (`id`)
     ) $charset_collate;";
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -918,8 +916,12 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
 //Functions of Javascript Files Attached to pages
 	function load_js_page_form_testing() {
 
+    // if (is_page('signup')){
+    //     wp_enqueue_script('js_charge', get_stylesheet_directory_uri() . '/js/charge.js', array( 'jquery'), '1.0.0', true );
+    // }
+
     if (is_page('available-clients')){
-        wp_enqueue_script('js_trainer_available_clients', get_stylesheet_directory_uri() . '/js/trainers/trainer_available_clients.js', array( 'jquery' ), '1.0.0', true );
+        wp_enqueue_script('js_trainer_available_clients', get_stylesheet_directory_uri() . '/js/trainers/trainer_available_clients.js', array( 'jquery'), '1.0.0', true );
     }
 
     if (is_page('my-clients')){

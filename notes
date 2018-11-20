@@ -1,3 +1,8 @@
+******Charging Customer Through Stripe*****
+
+******Install Composer Information*****
+For strip/stripe-php installation, I needed to active extension=php_curl by removing the ; in the php config settings.
+
 ****images not having a source is causing the sessions to crash I think?****
 
 <!-- <?php
