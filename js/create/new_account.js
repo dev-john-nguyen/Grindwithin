@@ -27,6 +27,8 @@
 		var repassword = jQuery('#re-password').val();
 		var description = jQuery('#description').val();
 		var athleteType = jQuery('#athleteType').val();
+		var customerId = jQuery('#customerId').val();
+		var sessionAmount = jQuery('#sessionAmount').val();
 
 		//check password length and match
 		if (password.length < 7){
@@ -48,7 +50,9 @@
 								username: username,
 								password: password,
 								description: description,
-								athleteType: athleteType
+								athleteType: athleteType,
+								customerId: customerId,
+								sessionAmount: sessionAmount
               }),
               success: function (response){
 								if(response == 1){

@@ -795,9 +795,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 		<?php if(isset($_SESSION['type']) && $_SESSION['type'] == 'client'){ ?>
 
 			<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url( '/home' ) ); ?>">Profile</a></li>
-<li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a href="<?php echo esc_url( home_url( '/calendar' ) ); ?>">Calendar</a></li>
-<li id="menu-item-761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-761"><a href="<?php echo esc_url( home_url( '/newsfeed' ) ); ?>">Feed</a></li>
-<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>">Contact</a></li>
+<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>">Contact Support</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="<?php echo esc_url( home_url( '/settings' ) ); ?>">Settings</a></li>
 </ul>
 
@@ -807,7 +805,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 	<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url( '/home' ) ); ?>">Profile</a></li>
 <li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a href="<?php echo esc_url( home_url( '/my-clients' ) ); ?>">My Clients</a></li>
 <li id="menu-item-761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-761"><a href="<?php echo esc_url( home_url( '/available-clients' ) ); ?>">Available Clients</a></li>
-<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>">Contact</a></li>
+<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url( '/contact' ) ); ?>">Contact Support</a></li>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="<?php echo esc_url( home_url( '/settings' ) ); ?>">Settings</a></li>
 </ul>
 

@@ -4,12 +4,12 @@ session_start();
 
 
 if(!isset($_SESSION['member']) ){
-  header("location: http://localhost/main/");
+  header("location: " . site_url('?logout'));
   session_destroy();
   exit();
 }else{
   $tableType = $_SESSION['type'];
-  $memberArray = get_member_profile($tableType);
+  $memberArray = get_member_profile($tableType, $_SESSION['member']);
 
   foreach ($memberArray as $item){
     $birthday = $item->birthday;
@@ -67,9 +67,9 @@ if(!isset($_SESSION['member']) ){
       <input type ="number" name = "weight" id = "weight" placeholder = "weight" value = "<?php echo $weight ?>"/>
       <input type = "file" name  = "file-member" id = "file-member"/>
       <img name = "image" id = "image" src = "<?php echo site_url($imagePath); ?>"/>
-      <input type = "text" name = "purpose" id = "purpose" placeholder = "purpose" value = "<?php echo stripslashes($purpose); ?>"/>
-      <input type ="text" name = "goal" id = "goal" placeholder="goal" value = "<?php echo stripslashes($goal); ?>" />
-      <input type ="text" name = "description" id = "description" placeholder="Description" value = "<?php echo stripslashes($description); ?>"/>
+      <textarea type = "text" name = "purpose" id = "purpose" placeholder = "purpose"><?php echo stripslashes($purpose); ?></textarea>
+      <textarea type ="text" name = "goal" id = "goal" placeholder="goal"><?php echo stripslashes($goal); ?></textarea>
+      <textarea name = "description" id = "description" placeholder="Description"><?php echo stripslashes($description); ?></textarea>
       <input type = "submit" name = "submit-member-settings" id = "submit-member-settings"/>
   </form>
 
