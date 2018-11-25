@@ -12,25 +12,33 @@ $last_name = $POST['last_name'];
 $email = $POST['email'];
 $token = $POST['stripeToken'];
 
-$text = $POST['text'];
-$amount = $POST['amount'];
-$price = $POST['price'];
-$descriptionStr = "Purchased " . $amount . " " . $text . " ($" . $price . ")";
+$stripeId = $POST['stripeId'];
+
+$text = "sessions";
+$amount = $POST['purchase-option-amount'];
+$price = $POST['purchase-option-price'];
+
+$priceStr = "$" . $price . " per session";
+
+$price = $amount * $price;
+
+$descriptionStr = "Purchased " . $amount . " " . $text . " @ " . $priceStr . " ($" . $price . ")";
+
 $price = $price * 100;
 
 try {
-    // Create Customer In Stripe
-    $customer = \Stripe\Customer::create(array(
-      "email" => $email,
-      "source" => $token
-    ));
+
+  // update Customer In Stripe
+  $customer = \Stripe\Customer::retrieve($stripeId);
+  $customer->source = $token;
+  $customer->save();
 
     // Charge Customer
     $charge = \Stripe\Charge::create(array(
       "amount" => $price,
       "currency" => "usd",
       "description" => $descriptionStr,
-      "customer" => $customer->id
+      "customer" => $stripeId
     ));
 
   // Use Stripe's library to make requests...
@@ -62,12 +70,29 @@ try {
 }
 
 $tid = $charge->id;
-$customerId = $customer->id;
 $product = $charge->description;
 $last4 = $customer->sources->data[0]->last4;
 
+$username = $_SESSION['member'];
+
+$table = $wpdb->prefix . "clients";
+
+$sql = $wpdb->prepare("SELECT t.sessionAmount FROM $table t where t.username = %s", array($username));
+$result = $wpdb->get_results($sql);
+
+foreach($result as $item){
+  $sessionAmount = $item->sessionAmount;
+}
+
+$sessionTotal = $sessionAmount + $amount;
+
+$result = $wpdb->update($table, array('last4'=>$last4, 'sessionAmount'=>$sessionTotal), array('username'=>$username));
+
+
 if(empty($tid) || empty($product)){
-  header('Location: ' . site_url('purchase-options?paymentfailed'));
+  header('Location: ' . site_url('home?paymentfailed'));
+}else{
+  header('Location: ' . site_url('renew-session?success&tid='.$tid.'&sessionTotal='.$sessionTotal));
 }
 
 

@@ -16,6 +16,19 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+function renew_session_payment(){
+
+  $first_name = $POST['fName'];
+  $last_name = $POST['lName'];
+  $email = $POST['email'];
+  $token = $POST['token'];
+
+return $token;
+
+}
+add_action('wp_ajax_renew_session_payment', 'renew_session_payment');
+add_action('wp_ajax_nopriv_renew_session_payment', 'renew_session_payment');
+
 function update_client_reminder(){
 
   // global $wpdb;
@@ -246,7 +259,7 @@ function get_member_profile($tableType, $username){
       $sql = $wpdb->prepare("SELECT t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
           t.purpose, t.description, t.goal, t.athleteType, t.email, t.phoneNumber FROM $table t Where t.username = %s", array($username));
   }else{
-    $sql = $wpdb->prepare("SELECT t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
+    $sql = $wpdb->prepare("SELECT t.last4, t.stripeId, t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
         t.purpose, t.description, t.goal, t.athleteType, t.email, t.phoneNumber, t.sessionAmount, t.trainer FROM $table t Where t.username = %s", array($username));
   }
 
@@ -484,7 +497,7 @@ wp_die();
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
 add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
 
-function store_new_profile($fName, $lName, $username, $description, $currentDate, $athleteType, $email, $customerId, $sessionAmount){
+function store_new_profile($last4, $fName, $lName, $username, $description, $currentDate, $athleteType, $email, $customerId, $sessionAmount){
 
   global $wpdb;
 
@@ -499,11 +512,12 @@ function store_new_profile($fName, $lName, $username, $description, $currentDate
         `id` mediumint(9) NOT NULL AUTO_INCREMENT,
     `accountCreated` date,
     `stripeId` text,
+    `last4` text,
     `username` text,
     `email` text,
     `fName` text,
     `lName` text,
-    `phoneNumber` int,
+    `phoneNumber` text,
     `trainer` text,
     `athleteType` text,
     `annoucement` text,
@@ -538,7 +552,8 @@ function store_new_profile($fName, $lName, $username, $description, $currentDate
         'trainer' => "none",
         'annoucement' => $annoucement,
         'accountCreated' => $currentDate,
-        'email' => $email
+        'email' => $email,
+        'last4' => $last4
           )
       );
 
@@ -598,7 +613,7 @@ function store_new_trainer_profile($fName, $lName, $username, $description, $typ
     `fName` text,
     `lName` text,
     `athleteType` text,
-    `phoneNumber` int,
+    `phoneNumber` text,
     `birthday` date,
     `imagePath` text,
     `heightFeet` int,
@@ -679,7 +694,7 @@ $result = $wpdb->insert(
     'username' => $username,
     'damn' => $hashPass,
     'created' => $currentDate,
-    'active' => true
+    'active' => 1
       )
   );
 
@@ -719,6 +734,7 @@ function store_new_account(){
   $athleteType = $_POST['athleteType'];
   $customerId = $_POST['customerId'];
   $sessionAmount = $_POST['sessionAmount'];
+  $last4 = $_POST['last4'];
 
   $table = $wpdb->prefix . "members";
 
@@ -745,6 +761,7 @@ function store_new_account(){
   `created` date,
   `active` boolean,
   `stripeId` text,
+  `last4` text,
   `fName` text,
   `lName` text,
   `type` text,
@@ -776,7 +793,8 @@ $result = $wpdb->insert(
     'username' => $username,
     'damn' => $hashPass,
     'created' => $currentDate,
-    'active' => true,
+    'active' => 1,
+    'last4' => $last4
       )
   );
 
@@ -785,7 +803,7 @@ $result = $wpdb->insert(
     " Thank you for your understanding.");
   }else{
     //create profile
-    $result = store_new_profile($fName, $lName, $username, $description, $currentDate, $athleteType, $email, $customerId, $sessionAmount);
+    $result = store_new_profile($last4, $fName, $lName, $username, $description, $currentDate, $athleteType, $email, $customerId, $sessionAmount);
 
     if(!$result > 0 || !$result || $result === false){
       exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .

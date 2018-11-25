@@ -14,31 +14,86 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
-P{
-  text-transform: capitalize;
+.close-form {
+  position: absolute;
+  right: -5px;
+  top: -20px;
+  font-size: 42px;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.popup-form-select{
+  width: 50%;
+}
+
+.select-payment-options{
+  width: 50%;
+  margin-top: 5%;
+}
+
+.popup-form{
+      width: 80%;
+  margin: 0 auto;
+    margin-top: 10%;
+    text-align: center;
+}
+
+.popup-session-form {
+  text-align: center;
+  width: 500px;
+  min-height: 300px;
+  background-color: white;
+  border-radius: 4px;
+  position: relative;
+}
+
+.popup-session{
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-header-information{
+  display: table;
+}
+
+.profile-img-description{
+  text-align: center;
+display: table-cell;
+}
+
+.profile-personal{
+      display: table-cell;
+      position: relative;
+      top: 10px;
+      left: 10%;
 }
 
 #profile-header-text{
   text-transform: capitalize;
-  position: relative;
-  left: 130px;
 }
 
 .profile-image{
-  border-radius: 50%;
   border: solid 3px #eee;
-  position: relative;
-  left: 100px;
   box-shadow: 1px 1px 10px #717070;
   margin-bottom: 20px;
 }
 
 .profile-information{
-  display: flex;
+padding-top: 1%;
 }
 
 .profile{
-  width: 45%
+  width: 45%;
+  box-shadow: 1px 1px 10px #717070;
+  border: solid 3px #eee;
+  padding: 1%;
 }
 
 #profile-member{
@@ -264,7 +319,8 @@ input[type="submit"]:disabled, input[type="button"]:disabled {
 }
 
 #primary {
-  padding-top: 200px;
+  padding-top: 150px;
+  padding-bottom: 100px;
 	float: left;
 	width: 100%;
 }

@@ -4,7 +4,7 @@ session_start();
 
 
 if(!isset($_SESSION['member']) && !$_SESSION['type'] == 'trainer'){
-  header("location: http://localhost/main/");
+  header("location: " . site_url());
   session_destroy();
   exit();
 }

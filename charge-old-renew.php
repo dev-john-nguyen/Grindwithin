@@ -7,30 +7,29 @@ require_once('vendor/autoload.php');
 // Sanitize Post Array
 $POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
 
-$first_name = $POST['first_name'];
-$last_name = $POST['last_name'];
-$email = $POST['email'];
-$token = $POST['stripeToken'];
+$stripeId = $POST['stripeId'];
 
-$text = $POST['text'];
-$amount = $POST['amount'];
-$price = $POST['price'];
-$descriptionStr = "Purchased " . $amount . " " . $text . " ($" . $price . ")";
+$text = "sessions";
+$amount = $POST['purchase-option-amount'];
+$price = $POST['purchase-option-price'];
+
+$priceStr = "$" . $price . " per session";
+
+$price = $amount * $price;
+
+$descriptionStr = "Purchased " . $amount . " " . $text . " @ " . $priceStr . " ($" . $price . ")";
+
 $price = $price * 100;
 
 try {
-    // Create Customer In Stripe
-    $customer = \Stripe\Customer::create(array(
-      "email" => $email,
-      "source" => $token
-    ));
+
 
     // Charge Customer
     $charge = \Stripe\Charge::create(array(
       "amount" => $price,
       "currency" => "usd",
       "description" => $descriptionStr,
-      "customer" => $customer->id
+      "customer" => $stripeId
     ));
 
   // Use Stripe's library to make requests...
@@ -62,13 +61,28 @@ try {
 }
 
 $tid = $charge->id;
-$customerId = $customer->id;
 $product = $charge->description;
-$last4 = $customer->sources->data[0]->last4;
 
-if(empty($tid) || empty($product)){
-  header('Location: ' . site_url('purchase-options?paymentfailed'));
+$username = $_SESSION['member'];
+
+$table = $wpdb->prefix . "clients";
+
+$sql = $wpdb->prepare("SELECT t.sessionAmount FROM $table t where t.username = %s", array($username));
+$result = $wpdb->get_results($sql);
+
+foreach($result as $item){
+  $sessionAmount = $item->sessionAmount;
 }
 
+$sessionTotal = $sessionAmount + $amount;
+
+$result = $wpdb->update($table, array('sessionAmount'=>$sessionTotal), array('username'=>$username));
+
+
+if(empty($tid) || empty($product)){
+  header('Location: ' . site_url('home?oldFailed'));
+}else{
+  header('Location: ' . site_url('renew-session?success&tid='.$tid.'&sessionTotal='.$sessionTotal));
+}
 
 ?>

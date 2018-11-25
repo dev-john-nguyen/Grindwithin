@@ -4,7 +4,7 @@ session_start();
 
 
 if(!isset($_SESSION['member']) ){
-  header("location: " . site_url('?logout'));
+  header("location: " . site_url());
   session_destroy();
   exit();
 }else{
@@ -67,9 +67,9 @@ if(!isset($_SESSION['member']) ){
       <input type ="number" name = "weight" id = "weight" placeholder = "weight" value = "<?php echo $weight ?>"/>
       <input type = "file" name  = "file-member" id = "file-member"/>
       <img name = "image" id = "image" src = "<?php echo site_url($imagePath); ?>"/>
-      <textarea type = "text" name = "purpose" id = "purpose" placeholder = "purpose"><?php echo stripslashes($purpose); ?></textarea>
-      <textarea type ="text" name = "goal" id = "goal" placeholder="goal"><?php echo stripslashes($goal); ?></textarea>
-      <textarea name = "description" id = "description" placeholder="Description"><?php echo stripslashes($description); ?></textarea>
+      <textarea type = "text" name = "purpose" id = "purpose" placeholder = "What is your why?"><?php echo stripslashes($purpose); ?></textarea>
+      <textarea type ="text" name = "goal" id = "goal" placeholder="What is your goal?"><?php echo stripslashes($goal); ?></textarea>
+      <textarea name = "description" id = "description" placeholder="Give a brief background about yourself"><?php echo stripslashes($description); ?></textarea>
       <input type = "submit" name = "submit-member-settings" id = "submit-member-settings"/>
   </form>
 

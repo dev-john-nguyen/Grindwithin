@@ -11,7 +11,7 @@
 
 					if (!name == "submit"){
 							if (value == ""){
-								alert("Indicated an empty field. Please fill in the empty field.");
+								alert("Indicated a empty field. Please fill in the empty field.");
 								event.preventDefault();
 								return;
 							}
@@ -29,6 +29,7 @@
 		var athleteType = jQuery('#athleteType').val();
 		var customerId = jQuery('#customerId').val();
 		var sessionAmount = jQuery('#sessionAmount').val();
+		var last4 = jQuery('#last4').val();
 
 		//check password length and match
 		if (password.length < 7){
@@ -52,7 +53,8 @@
 								description: description,
 								athleteType: athleteType,
 								customerId: customerId,
-								sessionAmount: sessionAmount
+								sessionAmount: sessionAmount,
+								last4: last4
               }),
               success: function (response){
 								if(response == 1){

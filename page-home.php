@@ -4,7 +4,7 @@ session_start();
 
 
 if(!isset($_SESSION['member']) ){
-  header("location: " . site_url('?logout'));
+  header("location: " . site_url());
   session_destroy();
   exit();
 }else{
@@ -46,15 +46,80 @@ if(!isset($_SESSION['member']) ){
         $purpose = $item->purpose;
         $description = $item->description;
         $goal = $item->goal;
-        $phoneNumber = $item->$phoneNumber;
+        $phoneNumber = $item->phoneNumber;
         $email = $item->email;
         $athleteType = $item->athleteType;
         $sessionAmount = $item->sessionAmount;
         $trainer = $item->trainer;
+        $stripeId = $item->stripeId;
+        $last4 = $item->last4;
       }
 
 }
 
+
+
+?>
+
+
+<div class = "popup-session">
+  <div class = "popup-session-form">
+    <div class = "close-form">+</div>
+    <img src = "<?php echo site_url('wp-content/uploads/2018/03/Logomakr_6i0BZz.png') ?>" style = "width: 12%; margin-top: 5%;"/>
+    <h2 style = "text-align: center; margin-top: 5%;">Purchase More Sessions</h2>
+    <div class = "popup-form">
+      <select class = "popup-form-select">
+        <option value = "default">Select Package</option>
+        <option value = "1" id = "40">1 Session Package</option>
+        <option value = "10" id = "38">10 Sessions Package</option>
+        <option value = "20" id = "35">20 Sessions Package</option>
+      </select>
+      <select class = "select-payment-options" style = "display: none; margin-bottom: 5%;">
+        <option value = "default">Select Payment</option>
+        <option value = "old">Card on File</option>
+        <option value = "new">New Card</option>
+      </select>
+
+<div class = "all-forms" style = "display: none;">
+
+      <!-- Old Card Form -->
+      <form id = "old-form" action="<?php echo site_url('renew-session?oldform'); ?>" method="post" style = "display: none; margin-bottom: 5%;">
+        <div id = "old-form-items">
+        </div>
+      <div id = "old-payment">
+        <input type = "text" name = "old-last4" value = "<?php echo $last4; ?>" hidden readonly/>
+        <input type = "text" name = "stripeId" value = "<?php echo $stripeId; ?>" hidden readonly/>
+        <p><b>Last 4 Digits: </b><?php echo $last4; ?></p>
+      </div>
+      <button class = "btn btn-primary btn-block mt-4">Submit</button>
+    </form>
+
+        <!-- New Card Form -->
+        <form action="<?php echo site_url('renew-session?newform'); ?>" method="post" id="payment-form" style = "display:none;">
+          <div id = "new-form-items">
+          </div>
+          <div class="form-row">
+                    <input type = "text" name = "stripeId" value = "<?php echo $stripeId; ?>" hidden readonly/>
+           <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="First Name">
+           <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Last Name">
+           <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email Address">
+            <div id="card-element" class="form-control">
+              <!-- a Stripe Element will be inserted here. -->
+            </div>
+
+            <!-- Used to display form errors -->
+            <div id="card-errors" role="alert"></div>
+          </div>
+          <button>Submit Payment</button>
+        </form>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+<?php
 
 /**
 
@@ -87,24 +152,50 @@ if(!isset($_SESSION['member']) ){
 
 <div id = "client-main" class = "client-main">
 
+
+  <div id = "display-sessions" class = "display-sessions" style = "text-align: center; padding-bottom: 20px;">
+
+    <h1><b>Welcome <?php echo $firstName; ?>!</b></h1>
+
+    <h2><b>Training Sessions Available: </b><?php echo $sessionAmount; ?></h2>
+
+    <div id = "session-buttons" class = "session-buttons" style = "display: inline-flex;">
+
+          <button id = "popupbtn" class="btn btn-primary btn-block mt-1"> Purchase More Sessions </button>
+
+
+    </div>
+
+  </div>
+
   <div id = "profile-member" class = "profile">
-    <h2 id = "profile-header-text"><?php echo $type; ?></h2>
+
+    <div id = "profile-header-information" class = "profile-header-information">
+
+          <div id = "profile-img-description" class = "profile-img-description">
+            <h2 id = "profile-header-text"><?php echo $type; ?></h2>
             <img class = "profile-image" src = "<?php echo site_url($imagePath); ?>"/>
+          </div>
+
+            <div id = "profile-personal" class = "profile-personal">
+            <p><b>Name:</b> <?php echo $firstName . " " .   $lastName; ?> </p>
+            <p><b>Athlete:</b> <?php echo stripslashes($athleteType); ?></p>
+            <p><b>Birthday:</b> <?php echo GetAge($birthday); ?> years old</p>
+            <p><b>Height:</b> <?php echo $heightFeet ?>'<?php echo $heightInch ?>"</p>
+            </div>
+    </div>
+
     <div id = "profile-information" class = "profile-information">
 
-      <div id = "profile-personal" class = "profile-personal">
-      <p>Name: <?php echo $firstName . " " .   $lastName; ?> </p>
-      <p>Athlete: <?php echo stripslashes($athleteType); ?></p>
-      <p>Birthday: <?php echo GetAge($birthday); ?> years old</p>
-      <p>Height: <?php echo $heightFeet ?>'<?php echo $heightInch ?>"</p>
-      <p>Email: <?php echo $email; ?></p>
-      <p>Phone Number: <?php echo $phoneNumber; ?></p>
+      <div id = "profile-description" class = "profile-description">
+        <p><b>Background:</b> <?php echo stripslashes($description); ?></p>
+        <p><b>Purpose:</b> <?php echo stripslashes($purpose); ?></p>
+        <p><b>Goal:</b> <?php echo stripslashes($goal); ?></p>
       </div>
 
-      <div id = "profile-description" class = "profile-description">
-        <p>Background: <?php echo stripslashes($description); ?></p>
-        <p>Purpose: <?php echo stripslashes($purpose); ?></p>
-        <p>Goal: <?php echo stripslashes($goal); ?></p>
+      <div id = "profile-contact" class = "profile-contact">
+        <p><b>Email:</b> <?php echo $email; ?></p>
+        <p><b>Phone Number:</b> <?php echo $phoneNumber; ?></p>
       </div>
 
     </div>
@@ -117,7 +208,9 @@ if(!isset($_SESSION['member']) ){
 
     if($trainer == "none"){
       ?>
-      <p>A trainer will be assigned to you shortly</p>
+      <div id = "profile-trainer" class = "profile" style = "position: relative; top: 150px; text-align: center;">
+      <h1>A trainer will be assigned to you shortly</h1>
+    </div>
       <?php
     }else{
 
@@ -136,7 +229,7 @@ if(!isset($_SESSION['member']) ){
           $purpose = $item->purpose;
           $description = $item->description;
           $goal = $item->goal;
-          $phoneNumber = $item->$phoneNumber;
+          $phoneNumber = $item->phoneNumber;
           $email = $item->email;
           $athleteType = $item->athleteType;
         }
@@ -144,28 +237,40 @@ if(!isset($_SESSION['member']) ){
         ?>
 
         <div id = "profile-trainer" class = "profile">
-          <h2 id = "profile-header-text">trainer</h2>
+
+          <div id = "profile-header-information" class = "profile-header-information">
+
+                <div id = "profile-img-description" class = "profile-img-description">
+                  <h2 id = "profile-header-text">Trainer</h2>
                   <img class = "profile-image" src = "<?php echo site_url($imagePath); ?>"/>
+                </div>
+
+                  <div id = "profile-personal" class = "profile-personal">
+                  <p><b>Name:</b> <?php echo $firstName . " " .   $lastName; ?> </p>
+                  <p><b>Athlete:</b> <?php echo stripslashes($athleteType); ?></p>
+                  <p><b>Birthday:</b> <?php echo GetAge($birthday); ?> years old</p>
+                  <p><b>Height:</b> <?php echo $heightFeet ?>'<?php echo $heightInch ?>"</p>
+                  </div>
+          </div>
+
           <div id = "profile-information" class = "profile-information">
 
-            <div id = "profile-personal" class = "profile-personal">
-            <p>Name: <?php echo $firstName . " " .   $lastName; ?> </p>
-            <p>Athlete: <?php echo stripslashes($athleteType); ?></p>
-            <p>Birthday: <?php echo GetAge($birthday); ?> years old</p>
-            <p>Height: <?php echo $heightFeet ?>'<?php echo $heightInch ?>"</p>
-            <p>Email: <?php echo $email ?> </p>
+            <div id = "profile-description" class = "profile-description">
+              <p><b>Background:</b> <?php echo stripslashes($description); ?></p>
+              <p><b>Purpose:</b> <?php echo stripslashes($purpose); ?></p>
+              <p><b>Goal:</b> <?php echo stripslashes($goal); ?></p>
             </div>
 
-            <div id = "profile-description" class = "profile-description">
-              <p>Background: <?php echo stripslashes($description); ?></p>
-              <p>Purpose: <?php echo stripslashes($purpose); ?></p>
-              <p>Goal: <?php echo stripslashes($goal); ?></p>
+            <div id = "profile-contact" class = "profile-contact">
+              <p><b>Email:</b> <?php echo $email; ?></p>
+              <p><b>Phone Number:</b> <?php echo $phoneNumber; ?></p>
             </div>
 
           </div>
 
 
         </div>
+
 
         <?php
 
@@ -177,6 +282,8 @@ if(!isset($_SESSION['member']) ){
   </div>
 </div>
 
-
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/home.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/charge.js"></script>
 
 <?php get_footer('custes'); ?>

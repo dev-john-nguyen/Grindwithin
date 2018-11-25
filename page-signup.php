@@ -50,11 +50,12 @@ get_header();
 		<div class = "new-account-form">
 
 		<form id = "new-account" name = "new-account" method = "post" >
-				<input type = "text" id = "customerId" value = "<?php echo $tid; ?>" hidden readonly/>
+				<input type = "text" id = "customerId" value = "<?php echo $customerId; ?>" hidden readonly/>
 				<input type = "number" id = "sessionAmount" value = "<?php echo $amount; ?>" hidden readonly/>
 				<input type = "text" id = "fName" value = "<?php echo $first_name; ?>" hidden readonly/>
 				<input type = "text" id = "lName" value = "<?php echo $last_name; ?>" hidden readonly/>
 				<input type = "email" id = "email" value = "<?php echo $email; ?>" hidden readonly/>
+				<input type = "number" id = "last4" value = "<?php echo $last4; ?>" hidden readonly/>
 				<input type = "text" id = "username" placeholder="Username"/>
 				<input type = "password" id = "password" placeholder="Password"/>
 				<input type = "password" id = "re-password" placeholder="Re-enter" Password/>
