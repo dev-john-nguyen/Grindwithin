@@ -60,7 +60,7 @@ function input_items_form(form, optionSelected){
   }else{
     input2.placeholder = "Amount";
     input2.min = 1;
-    input2.value = 1;
+    input2.required = true;
     input2.className = "form-control mb-3 StripeElement StripeElement--empty";
   }
 

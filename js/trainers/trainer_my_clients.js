@@ -58,6 +58,9 @@ function display_get_info(clientData){
   //Still need to add these attributes
   var goal = create_elements("Goal", 10, clientData);
   var purpose = create_elements("Purpose", 9, clientData);
+  var sessionAmount = create_elements("Sessions Available", 12, clientData);
+  var email = create_elements("Email", 13, clientData);
+  var phoneNumber = create_elements("Phone Number", 14, clientData);
 
   jQuery("#profile-info").children().each(function(index) {
     var value = jQuery(this);
@@ -95,6 +98,16 @@ function display_get_info(clientData){
           break;
         case 1:
           value.append(purpose);
+          break;
+        case 2:
+          value.append(sessionAmount);
+          break;
+        case 3:
+          value.append(email);
+          break;
+        case 4:
+          value.append(phoneNumber);
+
       }
   });
 
@@ -106,6 +119,76 @@ function create_elements(str, num, clientData){
   var client = clientData[num];
   return str + ": " + client;
 }
+
+//Start client reminder submit button Function
+  jQuery( "#client-reminder" ).submit(function( event ) {
+
+    event.preventDefault();
+
+    var reminder = jQuery("#reminder-input").val();
+    var trainerUsername = jQuery("#trainer-username").val();
+    var clientSelect = jQuery("#my-client-list").val();
+    if(reminder.length === 0){
+      alert("Can't submit an empty reminder!");
+      return;
+    }
+
+    console.log(reminder, trainerUsername, clientSelect);
+
+    return;
+
+    jQuery.ajax({
+          type: "POST",
+          url: ajaxurl,
+          data: ({
+            action: "update_client_reminder",
+            reminder: reminder,
+            trainerUsername: trainerUsername,
+            clientSelect: clientSelect
+          }),
+          success: function (response){
+            alert(response);
+            location.reload();
+          }
+        });
+
+
+
+  });
+
+  //Start client reminder submit button Function
+    jQuery( "#add-sessions-form" ).submit(function( event ) {
+
+      event.preventDefault();
+
+      var session = jQuery("#add-sessions").val();
+      var trainerUsername = jQuery("#trainer-username").val();
+      var clientSelect = jQuery("#my-client-list").val();
+      if(session.length === 0){
+        alert("Can't submit an empty reminder!");
+        return;
+      }
+
+      jQuery.ajax({
+            type: "POST",
+            url: ajaxurl,
+            data: ({
+              action: "update_client_sessions",
+              session: session,
+              trainerUsername: trainerUsername,
+              clientSelect: clientSelect
+            }),
+            success: function (response){
+              alert(response);
+              location.reload();
+            }
+          });
+
+
+
+    });
+
+  //End Submit function
 
 // function create_workout_table(){
 //   var formName = document.getElementById('workout-form');
@@ -202,42 +285,6 @@ function create_elements(str, num, clientData){
 //   div.appendChild(label);
 // }
 //
-// //Start Submit Function
-//   jQuery( "#client-reminder" ).submit(function( event ) {
-//
-//     event.preventDefault();
-//
-//     var reminder = jQuery("#reminder-input").val();
-//     var trainerUsername = jQuery("#trainer-username").val();
-//     var clientSelect = jQuery("#my-client-list").val();
-//     if(reminder.length === 0){
-//       alert("Can't submit an empty reminder!");
-//       return;
-//     }
-//
-//     console.log(reminder, trainerUsername, clientSelect);
-//
-//     return;
-//
-//     jQuery.ajax({
-//           type: "POST",
-//           url: ajaxurl,
-//           data: ({
-//             action: "update_client_reminder",
-//             reminder: reminder,
-//             trainerUsername: trainerUsername,
-//             clientSelect: clientSelect
-//           }),
-//           success: function (response){
-//             alert(response);
-//             location.reload();
-//           }
-//         });
-//
-//
-//
-//   });
-//   //End Submit function
 //
 //   jQuery( "#workout-form" ).submit(function( event ) {
 //         event.preventDefault();

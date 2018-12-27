@@ -831,12 +831,12 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 
 			<!-- #Member login header -->
 		<?php if(isset($_SESSION['member'])){ ?>
-				<button type="button" id = "btnLogout">log out</button>
+				<input type="submit" id = "btnLogout" value = "Logout" style = "width: 20%; float: right; margin-top: 4% !important;"/>
 		<?php }else{ ?>
 			<form id = "header-login" name = "header-login" method = "post" >
 				<input type = "text" id = "username-login" placeholder="username"/ required>
 				<input type = "password" id = "password-login" placeholder="password"/ required>
-				<input type = "submit" name = "submit-login" id = "submit-login"/>
+				<input type = "submit" name = "submit-login" id = "submit-login" value = "Login"/>
 			</form>
 		<?php } ?>
 

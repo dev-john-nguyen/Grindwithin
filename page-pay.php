@@ -51,9 +51,9 @@ get_header();
     <h2 class="my-4 text-center">Purchasing <?php echo $headerstr; ?></h2>
     <form action="<?php echo site_url('signup'); ?>" method="post" id="payment-form">
       <div class="form-row">
-       <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="First Name">
-       <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Last Name">
-       <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email Address">
+       <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="First Name" required>
+       <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Last Name" required>
+       <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email Address" required>
         <div id="card-element" class="form-control">
           <!-- a Stripe Element will be inserted here. -->
         </div>

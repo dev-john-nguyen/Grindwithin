@@ -29,6 +29,7 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
+<div class = "purchase-options-div">
     <form action="<?php echo site_url('pay'); ?>" class = "purchase-options" id = "per-session" method = "post" >
       <h1>$40/session</h1>
       <h2>Buy as many as you would like</h2>
@@ -38,7 +39,9 @@ get_header();
       <input type = "number" name = "purchase-option-price" value = "40" hidden readonly/>
 				<input type = "submit" name = "submit" id = "submit-per-session"/>
     </form>
+</div>
 
+<div class = "purchase-options-div">
     <form action="<?php echo site_url('pay'); ?>" class = "purchase-options" id = "week-subscription" method = "post" >
       <h1>Purchase 10 Session Package</h1>
       <h2>Originally $400 ($40/Session) Now $380 ($38/Session)</h2>
@@ -48,7 +51,9 @@ get_header();
             <input type = "number" name = "purchase-option-price" value = "38" hidden readonly/>
 				<input type = "submit" name = "submit" id = "submit-week-subscription"/>
     </form>
+</div>
 
+<div class = "purchase-options-div">
     <form action="<?php echo site_url('pay'); ?>" class = "purchase-options" id = "month-subscription" method = "post" >
       <h1>Purchase 20 Session Package</h1>
       <h2>Originally $800 ($40/Session) Now $700 ($35/Session)</h2>
@@ -58,6 +63,7 @@ get_header();
             <input type = "number" name = "purchase-option-price" value = "35" hidden readonly/>
 				<input type = "submit" name = "submit" id = "submit-month-subscription"/>
     </form>
+</div>
 
   </div>
 

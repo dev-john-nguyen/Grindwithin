@@ -58,6 +58,7 @@ if(!isset($_SESSION['member']) ){
 }
 
 
+if($tableType == "client"){
 
 ?>
 
@@ -91,7 +92,7 @@ if(!isset($_SESSION['member']) ){
         <input type = "text" name = "stripeId" value = "<?php echo $stripeId; ?>" hidden readonly/>
         <p><b>Last 4 Digits: </b><?php echo $last4; ?></p>
       </div>
-      <button class = "btn btn-primary btn-block mt-4">Submit</button>
+      <button class = "btn btn-primary btn-block mt-4" style = "background-color: rgb(51, 72, 91); border-color: rgb(51, 72, 91);">Submit</button>
     </form>
 
         <!-- New Card Form -->
@@ -100,9 +101,9 @@ if(!isset($_SESSION['member']) ){
           </div>
           <div class="form-row">
                     <input type = "text" name = "stripeId" value = "<?php echo $stripeId; ?>" hidden readonly/>
-           <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="First Name">
-           <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Last Name">
-           <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email Address">
+           <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="First Name" required>
+           <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Last Name" required>
+           <input type="email" name="email" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Email Address" required>
             <div id="card-element" class="form-control">
               <!-- a Stripe Element will be inserted here. -->
             </div>
@@ -110,7 +111,7 @@ if(!isset($_SESSION['member']) ){
             <!-- Used to display form errors -->
             <div id="card-errors" role="alert"></div>
           </div>
-          <button>Submit Payment</button>
+          <button style = "background-color: rgb(51, 72, 91); border-color: rgb(51, 72, 91);">Submit Payment</button>
         </form>
 
 </div>
@@ -120,6 +121,8 @@ if(!isset($_SESSION['member']) ){
 </div>
 
 <?php
+
+}
 
 /**
 
@@ -148,36 +151,42 @@ if(!isset($_SESSION['member']) ){
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 
-<div id="primary" class="content-area sidebar-left">
+<div class="container-fluid">
 
 <div id = "client-main" class = "client-main">
 
+  <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
+    <div class="col align-items-center" id = "header-content-items">
+        <h1 class = "page-header">Welcome <?php echo $firstName; ?>!</h1>
 
-  <div id = "display-sessions" class = "display-sessions" style = "text-align: center; padding-bottom: 20px;">
+        <?php if($_SESSION['type'] == "trainer"){ ?>
+            <p style="text-align: center;">
+              <a class="button primary-button" href="<?php echo site_url('home/my-clients'); ?>">New Clients</a>
+              <a class="button secondary-button" href="<?php echo site_url('home/available-clients'); ?>">Available Clients</a>
+            </p>
+        <?php }else{ ?>
+          <h2>Training Sessions Available: <?php echo $sessionAmount; ?></h2>
+          <div id = "session-buttons" class = "session-buttons" style = "display: inline-flex;">
+            <input type = "button" id = "popupbtn" class="btn btn-primary btn-block mt-1" value = "Purchase More Sessions" />
+          </div>
+        <?php } ?>
 
-    <h1><b>Welcome <?php echo $firstName; ?>!</b></h1>
-
-    <h2><b>Training Sessions Available: </b><?php echo $sessionAmount; ?></h2>
-
-    <div id = "session-buttons" class = "session-buttons" style = "display: inline-flex;">
-
-          <button id = "popupbtn" class="btn btn-primary btn-block mt-1"> Purchase More Sessions </button>
-
-
-    </div>
+      </div>
 
   </div>
 
-  <div id = "profile-member" class = "profile">
+  <div class="container">
+<div class="row" <?php if($_SESSION['type'] == "trainer"){?> style = "width: 50%; margin: 0 auto;" <?php } ?>>
+  <div class = "col" id = "profile">
 
-    <div id = "profile-header-information" class = "profile-header-information">
+    <div id = "profile-header-information" class = "row">
 
-          <div id = "profile-img-description" class = "profile-img-description">
-            <h2 id = "profile-header-text"><?php echo $type; ?></h2>
+          <div id = "profile-img-description" class = "col-sm-4" style = "text-align: center;">
+            <h2 id = "profile-header-text" style = "text-align: center;"><?php echo $type; ?></h2>
             <img class = "profile-image" src = "<?php echo site_url($imagePath); ?>"/>
           </div>
 
-            <div id = "profile-personal" class = "profile-personal">
+            <div id = "profile-personal" class = "col-sm-8">
             <p><b>Name:</b> <?php echo $firstName . " " .   $lastName; ?> </p>
             <p><b>Athlete:</b> <?php echo stripslashes($athleteType); ?></p>
             <p><b>Birthday:</b> <?php echo GetAge($birthday); ?> years old</p>
@@ -208,9 +217,11 @@ if(!isset($_SESSION['member']) ){
 
     if($trainer == "none"){
       ?>
-      <div id = "profile-trainer" class = "profile" style = "position: relative; top: 150px; text-align: center;">
+      <div id = "profile" class = "col">
+      <div id = "profile-trainer" class = "row" style = "position: relative; top: 150px; text-align: center;">
       <h1>A trainer will be assigned to you shortly</h1>
     </div>
+  </div>
       <?php
     }else{
 
@@ -236,16 +247,16 @@ if(!isset($_SESSION['member']) ){
 
         ?>
 
-        <div id = "profile-trainer" class = "profile">
+        <div id = "profile" class = "col">
 
-          <div id = "profile-header-information" class = "profile-header-information">
+          <div id = "profile-header-information" class = "row">
 
-                <div id = "profile-img-description" class = "profile-img-description">
-                  <h2 id = "profile-header-text">Trainer</h2>
+                <div id = "profile-img-description" class = "col-sm-4" style = "text-align: center;">
+                  <h2 id = "profile-header-text" style = "text-align: center;">Trainer</h2>
                   <img class = "profile-image" src = "<?php echo site_url($imagePath); ?>"/>
                 </div>
 
-                  <div id = "profile-personal" class = "profile-personal">
+                  <div id = "profile-personal" class = "col-sm-8">
                   <p><b>Name:</b> <?php echo $firstName . " " .   $lastName; ?> </p>
                   <p><b>Athlete:</b> <?php echo stripslashes($athleteType); ?></p>
                   <p><b>Birthday:</b> <?php echo GetAge($birthday); ?> years old</p>
@@ -279,11 +290,18 @@ if(!isset($_SESSION['member']) ){
 
 }?>
 
+</div>
+</div>
   </div>
 </div>
 
   <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/home.js"></script>
+
+  <?php if($tableType == "client"){ ?>
+
   <script src="https://js.stripe.com/v3/"></script>
   <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/charge.js"></script>
+
+<?php } ?>
 
 <?php get_footer('custes'); ?>

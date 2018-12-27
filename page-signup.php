@@ -37,17 +37,23 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
-		<h1>Thank you for your purchase and Welcome!</h1>
-		<hr>
-		<p><?php echo $product; ?></p>
-		<p>Your transaction ID is <?php echo $tid; ?></p>
-		<p>Email receipt has been sent to your account</p>
+				<div class = "customer-success">
 
-		<h2>Please DO NOT leave the page. To finish your registration</h2>
+		<h1>Thank you for your purchase and welcome!</h1>
+		<hr>
+		<p><?php echo $product; ?>.
+			Your transaction ID is <?php echo $tid; ?>.
+		Email receipt has been sent to your account.</p>
+
+		<h2>Please <b><u>DO NOT</u></b> leave the page. To finish your registration</h2>
 		<h2>fill and submit the form below to create your account</h2>
+
+				</div>
 
 
 		<div class = "new-account-form">
+
+			<h3 style = "margin-bottom: 1.5rem"><u>New Client Form</u></h3>
 
 		<form id = "new-account" name = "new-account" method = "post" >
 				<input type = "text" id = "customerId" value = "<?php echo $customerId; ?>" hidden readonly/>
@@ -56,11 +62,11 @@ get_header();
 				<input type = "text" id = "lName" value = "<?php echo $last_name; ?>" hidden readonly/>
 				<input type = "email" id = "email" value = "<?php echo $email; ?>" hidden readonly/>
 				<input type = "number" id = "last4" value = "<?php echo $last4; ?>" hidden readonly/>
-				<input type = "text" id = "username" placeholder="Username"/>
-				<input type = "password" id = "password" placeholder="Password"/>
-				<input type = "password" id = "re-password" placeholder="Re-enter" Password/>
-				<input type = "text" id = "athleteType" placeholder="What type of athlete are you?"/>
-				<input type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish."/>
+				<input type = "text" id = "username" placeholder="Username" required/>
+				<input type = "password" id = "password" placeholder="Password" required/>
+				<input type = "password" id = "re-password" placeholder="Re-enter Password" Password required/>
+				<textarea type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></textarea>
+				<textarea type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish." required></textarea>
 				<input type = "submit" name = "submit" id = "submit"/>
 		</form>
 

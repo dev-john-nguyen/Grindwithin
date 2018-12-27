@@ -39,56 +39,38 @@ get_header("member");
 
 ?>
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 
 	<div id="primary" class="content-area sidebar-left">
 
 		<main id="main" class="site-main" role="main">
 
-
-
-			<?php while ( have_posts() ) : the_post(); ?>
-
-
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-
-
-				<?php
-
-					// If comments are open or we have at least one comment, load up the comment template
-
-					if ( comments_open() || get_comments_number() ) :
-
-						comments_template();
-
-					endif;
-
-				?>
-
-
-
-			<?php endwhile; // end of the loop. ?>
-
+      <div class = "contact-support-div" style = "margin-top: 12%;">
+        <h3 style = "margin-bottom: 1.5rem"><u>Contact Us</u></h3>
+        <form name = "review-form" id = "review-form" method = "post" style = "margin-bottom: 5%;">
+          <input type = "text" class="form-control mb-3" name = "fname" id = "fname" placeholder="First Name" required/>
+          <input type = "text" class="form-control mb-3" name = "lname" id = "lname" placeholder="Last Name" required/>
+          <input type = "email" class="form-control mb-3" name = "email" id = "email" placeholder="Email" style = "width: 100%" required/>
+          <textarea name = "body" class="form-control mb-3" id = "body" placeholder="What's on your mind?" required></textarea>
+          <input type = "submit" value = "Submit" style = "width: 100%;"/>
+        </form>
+        <div class = "techsupport" style = "overflow: overlay;">
+          <p><b><u>Contact Tech Support</u></b></p>
+          <p><b>Email: </b>techsupport@8rare.com</p>
+        </div>
+        <div class = "customerservice" style = "overflow: overlay;">
+          <p><b><u>Contact Customer Service</u></b></p>
+          <p><b>Email: </b>customerservice@8rare.com</p>
+        </div>
+      </div>
 
 
 		</main><!-- #main -->
 
 
-
-
-
 	</div><!-- #primary -->
 
-<style type="text/css">
-	.fl-builder .site-content{ max-width:1100px !important; margin:0 auto !important;}
-</style>
-
-<?php if ( !is_plugin_active('woocommerce/woocommerce.php') || ( is_plugin_active('woocommerce/woocommerce.php') && ( !isset( $layout_default ) || !$layout_default || ( $layout_default == 'sidebar-left' ) || ( $layout_default == 'sidebar-right' ) ) ) ) get_sidebar(); ?>
-
-
-
-<?php //get_footer(); ?>
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/contact.js"></script>
 
 <?php get_footer('custes'); ?>

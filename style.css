@@ -14,6 +14,75 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
+.site-content {
+  max-width: 100% !important;
+}
+
+#header-content-items{
+  position: relative;
+bottom: 260px;
+color: #ffffff;
+}
+
+#display-sessions{
+    padding-bottom: 50px;
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.5)),url(http://localhost/main/wp-content/uploads/2018/03/justyn-warner-532065-unsplash.jpg);
+    background-position: center center;
+    background-size: cover;
+    height: 0;
+    padding-top: 40.64%;
+}
+
+input[type = "submit"], input[type = "button"]{
+  background-color: rgb(51, 72, 91);
+}
+
+.col#profile {
+  box-shadow: 1px 1px 10px #717070;
+  border: solid 3px #eee;
+  padding: 1%;
+  margin: 2%;
+}
+
+#header-login{
+  display: inline-flex !important;
+  margin-top: 4% !important;
+}
+
+#header-login input{
+  margin-right: 10px;
+}
+
+.customer-success{
+  width: 80%;
+  padding: 1%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 20px;
+
+}
+
+
+form#member-settings input {
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+form#member-settings textarea {
+  margin-bottom: 10px;
+}
+
+.contact-support-div, .new-account-form{
+  margin-top: 10%;
+  width: 45%;
+  box-shadow: 1px 1px 10px #717070;
+  border: solid 3px #eee;
+  padding: 1%;
+  margin: 0 auto;
+  text-align: center;
+  border-spacing: 20px;
+}
+
 .close-form {
   position: absolute;
   right: -5px;
@@ -96,21 +165,10 @@ padding-top: 1%;
   padding: 1%;
 }
 
-#profile-member{
-  float: left;
-}
-
-#profile-trainer{
-  float: right;
-}
 
 .entry-meta, .entry-footer, .logged-in-as {
     font-size: 13px;
     display: initial;
-}
-
-.archive #primary article, .search #primary article {
-  line-height: 2;
 }
 
 #bloglist_title h2.entry-title a {
@@ -145,7 +203,6 @@ padding-top: 1%;
 .blog-content {
   color: #33485b;
   text-align: center;
-  line-height: 2;
 }
 
   .header_program {
@@ -189,7 +246,6 @@ div#pg-6-1 {
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
-    line-height: 2;
     box-shadow: 1px 1px 10px #717070;
 }
 
@@ -319,8 +375,7 @@ input[type="submit"]:disabled, input[type="button"]:disabled {
 }
 
 #primary {
-  padding-top: 150px;
-  padding-bottom: 100px;
+  padding-bottom: 5%;
 	float: left;
 	width: 100%;
 }
@@ -333,7 +388,7 @@ h4 {
 
 body {
 	background-color: #fdfdfd;
-	line-height: 8;
+	line-height: 1.5;
 }
 .primary-button {
 	background-color: #33485b;
@@ -370,12 +425,13 @@ strong {
     opacity: .95 !important;
 }
 
-.home .site-footer, .home .site-footer {
+.home .site-footer{
 	    background-color: #2a2a2a !important;
+      padding-top: 15px !important;
+      padding-bottom: 15px !important;
 }
 
 h2 {
-	line-height: 0;
 	color: #fdfdfd;
 	font-style: italic;
 }
@@ -399,21 +455,6 @@ h3 {
     font-weight: bold;
 }
 
-form {
-	line-height: 1;
-}
-
-div#lift_program #main_form {
-    line-height: 3;
-}
-
-.page-id-7 #primary {
-    line-height: 3;
-}
-
-.page-id-7 .site-content, .page-id-728 .site-content, .page-id-282 .site-content {
-  max-width: 100%;
-}
 
 .display_header {
 }
@@ -529,12 +570,8 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
       bottom: 40px;
     }
 
-    .header-content p {
-      line-height: 3;
-    }
 
       h2 {
-        line-height: initial !important;
         font-size: medium;
       }
 
@@ -553,16 +590,8 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
 hyphens: none;
       }
 
-      .text-home-pictures p {
-        line-height: 3;
-      }
-
       .footer-menu {
         display: none;
-      }
-
-      body {
-        line-height: 6 !important;
       }
 
       .widget {

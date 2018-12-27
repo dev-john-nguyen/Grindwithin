@@ -26,50 +26,23 @@ get_header();
 
 ?>
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 
 	<div id="primary" class="content-area sidebar-left">
 
-		<main id="main" class="site-main" role="main">
-
-
-
-			<?php while ( have_posts() ) : the_post(); ?>
-
-
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-
-
-				<?php
-
-					// If comments are open or we have at least one comment, load up the comment template
-
-					if ( comments_open() || get_comments_number() ) :
-
-						comments_template();
-
-					endif;
-
-				?>
-
-
-
-			<?php endwhile; // end of the loop. ?>
-
-		</main><!-- #main -->
-
 		<div class = "new-account-form">
 
-		<form id = "new-account-trainer" name = "new-account-trainer" method = "post" >
-				<input type = "text" id = "fName" placeholder="First Name"/>
-				<input type = "text" id = "lName" placeholder="Last Name"/>
-				<input type = "email" id = "email" placeholder="Email"/>
-				<input type = "text" id = "username" placeholder="Username"/>
-				<input type = "password" id = "password" placeholder="Password"/>
-				<input type = "password" id = "re-password" placeholder="Re-enter" Password/>
-				<input type = "text" id = "description" placeholder="Tell us a little about yourself"/>
+			<h3 style = "margin-bottom: 1.5rem"><u>New Trainer Form</u></h3>
+
+		<form id = "new-account-trainer" name = "new-account-trainer" method = "post" required>
+				<input type = "text" class="form-control mb-3" id = "fName" placeholder="First Name" required/>
+				<input type = "text" class="form-control mb-3" id = "lName" placeholder="Last Name" required/>
+				<input type = "email" class="form-control mb-3" id = "email" placeholder="Email" style = "width: 100%;" required/>
+				<input type = "text" class="form-control mb-3" id = "username" placeholder="Username" required/>
+				<input type = "password" class="form-control mb-3" id = "password" placeholder="Password" required/>
+				<input type = "password" class="form-control mb-3" id = "re-password" placeholder="Re-enter Password" Password required/>
+				<textarea type = "text" class="form-control mb-3" id = "description" placeholder="Tell us a little about yourself" required></textarea>
 				<input type = "submit" name = "submit" id = "submit"/>
 		</form>
 

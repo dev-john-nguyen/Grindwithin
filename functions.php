@@ -16,47 +16,70 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
-function renew_session_payment(){
+function send_email(){
+  global $wpdb;
 
-  $first_name = $POST['fName'];
-  $last_name = $POST['lName'];
-  $email = $POST['email'];
-  $token = $POST['token'];
+  $fName = $_POST['fName'];
+  $lName = $_POST['lName'];
+  $email = $_POST['email'];
+  $body = $_POST['body'];
 
-return $token;
+  $to = "customerservice@8rare.com";
+  $subject = "review";
+  $message = $body;
+  $header = "From: " . $fName . " " . $lName . "<br>Email: " . $email;
 
-}
-add_action('wp_ajax_renew_session_payment', 'renew_session_payment');
-add_action('wp_ajax_nopriv_renew_session_payment', 'renew_session_payment');
+ $result = wp_mail($to, $subject, $message, $header);
 
-function update_client_reminder(){
+return $result;
 
-  // global $wpdb;
-  //
-  // $reminder = $_POST['reminder'];
-  //   $trainerUsername = $_POST['trainerUsername'];
-  //
-  // $table = $wpdb->prefix . "clients";
-  //
-  //
-  //   $result = $wpdb->update(
-  //     $table,
-  //     array('reminder' => $reminder),
-  //     array('trainer' => $trainerUsername)
-  //   );
-  //
-  //     if($result === false){
-  //       exit("Failed to update your selection. Please contact customer service");
-  //     }else if($result == 0){
-  //       exit("It looks like someone has already taken the user. I apologize for the inconvenience");
-  //     }else{
-  //       echo "Annoucement successfully updated!";
-  //     }
-  //
-  // wp_die();
-
+wp_die();
 
 }
+add_action('wp_ajax_send_email', 'send_email');
+add_action('wp_ajax_nopriv_send_email', 'send_email');
+
+function update_client_sessions(){
+
+  global $wpdb;
+
+    $table = $wpdb->prefix . "clients";
+
+        $session = $_POST['session'];
+        $trainerUsername = $_POST['trainerUsername'];
+        $clientSelect = $_POST['clientSelect'];
+
+  $sql = $wpdb->prepare("SELECT t.sessionAmount FROM $table t WHERE t.username = %s", array($clientSelect));
+
+  $results = $wpdb->get_results($sql);
+
+  foreach ($results as $item) {
+    $sessionAmount = $item->sessionAmount;
+  }
+
+  $sessionTotal = $sessionAmount + $session;
+
+
+    $result = $wpdb->update(
+      $table,
+      array('sessionAmount' => $sessionTotal),
+      array('username' => $clientSelect)
+    );
+
+      if($result === false){
+        exit("Failed to update section. Please contact customer support.");
+      }else if($result == 0){
+        exit("It looks like we couldn't find your client. Please contact customer support.");
+      }else{
+        echo "session successfully updated! Now $clientSelect has $sessionTotal sessions available.";
+      }
+
+  wp_die();
+
+
+}
+add_action('wp_ajax_update_client_sessions', 'update_client_sessions');
+add_action('wp_ajax_nopriv_update_client_sessions', 'update_client_sessions');
 
 // function store_workout_image(){
 //
@@ -122,7 +145,7 @@ $table = $wpdb->prefix . "clients";
 
   $sql = $wpdb->prepare("SELECT t.username, t.fName, t.lName, t.annoucement,
     t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight, t.purpose, t.goal,
-    t.description FROM $table t WHERE t.username = %s", array($clientUsername));
+    t.description, t.sessionAmount, t.email, t.phoneNumber FROM $table t WHERE t.username = %s", array($clientUsername));
     $results = $wpdb->get_results($sql);
 
     $error = 0;
