@@ -201,17 +201,16 @@ add_action('wp_ajax_nopriv_update_client_annoucement', 'update_client_annoucemen
 function trainer_register_client(){
   global $wpdb;
 
-  $clientArray = $_POST['clientArray'];
+  $clientUsername = $_POST['clientUsername'];
   $trainerUsername = $_POST['trainerUsername'];
 
   $table = $wpdb->prefix . "clients";
 
-  foreach($clientArray as $item){
 
     $result = $wpdb->update(
       $table,
       array('trainer' => $trainerUsername),
-      array('username' => $item)
+      array('username' => $clientUsername)
     );
 
       if($result === false){
@@ -219,12 +218,11 @@ function trainer_register_client(){
       }else if($result == 0){
         exit("It looks like someone has already taken the user. I apologize for the inconvenience");
       }else{
-        $clientStr .= " " . $item . ",";
+        $clientStr = $clientUsername;
       }
 
-  }
 
-  echo "$clientStr have been registerd under $trainerUsername";
+  echo "Successfully registered $clientStr";
 
   wp_die();
 }
@@ -476,6 +474,7 @@ function logout_user(){
   unset($_SESSION['member']);
   unset($_SESSION['firstName']);
   unset($_SESSION['lastName']);
+  unset($_SESSION['type']);
   session_destroy();
 
 }
@@ -980,7 +979,7 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
         wp_enqueue_script('js_trainer_available_clients', get_stylesheet_directory_uri() . '/js/trainers/trainer_available_clients.js', array( 'jquery'), '1.0.0', true );
     }
 
-    if (is_page('my-clients')){
+    if (is_page( array('my-clients', 'available-clients'))){
         wp_enqueue_script('js_trainer_my_clients', get_stylesheet_directory_uri() . '/js/trainers/trainer_my_clients.js', array( 'jquery' ), '1.0.0', true );
     }
 

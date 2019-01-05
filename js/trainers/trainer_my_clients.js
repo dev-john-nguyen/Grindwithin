@@ -1,7 +1,79 @@
 jQuery('#my-client-list').on('change', function() {
 
   if(this.value == "default"){
+
+      jQuery("[name=client-info]").css('display', 'none');
+
+ //clear profile-info
+      jQuery("#profile-info").children().each(function(index) {
+
+        switch (index) {
+          case 0:
+              jQuery(this).children().each(function(i) {
+
+                var value = jQuery(this);
+                value.html("");
+
+                  switch (i) {
+                    case 1:
+                      value.attr('src', "");
+                  }
+
+              });
+            break;
+          case 1:
+              jQuery(this).children().each(function(i) {
+
+                var value = jQuery(this);
+                value.html("");
+
+              });
+
+        }
+
+      });
+
+//clear profile-body
+      jQuery("#profile-body").children().each(function(index) {
+
+        switch (index) {
+          case 0:
+              jQuery(this).children().each(function(i) {
+
+                var value = jQuery(this);
+                value.html("");
+
+              });
+            break;
+          case 1:
+              jQuery(this).children().each(function(i) {
+
+                var value = jQuery(this);
+
+                switch (i) {
+                  case 0:
+                    value.html("");
+                    break;
+                  case 1:
+                    value.css("display", "none");
+
+                }
+
+              });
+
+            }
+
+      });
+
+    //Display Send Sessions
+    jQuery("#add-sessions-form").css("display", "none");
+    jQuery("#register-client").css("display", "none");
+
+
     return;
+
+  }else{
+      jQuery("[name=client-info]").css('display', 'initial');
   }
 
   var clientUsername = this.value;
@@ -41,110 +113,205 @@ function getAge(dateString)
 }
 
 function display_get_info(clientData){
-  console.log(clientData);
 
   var url = window.location.protocol+"//"+window.location.host + "/main/";
 
   var img = url + clientData[5];
 
-  var name = "Name: " + clientData[1] + " " + clientData[2];
+  var name = "<b>Name: </b>" + clientData[1] + " " + clientData[2];
 
-  var height = "Height: " + clientData[6] + "'" + clientData[7] + '"';
+  var height = "<b>Height: </b>" + clientData[6] + "'" + clientData[7] + '"';
 
-  var description = create_elements("Description", 11, clientData);
-  var weight = create_elements("Weight", 8, clientData);
-  var birthday = create_elements("Birthday", 4, clientData);
+  var description = create_elements("<b>Description: </b>", 11, clientData);
+  var weight = create_elements("<b>Weight: </b>", 8, clientData);
+  var birthday = create_elements("<b>Birthday: </b>", 4, clientData);
 
   //Still need to add these attributes
-  var goal = create_elements("Goal", 10, clientData);
-  var purpose = create_elements("Purpose", 9, clientData);
-  var sessionAmount = create_elements("Sessions Available", 12, clientData);
-  var email = create_elements("Email", 13, clientData);
-  var phoneNumber = create_elements("Phone Number", 14, clientData);
+  var goal = create_elements("<b>Goal: </b>", 10, clientData);
+  var purpose = create_elements("<b>Purpose: </b>", 9, clientData);
+  var sessionAmount = create_elements("<b>Sessions Available: </b>", 12, clientData);
+  var email = create_elements("<b>Email: </b>", 13, clientData);
+  var phoneNumber = create_elements("<b>Phone Number: </b>", 14, clientData);
 
   jQuery("#profile-info").children().each(function(index) {
-    var value = jQuery(this);
-    value.html("");
-    switch(index){
+
+    switch (index) {
       case 0:
-        value.append(name);
+          jQuery(this).children().each(function(i) {
+
+            var value = jQuery(this);
+            value.html("");
+
+              switch (i) {
+                case 0:
+                value.append("Client");
+                break;
+                case 1:
+                  value.attr('src', img);
+              }
+
+          });
         break;
       case 1:
-        value.append(height);
-        break;
-      case 2:
-        value.append(weight);
-        break;
-      case 3:
-        birthday = getAge(birthday);
-        var str = "Age: " + birthday;
-        value.append(str);
-        break;
-      case 4:
-        value.attr('src', img);
-        break;
-      case 5:
-        value.append(description);
+          jQuery(this).children().each(function(i) {
+
+            var value = jQuery(this);
+            value.html("");
+
+              switch (i) {
+                case 0:
+                  value.append(name);
+                  break;
+                case 1:
+                  value.append(height);
+                  break;
+                case 2:
+                  value.append(weight);
+                  break;
+                case 3:
+                  birthday = getAge(birthday);
+                  var str = "<b>Age: </b>" + birthday;
+                  value.append(str);
+              }
+
+          });
 
     }
+
+
+
+
+
+    // var value = jQuery(this);
+    // value.html("");
+    // switch(index){
+    //   case 0:
+    //     value.attr('src', img);
+    //     break;
+    //   case 1:
+    //     value.append(name);
+    //     break;
+    //   case 2:
+    //     value.append(height);
+    //     break;
+    //   case 3:
+    //     value.append(weight);
+    //     break;
+    //   case 4:
+    //     birthday = getAge(birthday);
+    //     var str = "Age: " + birthday;
+    //     value.append(str);
+    //     break;
+    //   case 5:
+    //     value.append(description);
+    //
+    // }
   });
 
-  jQuery('#client-header').children().each(function(index) {
-      var value = jQuery(this);
-      value.html("");
-      switch(index){
-        case 0:
-          value.append(goal);
-          break;
-        case 1:
-          value.append(purpose);
-          break;
-        case 2:
-          value.append(sessionAmount);
-          break;
-        case 3:
-          value.append(email);
-          break;
-        case 4:
-          value.append(phoneNumber);
+  jQuery('#profile-body').children().each(function(index) {
 
-      }
+    switch (index) {
+      case 0:
+          jQuery(this).children().each(function(i) {
+
+            var value = jQuery(this);
+            value.html("");
+
+              switch (i) {
+                case 0:
+                    value.append(description);
+                  break;
+                case 1:
+                    value.append(purpose);
+                  break;
+                case 2:
+                    value.append(goal);
+                  break;
+                case 3:
+                    value.append(email);
+                  break;
+                case 4:
+                    value.append(phoneNumber);
+                  break;
+              }
+
+          });
+        break;
+      case 1:
+          jQuery(this).children().each(function(i) {
+
+            var value = jQuery(this);
+
+              switch (i) {
+                case 0:
+                  value.html("");
+                  value.append(sessionAmount);
+                  break;
+                }
+
+          });
+
+    }
+
+
+
+
+
+      // var value = jQuery(this);
+      // value.html("");
+      // switch(index){
+      //   case 0:
+      //     value.append(goal);
+      //     break;
+      //   case 1:
+      //     value.append(purpose);
+      //     break;
+      //   case 2:
+      //     value.append(sessionAmount);
+      //     break;
+      //   case 3:
+      //     value.append(email);
+      //     break;
+      //   case 4:
+      //     value.append(phoneNumber);
+      //
+      // }
   });
 
 
+
+
+    //Display Send Sessions
+    jQuery("#add-sessions-form").css("display", "initial");
+    jQuery("#register-client").css("display", "initial");
 
 }
 
 function create_elements(str, num, clientData){
   var client = clientData[num];
-  return str + ": " + client;
+  return str + client;
 }
 
 //Start client reminder submit button Function
-  jQuery( "#client-reminder" ).submit(function( event ) {
+  jQuery( "#client-annoucement" ).submit(function( event ) {
 
     event.preventDefault();
 
-    var reminder = jQuery("#reminder-input").val();
+    var annoucement = jQuery("#annoucement-input").val();
     var trainerUsername = jQuery("#trainer-username").val();
-    var clientSelect = jQuery("#my-client-list").val();
-    if(reminder.length === 0){
-      alert("Can't submit an empty reminder!");
+
+    if(annoucement.length === 0){
+      alert("Can't submit an empty annoucement!");
       return;
     }
-
-    console.log(reminder, trainerUsername, clientSelect);
-
-    return;
 
     jQuery.ajax({
           type: "POST",
           url: ajaxurl,
           data: ({
-            action: "update_client_reminder",
-            reminder: reminder,
-            trainerUsername: trainerUsername,
-            clientSelect: clientSelect
+            action: "update_client_annoucement",
+            annoucement: annoucement,
+            trainerUsername: trainerUsername
           }),
           success: function (response){
             alert(response);

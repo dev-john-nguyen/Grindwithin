@@ -179,7 +179,7 @@ if($tableType == "client"){
 <div class="row" <?php if($_SESSION['type'] == "trainer"){?> style = "width: 50%; margin: 0 auto;" <?php } ?>>
   <div class = "col" id = "profile">
 
-    <div id = "profile-header-information" class = "row">
+    <div id = "profile-header-information" class = "row align-items-center">
 
           <div id = "profile-img-description" class = "col-sm-4" style = "text-align: center;">
             <h2 id = "profile-header-text" style = "text-align: center;"><?php echo $type; ?></h2>
@@ -249,7 +249,7 @@ if($tableType == "client"){
 
         <div id = "profile" class = "col">
 
-          <div id = "profile-header-information" class = "row">
+          <div id = "profile-header-information" class = "row align-items-center">
 
                 <div id = "profile-img-description" class = "col-sm-4" style = "text-align: center;">
                   <h2 id = "profile-header-text" style = "text-align: center;">Trainer</h2>

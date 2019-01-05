@@ -14,6 +14,13 @@ Use it to make something cool, have fun, and share what you've learned with othe
 Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
 */
 
+.purchase-div {
+  box-shadow: 1px 1px 10px #717070;
+  border: solid 3px #eee;
+  margin: 20px;
+  padding: 20px;
+}
+
 .site-content {
   max-width: 100% !important;
 }
@@ -37,11 +44,14 @@ input[type = "submit"], input[type = "button"]{
   background-color: rgb(51, 72, 91);
 }
 
-.col#profile {
+#profile{
+  text-align: left;
   box-shadow: 1px 1px 10px #717070;
   border: solid 3px #eee;
   padding: 1%;
   margin: 2%;
+  margin-bottom: 5%;
+margin-top: 5%;
 }
 
 #header-login{
@@ -144,7 +154,7 @@ display: table-cell;
       left: 10%;
 }
 
-#profile-header-text{
+#profile-header-text, .profile-header-text{
   text-transform: capitalize;
 }
 

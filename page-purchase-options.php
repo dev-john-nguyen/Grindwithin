@@ -29,40 +29,54 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
-<div class = "purchase-options-div">
+		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
+			<div class="col align-items-center" id = "header-content-items">
+					<h1 class = "page-header">Get Trained By The Best</h1>
+					<h2>Purchase Sessions Below</h2>
+				</div>
+
+		</div>
+
+		<div class = "container">
+
+			<div class = "row align-items-end">
+
+<div class = "col purchase-div" style = "text-align: center;">
     <form action="<?php echo site_url('pay'); ?>" class = "purchase-options" id = "per-session" method = "post" >
-      <h1>$40/session</h1>
-      <h2>Buy as many as you would like</h2>
+      <h2>$40 Per Session</h2>
       <input type = "text" name = "purchase-option-text" value = "Single Sessions" hidden readonly/>
-      <label for = "purchase-option-amount">Choose Desired Amount<br>Recommend buying package if purchasing more than 9</label>
-      <input type = "number" id = "purchase-option-amount" name = "purchase-option-amount" value = "1" min = "1"/>
+      <label for = "purchase-option-amount"><p>Choose Desired Amount</p></label>
+      <input type = "number" id = "purchase-option-amount" name = "purchase-option-amount" value = "1" min = "1" style = "width: 20%;"/>
+			<br>
       <input type = "number" name = "purchase-option-price" value = "40" hidden readonly/>
-				<input type = "submit" name = "submit" id = "submit-per-session"/>
+				<input type = "submit" name = "submit" value = "Purchase" id = "submit-per-session"/>
     </form>
 </div>
 
-<div class = "purchase-options-div">
+<div class = "col purchase-div" style = "text-align: center;">
     <form action="<?php echo site_url('pay'); ?>" class = "purchase-options" id = "week-subscription" method = "post" >
-      <h1>Purchase 10 Session Package</h1>
-      <h2>Originally $400 ($40/Session) Now $380 ($38/Session)</h2>
-      <h2>Save $20 Dollars</h2>
+      <h2>10 Session Package</h2>
+      <p>Originally $400, Now $380 (Save $20)</p>
             <input type = "text" name = "purchase-option-text" value = "Sessions Package" hidden readonly/>
             <input type = "number" name = "purchase-option-amount" value = "10" hidden readonly/>
             <input type = "number" name = "purchase-option-price" value = "38" hidden readonly/>
-				<input type = "submit" name = "submit" id = "submit-week-subscription"/>
+				<input type = "submit" name = "submit" value = "Purchase" id = "submit-week-subscription"/>
     </form>
 </div>
 
-<div class = "purchase-options-div">
+<div class = "col purchase-div" style = "text-align: center;">
     <form action="<?php echo site_url('pay'); ?>" class = "purchase-options" id = "month-subscription" method = "post" >
-      <h1>Purchase 20 Session Package</h1>
-      <h2>Originally $800 ($40/Session) Now $700 ($35/Session)</h2>
-      <h2>Save $100 Dollars</h2>
+      <h2>20 Session Package</h2>
+      <p>Originally $800, Now $700 (Save $100)</p>
             <input type = "text" name = "purchase-option-text" value = "Sessions Package" hidden readonly/>
             <input type = "number" name = "purchase-option-amount" value = "20" hidden readonly/>
             <input type = "number" name = "purchase-option-price" value = "35" hidden readonly/>
-				<input type = "submit" name = "submit" id = "submit-month-subscription"/>
+				<input type = "submit" name = "submit" value = "Purchase" id = "submit-month-subscription"/>
     </form>
+</div>
+
+</div>
+
 </div>
 
   </div>
