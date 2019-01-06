@@ -1,18 +1,19 @@
 /*
 Theme Name: TESSERACT Child
 Theme URI: http://tesseracttheme.com/
+Template: tesseract-free-theme
 Author: Tesseract Theme
 Author URI: http://tesseracttheme.com/theme-details/
 Description: Tesseract is a beautiful theme from the fourth dimension. Tesseract makes it easy to create a website that you are proud to show off to the world. It is responsive, has simple and useful navigation, an amazing featured image with buttons and is simple to use.
-Version: 3.8.5
-License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: tesseract
-Tags: custom-background, custom-header, custom-menu, editor-style, one-column, two-columns, featured-images, full-width-template, left-sidebar, threaded-comments, translation-ready, microformats
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
-Tesseract is based on Underscores http://underscores.me/, (C) 2012-2014 Automattic, Inc.
+Tags: custom-background,custom-header,custom-menu,editor-style,one-column,two-columns,featured-images,full-width-template,left-sidebar,threaded-comments,translation-ready,microformats
+Version: 3.9.4.1546685724
+Updated: 2019-01-05 10:55:24
+
 */
+
+#site-banner-left {
+  width: 60% !important;
+}
 
 .purchase-div {
   box-shadow: 1px 1px 10px #717070;
@@ -56,7 +57,7 @@ margin-top: 5%;
 
 #header-login{
   display: inline-flex !important;
-  margin-top: 4% !important;
+  margin-top: 2% !important;
 }
 
 #header-login input{
@@ -552,6 +553,7 @@ button, .button, input[type="reset"], input[type="submit"], input[type="button"]
     height: 60px !important;
     margin-top: 20px !important;
 }
+
 
 .mobile-menu-collaps-button {
     top: 20px !important;
