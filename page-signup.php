@@ -37,21 +37,21 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
-				<div class = "customer-success">
+    <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
+      <div class="col align-items-center" id = "header-content-items">
+				<h1>Thank You And Welcome!</h1>
+				<hr>
+				<h2>Please <b><u>DO NOT</u></b> leave/refresh this page. To finish your registration</h2>
+				<h2>fill and submit the form below to create your account</h2>
+				<p><?php echo $product; ?>.
+					Your transaction ID is <?php echo $tid; ?>.
+				Email receipt has been sent to your account.</p>
+				<a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
+			</div>
+		</div>
 
-		<h1>Thank you for your purchase and welcome!</h1>
-		<hr>
-		<p><?php echo $product; ?>.
-			Your transaction ID is <?php echo $tid; ?>.
-		Email receipt has been sent to your account.</p>
 
-		<h2>Please <b><u>DO NOT</u></b> leave the page. To finish your registration</h2>
-		<h2>fill and submit the form below to create your account</h2>
-
-				</div>
-
-
-		<div class = "new-account-form">
+		<div class = "container form-layout form-width margin-top-header">
 
 			<h3 style = "margin-bottom: 1.5rem"><u>New Client Form</u></h3>
 
@@ -62,12 +62,12 @@ get_header();
 				<input type = "text" id = "lName" value = "<?php echo $last_name; ?>" hidden readonly/>
 				<input type = "email" id = "email" value = "<?php echo $email; ?>" hidden readonly/>
 				<input type = "number" id = "last4" value = "<?php echo $last4; ?>" hidden readonly/>
-				<input type = "text" id = "username" placeholder="Username" required/>
-				<input type = "password" id = "password" placeholder="Password" required/>
-				<input type = "password" id = "re-password" placeholder="Re-enter Password" Password required/>
-				<textarea type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></textarea>
-				<textarea type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish." required></textarea>
-				<input type = "submit" name = "submit" id = "submit"/>
+				<input class="form-control mb-3" type = "text" id = "username" placeholder="Username" required/>
+				<input class="form-control mb-3" type = "password" id = "password" placeholder="Password" required/>
+				<input class="form-control mb-3" type = "password" id = "re-password" placeholder="Re-enter Password" Password required/>
+				<input class="form-control mb-3" type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></input>
+				<textarea class="form-control mb-3" type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish." required></textarea>
+				<input type = "submit" class="btn btn-primary btn-block mt-4" name = "submit" id = "submit"/>
 		</form>
 
 	</div>
@@ -80,7 +80,7 @@ get_header();
 
 <?php if ( !is_plugin_active('woocommerce/woocommerce.php') || ( is_plugin_active('woocommerce/woocommerce.php') && ( !isset( $layout_default ) || !$layout_default || ( $layout_default == 'sidebar-left' ) || ( $layout_default == 'sidebar-right' ) ) ) ) get_sidebar(); ?>
 
-
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
 
 <?php //get_footer(); ?>
 

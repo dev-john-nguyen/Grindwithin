@@ -47,7 +47,31 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
-<div class="container">
+    <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
+      <div class="col align-items-center" id = "header-content-items">
+          <h1 class = "page-header">Submit Payment</h1>
+          <h2>Enter Personal Information Below</h2>
+          <p><b><u>Important</u></b>. We do not store your debit/credit card information.
+          All payments are handle through Stripe.</p>
+          <p>We offer a <b>100% Refund Policy </b>until the 1st month if unsatisfied or any other personal reasons.</p>
+          <p>Please contact us if you have financial issues. We are here to help and offer
+            special payment programs for individuals that fit the necessary requirements.</p>
+          <p>Step 2/3</p>
+          <a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
+        </div>
+
+    </div>
+
+<div class="container form-layout form-width margin-top-header">
+
+  <div class = "row">
+    <div class = "col"></div>
+    <div class = "col">
+        <img src = "http://localhost/main/wp-content/uploads/2019/01/stripe-logo.jpg" style = "width: 30%;"/>
+    </div>
+    <div class = "col"></div>
+  </div>
+
     <h2 class="my-4 text-center">Purchasing <?php echo $headerstr; ?></h2>
     <form action="<?php echo site_url('signup'); ?>" method="post" id="payment-form">
       <div class="form-row">
@@ -73,6 +97,7 @@ get_header();
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
   <script src="https://js.stripe.com/v3/"></script>
   <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/charge.js"></script>
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
 
 
 

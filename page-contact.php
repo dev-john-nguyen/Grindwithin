@@ -46,14 +46,14 @@ get_header("member");
 
 		<main id="main" class="site-main" role="main">
 
-      <div class = "contact-support-div" style = "margin-top: 12%;">
+      <div class = "form-layout margin-top-format">
         <h3 style = "margin-bottom: 1.5rem"><u>Contact Us</u></h3>
         <form name = "review-form" id = "review-form" method = "post" style = "margin-bottom: 5%;">
           <input type = "text" class="form-control mb-3" name = "fname" id = "fname" placeholder="First Name" required/>
           <input type = "text" class="form-control mb-3" name = "lname" id = "lname" placeholder="Last Name" required/>
           <input type = "email" class="form-control mb-3" name = "email" id = "email" placeholder="Email" style = "width: 100%" required/>
           <textarea name = "body" class="form-control mb-3" id = "body" placeholder="What's on your mind?" required></textarea>
-          <input type = "submit" value = "Submit" style = "width: 100%;"/>
+          <input type = "submit" class="btn btn-primary btn-block mt-4" value = "Submit" style = "width: 100%;"/>
         </form>
         <div class = "techsupport" style = "overflow: overlay;">
           <p><b><u>Contact Tech Support</u></b></p>

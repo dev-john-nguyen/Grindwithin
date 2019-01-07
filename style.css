@@ -11,6 +11,10 @@ Updated: 2019-01-05 10:55:24
 
 */
 
+.margin-top-header{
+  margin-top: 3%;
+}
+
 #site-banner-left {
   width: 60% !important;
 }
@@ -83,15 +87,23 @@ form#member-settings textarea {
   margin-bottom: 10px;
 }
 
-.contact-support-div, .new-account-form{
+.margin-top-format {
   margin-top: 10%;
+}
+
+.form-layout{
   width: 45%;
   box-shadow: 1px 1px 10px #717070;
   border: solid 3px #eee;
   padding: 1%;
-  margin: 0 auto;
   text-align: center;
   border-spacing: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.form-width {
+  width: 45% !important;
 }
 
 .close-form {

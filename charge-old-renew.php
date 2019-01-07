@@ -23,13 +23,16 @@ $price = $price * 100;
 
 try {
 
+    $customer = \Stripe\Customer::retrieve($stripeId);
+
 
     // Charge Customer
     $charge = \Stripe\Charge::create(array(
       "amount" => $price,
       "currency" => "usd",
       "description" => $descriptionStr,
-      "customer" => $stripeId
+      "customer" => $stripeId,
+      'receipt_email' => $customer->email
     ));
 
   // Use Stripe's library to make requests...

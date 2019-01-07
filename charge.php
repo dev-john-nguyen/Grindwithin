@@ -30,7 +30,8 @@ try {
       "amount" => $price,
       "currency" => "usd",
       "description" => $descriptionStr,
-      "customer" => $customer->id
+      "customer" => $customer->id,
+      'receipt_email' => $email
     ));
 
   // Use Stripe's library to make requests...

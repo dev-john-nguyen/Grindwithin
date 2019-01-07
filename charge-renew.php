@@ -38,7 +38,8 @@ try {
       "amount" => $price,
       "currency" => "usd",
       "description" => $descriptionStr,
-      "customer" => $stripeId
+      "customer" => $stripeId,
+      'receipt_email' => $email
     ));
 
   // Use Stripe's library to make requests...
