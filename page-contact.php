@@ -46,7 +46,7 @@ get_header("member");
 
 		<main id="main" class="site-main" role="main">
 
-      <div class = "form-layout margin-top-format">
+      <div class = "form-layout margin-top-format margin-bottom">
         <h3 style = "margin-bottom: 1.5rem"><u>Contact Us</u></h3>
         <form name = "review-form" id = "review-form" method = "post" style = "margin-bottom: 5%;">
           <input type = "text" class="form-control mb-3" name = "fname" id = "fname" placeholder="First Name" required/>

@@ -11,6 +11,12 @@ Updated: 2019-01-05 10:55:24
 
 */
 
+
+.hm-social {
+  font-family: Roboto;
+  color: #ffffff;
+}
+
 .margin-top-header{
   margin-top: 3%;
 }
@@ -49,14 +55,13 @@ input[type = "submit"], input[type = "button"]{
   background-color: rgb(51, 72, 91);
 }
 
-#profile{
+.profile{
   text-align: left;
   box-shadow: 1px 1px 10px #717070;
   border: solid 3px #eee;
   padding: 1%;
   margin: 2%;
   margin-bottom: 5%;
-margin-top: 5%;
 }
 
 #header-login{
@@ -91,6 +96,10 @@ form#member-settings textarea {
   margin-top: 10%;
 }
 
+.margin-bottom {
+  margin-bottom: 3%;
+}
+
 .form-layout{
   width: 45%;
   box-shadow: 1px 1px 10px #717070;
@@ -116,11 +125,11 @@ form#member-settings textarea {
 }
 
 .popup-form-select{
-  width: 50%;
+  width: 60%;
 }
 
 .select-payment-options{
-  width: 50%;
+  width: 60%;
   margin-top: 5%;
 }
 
@@ -140,6 +149,27 @@ form#member-settings textarea {
   position: relative;
 }
 
+.popup-confirm-form {
+  text-align: center;
+  width: 500px;
+  min-height: 100px;
+  background-color: white;
+  border-radius: 4px;
+  position: relative;
+}
+
+
+.popup-confirm{
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+}
+
 .popup-session{
   display: none;
   width: 100%;
@@ -150,6 +180,8 @@ form#member-settings textarea {
   justify-content: center;
   align-items: center;
 }
+
+
 
 .profile-header-information{
   display: table;
@@ -398,9 +430,9 @@ input[type="submit"]:disabled, input[type="button"]:disabled {
 }
 
 #primary {
-  padding-bottom: 5%;
 	float: left;
 	width: 100%;
+  min-height: initial;
 }
 
 
@@ -435,10 +467,6 @@ strong {
 	position: absolute;
 }
 
-#footer-banner {
-	max-width: 1100px !important;
-}
-
 #pg-6-1> .panel-row-style{
 	padding-bottom: 25px;
 }
@@ -448,10 +476,10 @@ strong {
     opacity: .95 !important;
 }
 
-.home .site-footer{
+.site-footer{
 	    background-color: #2a2a2a !important;
-      padding-top: 15px !important;
-      padding-bottom: 15px !important;
+      padding-top: 20px !important;
+      padding-bottom: 20px !important;
 }
 
 h2 {

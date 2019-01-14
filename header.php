@@ -831,13 +831,18 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 
 			<!-- #Member login header -->
 		<?php if(isset($_SESSION['member'])){ ?>
-				<input type="submit" id = "btnLogout" value = "Logout" style = "width: 20%; float: right; margin-top: 4% !important;"/>
+			<div class = "header-logout text-right">
+				<input type="submit" class="btn btn-primary" id = "btnLogout" value = "Logout"/>
+			</div>
 		<?php }else{ ?>
-			<form id = "header-login" name = "header-login" method = "post" >
-				<input type = "text" id = "username-login" placeholder="username"/ required>
-				<input type = "password" id = "password-login" placeholder="password"/ required>
-				<input type = "submit" name = "submit-login" id = "submit-login" value = "Login"/>
-			</form>
+					<form id = "header-login" name = "header-login" method = "post" >
+						<input type = "text" class="form-control" id = "username-login" placeholder="username"/ required>
+						<input type = "password" class="form-control" id = "password-login" placeholder="password"/ required>
+						<input type = "submit" class="btn btn-primary form-control w-25" name = "submit-login" id = "submit-login" value = "Login"/>
+						<input type = "button" class="btn btn-primary form-control w-25" value = "Sign Up" onclick = "window.location = '<?php echo esc_url( home_url( '/purchase-options' ) ); ?>'"/>
+						</input>
+
+					</form>
 		<?php } ?>
 
     </div>

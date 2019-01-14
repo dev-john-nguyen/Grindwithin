@@ -57,7 +57,7 @@ if(!isset($_SESSION['member']) ){
 
   <main id="main" class="site-main" role="main">
 
-  <div class = "container form-layout form-width margin-top-format text-left">
+  <div class = "container form-layout form-width margin-top-format margin-bottom text-left">
 
     <h3 style = "margin-bottom: 1.5rem; text-align: center;"><u>Settings</u></h3>
 

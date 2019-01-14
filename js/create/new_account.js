@@ -26,7 +26,7 @@
 		var password = jQuery('#password').val();
 		var repassword = jQuery('#re-password').val();
 		var description = jQuery('#description').val();
-		var athleteType = jQuery('#athleteType').val();
+		var athleteType = jQuery( "#athleteType option:selected" ).val();
 		var customerId = jQuery('#customerId').val();
 		var sessionAmount = jQuery('#sessionAmount').val();
 		var last4 = jQuery('#last4').val();
@@ -37,6 +37,12 @@
 			return;
 		}else if (!(password == repassword)){
 			alert("The passwords do not match. Please try again.");
+			return;
+		}
+
+		//check if athleteType is not the default value
+		if (athleteType == "default"){
+			alert("Please choose your athlete type. If you are not sure, please select others");
 			return;
 		}
 

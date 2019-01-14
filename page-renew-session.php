@@ -59,14 +59,21 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
-<h1>Thank you for your purchase!</h1>
-<h1>Now you have <?php echo $sessionTotal; ?> Sessions Available</h1>
-<hr>
-<p>Your transaction ID is <?php echo $tid; ?></p>
-<p>Email receipt has been sent to your account</p>
+    <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
+      <div class="col align-items-center" id = "header-content-items">
 
+          <h1>Thank You For Your Purchase!</h1>
+          <h1>Now you have <?php echo $sessionTotal; ?> Sessions Available</h1>
+          <hr>
+          <p>Your transaction ID is <?php echo $tid; ?></p>
+          <p>Email receipt has been sent to your account</p>
+
+  			</div>
+  		</div>
 
 
   </div>
+
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
 
 <?php get_footer('custes'); ?>

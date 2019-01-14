@@ -51,7 +51,7 @@ get_header();
 		</div>
 
 
-		<div class = "container form-layout form-width margin-top-header">
+		<div class = "container form-layout form-width margin-top-header margin-bottom">
 
 			<h3 style = "margin-bottom: 1.5rem"><u>New Client Form</u></h3>
 
@@ -65,7 +65,18 @@ get_header();
 				<input class="form-control mb-3" type = "text" id = "username" placeholder="Username" required/>
 				<input class="form-control mb-3" type = "password" id = "password" placeholder="Password" required/>
 				<input class="form-control mb-3" type = "password" id = "re-password" placeholder="Re-enter Password" Password required/>
-				<input class="form-control mb-3" type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></input>
+				<select id = "athleteType">
+					<option value = "default" selected>Choose Athlete Type</option>
+						<option value = "football">Football</option>
+						<option value = "basketball">Basketball</option>
+						<option value = "soccer">Soccer</option>
+						<option value = "baseball">Baseball</option>
+						<option value = "track">Track</option>
+						<option value = "hockey">Hockey</option>
+						<option value = "multi-sport">Multi-Sport</option>
+						<option value = "other">Others</option>
+				</select>
+				<!-- <input class="form-control mb-3" type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></input> -->
 				<textarea class="form-control mb-3" type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish." required></textarea>
 				<input type = "submit" class="btn btn-primary btn-block mt-4" name = "submit" id = "submit"/>
 		</form>

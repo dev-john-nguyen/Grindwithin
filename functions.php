@@ -281,7 +281,7 @@ function get_member_profile($tableType, $username){
           t.purpose, t.description, t.goal, t.athleteType, t.email, t.phoneNumber FROM $table t Where t.username = %s", array($username));
   }else{
     $sql = $wpdb->prepare("SELECT t.last4, t.stripeId, t.birthday, t.imagePath, t.heightFeet, t.heightInch, t.weight,
-        t.purpose, t.description, t.goal, t.athleteType, t.email, t.phoneNumber, t.sessionAmount, t.trainer FROM $table t Where t.username = %s", array($username));
+        t.purpose, t.description, t.goal, t.athleteType, t.email, t.phoneNumber, t.sessionAmount, t.trainer, t.annoucement FROM $table t Where t.username = %s", array($username));
   }
 
   $result = $wpdb->get_results($sql);

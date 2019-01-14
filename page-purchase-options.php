@@ -39,7 +39,7 @@ get_header();
 
 		</div>
 
-		<div class = "container margin-top-header">
+		<div class = "container margin-top-header margin-bottom">
 
 			<div class = "row align-items-start">
 
@@ -51,7 +51,7 @@ get_header();
       <input type = "number" id = "purchase-option-amount" name = "purchase-option-amount" value = "1" min = "1" style = "width: 20%;"/>
 			<br>
       <input type = "number" name = "purchase-option-price" value = "40" hidden readonly/>
-				<input type = "submit" class="btn btn-primary btn-block mt-4" name = "submit" value = "Purchase" id = "submit-per-session"/>
+				<input type = "submit" class="btn btn-primary btn-block mt-2" name = "submit" value = "Purchase" id = "submit-per-session"/>
     </form>
 </div>
 

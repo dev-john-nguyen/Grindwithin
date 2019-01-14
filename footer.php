@@ -150,27 +150,77 @@
 
                        <!-- right footer content -->
 
-       <div class = "socialicons" style="float: right; margin-top: 1%;">
-       <ul class="hm-social">
+     <div class = "row">
 
-         <li><a title="Follow Us on Facebook" href="http://Facebook.com" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_87cH2U.png" width="75" height="75" alt="Facebook icon"></a></li><li><a title="Follow Us on Instagram" href="https://www.instagram.com/livin_thejourney/" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_1mxgLX.png" width="75" height="75" alt="Instagram icon"></a></li><li><a title="Follow Us on Youtube" href="http://youtube.com" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_57gzHU.png" width="75" height="75" alt="Youtube icon"></a></li><li><a title="Follow Us on Twitter" href="http://twitter.com" target="_blank" class="customize-unpreviewable"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_0Mvvee.png" width="75" height="75" alt="Twitter icon"></a></li>
-           </ul>
-</div>
+       <div class = "col">
+           <div class = "logo">
+             <a href="<?php echo esc_url( home_url( '/contact' ) ); ?>" rel="home" target="_self">
+             <img src="http://efitprogram.com/wp-content/uploads/2018/02/Main-logo.png" alt="logo" style="height: 40px;">
+           </a>
+         </div>
+       </div>
 
+       <div class = "col">
+         <ul class="hm-social d-flex justify-content-center" style = "position: relative; top: 5px;">
+           <li>
+             <a href="<?php echo esc_url( home_url() ); ?>" target="_self">Home</a>
+           </li>
 
-     <div class = "logo" style="float: left; width: 33%; position: relative; top: 10px;"><a href="http://efitprogram.com" rel="home" target="_self"><img src="http://efitprogram.com/wp-content/uploads/2018/02/Main-logo.png" alt="logo" style="height: 40px;"></a></div>
+           <li>
+             <a>|</a>
+           </li>
 
+           <li>
+             <a href="<?php echo esc_url( home_url( '/faq' ) ); ?>" target="_self">FAQ</a>
+           </li>
 
-<div class = "footer-menu" style="float: left; padding-left: 1%; font-family: roboto; margin-top: 2%;">
-<a href="http://efitprogram.com" target="_self">Home</a>
-       <a> | </a>
-<a href="http://efitprogram.com/intermediate" target="_self">Intermediate</a>
-     <a> | </a>
-<a href="http://efitprogram.com/experienced" target="_self">Experienced</a>
-   <a> | </a>
-<a href="http://efitprogram.com/blog" target="_self">Blog</a> |
-<a href="http://efitprogram.com/about-us" target="_self">About Us</a>
-</div>
+           <li>
+             <a>|</a>
+           </li>
+
+           <li>
+             <a href="<?php echo esc_url( home_url( '/privacy-policy' ) ); ?>" target="_self">Privacy Policy</a>
+           </li>
+
+           <li>
+             <a>|</a>
+           </li>
+
+           <li>
+              <a href="<?php echo esc_url( home_url( '/terms-and-conditions' ) ); ?>" target="_self">Terms and Conditions</a>
+           </li>
+
+        </ul>
+
+       </div>
+
+       <div class = "col">
+         <ul class="hm-social float-right">
+           <li>
+             <a title="Follow Us on Facebook" href="http://Facebook.com" target="_blank" class="customize-unpreviewable">
+               <img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_87cH2U.png" width="75" height="75" alt="Facebook icon">
+             </a>
+           </li>
+           <li>
+             <a title="Follow Us on Instagram" href="https://www.instagram.com/livin_thejourney/" target="_blank" class="customize-unpreviewable">
+               <img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_1mxgLX.png" width="75" height="75" alt="Instagram icon">
+             </a>
+           </li>
+           <li>
+             <a title="Follow Us on Youtube" href="http://youtube.com" target="_blank" class="customize-unpreviewable">
+               <img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_57gzHU.png" width="75" height="75" alt="Youtube icon">
+             </a>
+           </li>
+           <li>
+             <a title="Follow Us on Twitter" href="http://twitter.com" target="_blank" class="customize-unpreviewable">
+               <img src="http://efitprogram.com/wp-content/uploads/2018/02/Logomakr_0Mvvee.png" width="75" height="75" alt="Twitter icon">
+             </a>
+           </li>
+          </ul>
+       </div>
+
+     </div>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
          <!-- right footer content End -->
 
@@ -338,7 +388,6 @@ $mobmenu_fontsize = get_theme_mod('tesseract_mobile_menu_font_size') ? get_theme
 		}
 	}
 </style>
-
 
 </body>
 

@@ -56,5 +56,10 @@ jQuery(document).ready(function(jQuery) {
   		});
 			//End Submit function
 
+			// jQuery("#signupBtn").click(function(e){
+			//
+			//
+			// });
+
 });
 //End JQuery

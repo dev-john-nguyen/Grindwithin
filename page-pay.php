@@ -49,8 +49,8 @@ get_header();
 
     <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
       <div class="col align-items-center" id = "header-content-items">
-          <h1 class = "page-header">Submit Payment</h1>
-          <h2>Enter Personal Information Below</h2>
+          <h1 class = "page-header">Payment</h1>
+          <h2>Enter Payment Information Below</h2>
           <p><b><u>Important</u></b>. We do not store your debit/credit card information.
           All payments are handle through Stripe.</p>
           <p>We offer a <b>100% Refund Policy </b>until the 1st month if unsatisfied or any other personal reasons.</p>
@@ -62,7 +62,7 @@ get_header();
 
     </div>
 
-<div class="container form-layout form-width margin-top-header">
+<div class="container form-layout form-width margin-top-header margin-bottom">
 
   <div class = "row">
     <div class = "col"></div>

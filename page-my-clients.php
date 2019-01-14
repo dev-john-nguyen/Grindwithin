@@ -65,7 +65,7 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
 
 <div class = "col"></div>
 
-      <div class = "col-9" id = "profile" style = "height: min-content;">
+      <div class = "col-9 profile" style = "height: min-content;">
 
         <h3 class ="text-center" style="margin-bottom: 1.5rem"><u>Update Annoucement</u></h3>
 
@@ -88,7 +88,7 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
 
               <div class = "col"></div>
 
-              <div class = "col-9" id = "profile">
+              <div class = "col-9 profile">
 
               <h3 class ="text-center" style="margin-bottom: 1.5rem"><u>Find Client</u></h3>
 
@@ -108,7 +108,7 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
 
       <div class="row" style="width: 90%;margin: 0 auto;">
 
-      <div name = "client-info" class = "col" id = "profile" style = "box-shadow: none; border: none; display: none;">
+      <div name = "client-info" class = "col profile" style = "box-shadow: none; border: none; display: none;">
 
         <div id = "profile-info" class = "row align-items-center">
 
