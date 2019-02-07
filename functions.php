@@ -16,6 +16,163 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+
+function update_trainer_app(){
+  global $wpdb;
+
+    $idClicked = $_POST['idClicked'];
+    $trainerEmail = $_POST['trainerEmail'];
+
+    $table = $wpdb->prefix . "app_trainer";
+
+
+    $result = $wpdb->update(
+      $table,
+      array('status' => $idClicked),
+      array('email' => $trainerEmail)
+    );
+
+      if($result === false){
+        exit("Failed to update application. Please contact customer support.");
+      }else if($result == 0){
+        exit("It looks like we couldn't find application. Please contact customer support.");
+      }else{
+        echo "Application successfully updated!";
+      }
+
+
+
+ wp_die();
+}
+add_action('wp_ajax_update_trainer_app', 'update_trainer_app');
+add_action('wp_ajax_nopriv_update_trainer_app', 'update_trainer_app');
+
+function get_applicant(){
+
+    global $wpdb;
+
+    $applicantEmail = $_POST['applicantEmail'];
+
+      $table = $wpdb->prefix . "app_trainer";
+
+
+      $sql = $wpdb->prepare("SELECT t.fName, t.lName, t.email, t.certified, t.certifiedType,
+         t.yearsExp, t.sportName, t.sportLvl, t.q1, t.q2, t.q3 FROM $table t WHERE t.email = %s", array($applicantEmail));
+
+      $results = $wpdb->get_results($sql);
+
+         $error = 0;
+
+         if(empty($results)){
+           exit($error);
+         }else{
+           foreach($results as $item){
+
+               foreach($item as $i){
+                 $appInfoArray[]  = $i;
+               }
+
+           }
+            echo json_encode($appInfoArray);
+         }
+
+         wp_die();
+
+}
+add_action('wp_ajax_get_applicant', 'get_applicant');
+add_action('wp_ajax_nopriv_get_applicant', 'get_applicant');
+
+function store_app_trainer(){
+
+    global $wpdb;
+
+  $fName = $_POST['fName'];
+  $lName = $_POST['lName'];
+  $email = $_POST['email'];
+  $certified = $_POST['certified'];
+  $certifiedType = $_POST['certifiedType'];
+  $yearsExp = $_POST['yearsExp'];
+  $sportName = $_POST['sportName'];
+  $sportLvl = $_POST['sportLvl'];
+  $q1 = $_POST['q1'];
+  $q2 = $_POST['q2'];
+  $q3 = $_POST['q3'];
+
+
+  $currentDate = current_time( 'mysql' );
+  $status = "processing";
+
+
+
+  $table = $wpdb->prefix . "app_trainer";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+    `accountCreated` date,
+    `status` text,
+    `email` text,
+    `fName` text,
+    `lName` text,
+    `certified` text,
+    `certifiedType` text,
+    `yearsExp` text,
+    `sportName` text,
+    `sportLvl` text,
+    `q1` text,
+    `q2` text,
+    `q3` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+
+    $sql = $wpdb->prepare("SELECT t.email FROM $table t WHERE t.email = %s", array($email));
+
+    $results = $wpdb->get_results($sql);
+
+
+    if(!empty($results)){
+      exit("It looks like you have applied already. Please contact us directly if this is incorrect.");
+    }else{
+
+        $result = $wpdb->insert(
+              $table,
+              array(
+            'accountCreated' => $currentDate,
+            'status' => $status,
+            'fName' => $fName,
+            'lName' => $lName,
+            'email' => $email,
+            'certified' => $certified,
+            'certifiedType' => $certifiedType,
+            'yearsExp' => $yearsExp,
+            'sportName' => $sportName,
+            'sportLvl' => $sportLvl,
+            'q1' => $q1,
+            'q2' => $q2,
+            'q3' => $q3
+              )
+          );
+
+          if(!$result > 0 || !$result || $result === false){
+            exit("I apologize, we are having issues submitting your information. Please contact us directly via email." .
+            " Thank you for your understanding.");
+          }else{
+            echo 1;
+          }
+
+    }
+
+    wp_die();
+
+
+}
+add_action('wp_ajax_store_app_trainer', 'store_app_trainer');
+add_action('wp_ajax_nopriv_store_app_trainer', 'store_app_trainer');
+
 function send_email(){
   global $wpdb;
 
@@ -519,7 +676,7 @@ wp_die();
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
 add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
 
-function store_new_profile($last4, $fName, $lName, $username, $description, $currentDate, $athleteType, $email, $customerId, $sessionAmount){
+function store_new_profile($fName, $lName, $username, $currentDate, $email){
 
   global $wpdb;
 
@@ -563,19 +720,14 @@ function store_new_profile($last4, $fName, $lName, $username, $description, $cur
     $result = $wpdb->insert(
           $table,
           array(
-        'stripeId' => $customerId,
-        'sessionAmount' => $sessionAmount,
         'fName' => $fName,
         'lName' => $lName,
         'username' => $username,
-        'description' => $description,
-        'athleteType' => $athleteType,
         'imagePath' => $defaultImage,
         'trainer' => "none",
         'annoucement' => $annoucement,
         'accountCreated' => $currentDate,
-        'email' => $email,
-        'last4' => $last4
+        'email' => $email
           )
       );
 
@@ -722,14 +874,14 @@ $result = $wpdb->insert(
 
   if(!$result > 0 || !$result || $result === false){
     exit("I apologize, we are having issues submitting your information. Please contact us directly via email." .
-    "Thank you for your understanding.");
+    " Thank you for your understanding.");
   }else{
     //create profile
     $result = store_new_trainer_profile($fName, $lName, $username, $description, $type, $currentDate, $email);
 
     if(!$result > 0 || !$result || $result === false){
       exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
-      "Thank you for your understanding.");
+      " Thank you for your understanding.");
     }
 
     session_start();
@@ -752,11 +904,6 @@ function store_new_account(){
   $email = $_POST['email'];
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $description = $_POST['description'];
-  $athleteType = $_POST['athleteType'];
-  $customerId = $_POST['customerId'];
-  $sessionAmount = $_POST['sessionAmount'];
-  $last4 = $_POST['last4'];
 
   $table = $wpdb->prefix . "members";
 
@@ -807,7 +954,6 @@ $type = "client";
 $result = $wpdb->insert(
       $table,
       array(
-    'stripeId' => $customerId,
     'fName' => $fName,
     'lName' => $lName,
     'type' => $type,
@@ -815,8 +961,7 @@ $result = $wpdb->insert(
     'username' => $username,
     'damn' => $hashPass,
     'created' => $currentDate,
-    'active' => 1,
-    'last4' => $last4
+    'active' => 1
       )
   );
 
@@ -825,11 +970,11 @@ $result = $wpdb->insert(
     " Thank you for your understanding.");
   }else{
     //create profile
-    $result = store_new_profile($last4, $fName, $lName, $username, $description, $currentDate, $athleteType, $email, $customerId, $sessionAmount);
+    $result = store_new_profile($fName, $lName, $username, $currentDate, $email);
 
     if(!$result > 0 || !$result || $result === false){
       exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
-      "Thank you for your understanding.");
+      " Thank you for your understanding.");
     }
 
 
@@ -986,11 +1131,6 @@ add_action('wp_ajax_nopriv_get_data', 'get_data');
     if (is_page('home')){
       wp_enqueue_script('js_trainer_profile', get_stylesheet_directory_uri() . '/js/trainers/trainer_profile.js', array( 'jquery' ), '1.0.0', true );
 
-    }
-
-    //signup.php and signup-trainer.php
-    if (is_page( array(874, 897) ) ){
-      wp_enqueue_script('js_new_account', get_stylesheet_directory_uri() . '/js/create/new_account.js', array( 'jquery' ), '1.0.0', true );
     }
 
 		//program form page

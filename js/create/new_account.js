@@ -1,7 +1,7 @@
 
 
 //Start load function that will load data by using ajax
-	jQuery('#new-account').submit(function(event) {
+	jQuery('#new-account1').submit(function(event) {
 		event.preventDefault();
 
 		jQuery(this).find(':input').each(function(index, value){
@@ -25,11 +25,6 @@
 		var username = jQuery('#username').val();
 		var password = jQuery('#password').val();
 		var repassword = jQuery('#re-password').val();
-		var description = jQuery('#description').val();
-		var athleteType = jQuery( "#athleteType option:selected" ).val();
-		var customerId = jQuery('#customerId').val();
-		var sessionAmount = jQuery('#sessionAmount').val();
-		var last4 = jQuery('#last4').val();
 
 		//check password length and match
 		if (password.length < 7){
@@ -37,12 +32,6 @@
 			return;
 		}else if (!(password == repassword)){
 			alert("The passwords do not match. Please try again.");
-			return;
-		}
-
-		//check if athleteType is not the default value
-		if (athleteType == "default"){
-			alert("Please choose your athlete type. If you are not sure, please select others");
 			return;
 		}
 
@@ -55,16 +44,12 @@
 								lName: lName,
 								email: email,
 								username: username,
-								password: password,
-								description: description,
-								athleteType: athleteType,
-								customerId: customerId,
-								sessionAmount: sessionAmount,
-								last4: last4
+								password: password
               }),
               success: function (response){
 								if(response == 1){
-									window.location.replace("http://localhost/main/home");
+									var url = document.URL + "/purchase-options";
+									window.location.replace(url);
 								}else{
 									alert(response);
 								}
@@ -126,7 +111,8 @@
               }),
               success: function (response){
 								if(response == 1){
-									window.location.replace("http://localhost/main/home");
+									//window.location.replace("http://localhost/main/home");
+									event.submit();
 								}else{
 									alert(response);
 								}

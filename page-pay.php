@@ -1,5 +1,7 @@
 <?php
 
+	session_start();
+
 // Sanitize Post Array
 $POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
 
@@ -14,6 +16,8 @@ empty($POST['purchase-option-price'])){
 
 			$totalPrice = $amount * $price;
 			$headerstr = $amount . " " . $text . " ($" . $totalPrice . ")";
+
+
 }
 
 /**
@@ -73,7 +77,7 @@ get_header();
   </div>
 
     <h2 class="my-4 text-center">Purchasing <?php echo $headerstr; ?></h2>
-    <form action="<?php echo site_url('signup'); ?>" method="post" id="payment-form">
+    <form action="<?php echo site_url('client-complete'); ?>" method="post" id="payment-form">
       <div class="form-row">
        <input type="text" name="first_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="First Name" required>
        <input type="text" name="last_name" class="form-control mb-3 StripeElement StripeElement--empty" placeholder="Last Name" required>

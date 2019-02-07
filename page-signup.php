@@ -1,11 +1,12 @@
 <?php
 
-if (empty($_POST)){
-header('Location: ' . site_url('purchase-options'));
-}else{
-require_once('charge.php');
-}
+session_start();
 
+$_SESSION['fName'] = "hello";
+$_SESSION['lName'] = "hello";
+$_SESSION['email'] = "hello";
+$_SESSION['username'] = "hello";
+$_SESSION['password'] = "hello";
 
 /**
 
@@ -39,13 +40,11 @@ get_header();
 
     <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
       <div class="col align-items-center" id = "header-content-items">
-				<h1>Thank You And Welcome!</h1>
+				<p><?php echo $_SESSION['fName']; ?></p>
+				<h1 class = "page-header">Join The Family</h1>
+				<h2>Be Trained By The Best</h2>
+				<p>Step 1/3</p>
 				<hr>
-				<h2>Please <b><u>DO NOT</u></b> leave/refresh this page. To finish your registration</h2>
-				<h2>fill and submit the form below to create your account</h2>
-				<p><?php echo $product; ?>.
-					Your transaction ID is <?php echo $tid; ?>.
-				Email receipt has been sent to your account.</p>
 				<a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
 			</div>
 		</div>
@@ -53,32 +52,16 @@ get_header();
 
 		<div class = "container form-layout form-width margin-top-header margin-bottom">
 
-			<h3 style = "margin-bottom: 1.5rem"><u>New Client Form</u></h3>
+			<h3 style = "margin-bottom: 1.5rem"><u>Sign Up</u></h3>
 
-		<form id = "new-account" name = "new-account" method = "post" >
-				<input type = "text" id = "customerId" value = "<?php echo $customerId; ?>" hidden readonly/>
-				<input type = "number" id = "sessionAmount" value = "<?php echo $amount; ?>" hidden readonly/>
-				<input type = "text" id = "fName" value = "<?php echo $first_name; ?>" hidden readonly/>
-				<input type = "text" id = "lName" value = "<?php echo $last_name; ?>" hidden readonly/>
-				<input type = "email" id = "email" value = "<?php echo $email; ?>" hidden readonly/>
-				<input type = "number" id = "last4" value = "<?php echo $last4; ?>" hidden readonly/>
-				<input class="form-control mb-3" type = "text" id = "username" placeholder="Username" required/>
-				<input class="form-control mb-3" type = "password" id = "password" placeholder="Password" required/>
-				<input class="form-control mb-3" type = "password" id = "re-password" placeholder="Re-enter Password" Password required/>
-				<select id = "athleteType">
-					<option value = "default" selected>Choose Athlete Type</option>
-						<option value = "football">Football</option>
-						<option value = "basketball">Basketball</option>
-						<option value = "soccer">Soccer</option>
-						<option value = "baseball">Baseball</option>
-						<option value = "track">Track</option>
-						<option value = "hockey">Hockey</option>
-						<option value = "multi-sport">Multi-Sport</option>
-						<option value = "other">Others</option>
-				</select>
-				<!-- <input class="form-control mb-3" type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></input> -->
-				<textarea class="form-control mb-3" type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish." required></textarea>
-				<input type = "submit" class="btn btn-primary btn-block mt-4" name = "submit" id = "submit"/>
+		<form action="<?php echo site_url('purchase-options'); ?>" id = "new-account" name = "new-account" method = "post" >
+				<input class="form-control mb-3" type = "text" name = "fName" placeholder = "First Name" required/>
+	    	<input class="form-control mb-3" type = "text" name = "lName" placeholder = "Last Name" required/>
+				<input class="form-control mb-3" type = "text" name = "email" placeholder = "Email" required/>
+				<input class="form-control mb-3" type = "text" name = "username" placeholder="Username" required/>
+				<input class="form-control mb-3" type = "password" name = "password" placeholder="Password" required/>
+				<input class="form-control mb-3" type = "password" name = "re-password" placeholder="Re-enter Password" Password required/>
+				<input type = "submit" class="btn btn-primary btn-block" name = "submit" id = "submit"/>
 		</form>
 
 	</div>
@@ -92,6 +75,7 @@ get_header();
 <?php if ( !is_plugin_active('woocommerce/woocommerce.php') || ( is_plugin_active('woocommerce/woocommerce.php') && ( !isset( $layout_default ) || !$layout_default || ( $layout_default == 'sidebar-left' ) || ( $layout_default == 'sidebar-right' ) ) ) ) get_sidebar(); ?>
 
   <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
+	<script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/create/new_account.js"></script>
 
 <?php //get_footer(); ?>
 

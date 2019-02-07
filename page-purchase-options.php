@@ -1,5 +1,24 @@
 <?php
 
+	session_start();
+
+// Sanitize Post Array
+$POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
+
+if(empty($POST['username']) || empty($POST['password']) ||
+empty($POST['email'])){
+  header("location: " . site_url('signup'));
+	exit();
+}else{
+
+    $_SESSION['fName'] = $POST['fName'];
+		$_SESSION['lName'] = $POST['lName'];
+		$_SESSION['email'] = $POST['email'];
+		$_SESSION['username'] = $POST['username'];
+		$_SESSION['password'] = $POST['password'];
+
+}
+
 /**
 
  * The template for displaying all pages.
@@ -31,6 +50,7 @@ get_header();
 
 		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
 			<div class="col align-items-center" id = "header-content-items">
+				<p><?php echo $_SESSION['fName']; ?></p>
 					<h1 class = "page-header">Get Trained By The Best</h1>
 					<h2>Purchase Sessions Below</h2>
 					<p>Step 1/3</p>

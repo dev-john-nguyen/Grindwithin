@@ -1,3 +1,31 @@
+<form id = "new-account" name = "new-account" method = "post" >
+    <input type = "text" id = "customerId" value = "<?php echo $customerId; ?>" hidden readonly/>
+    <input type = "number" id = "sessionAmount" value = "<?php echo $amount; ?>" hidden readonly/>
+    <input type = "text" id = "fName" value = "<?php echo $first_name; ?>" hidden readonly/>
+    <input type = "text" id = "lName" value = "<?php echo $last_name; ?>" hidden readonly/>
+    <input type = "email" id = "email" value = "<?php echo $email; ?>" hidden readonly/>
+    <input type = "number" id = "last4" value = "<?php echo $last4; ?>" hidden readonly/>
+    <input class="form-control mb-3" type = "text" id = "username" placeholder="Username" required/>
+    <input class="form-control mb-3" type = "password" id = "password" placeholder="Password" required/>
+    <input class="form-control mb-3" type = "password" id = "re-password" placeholder="Re-enter Password" Password required/>
+    <select id = "athleteType">
+      <option value = "default" selected>Choose Athlete Type</option>
+        <option value = "football">Football</option>
+        <option value = "basketball">Basketball</option>
+        <option value = "soccer">Soccer</option>
+        <option value = "baseball">Baseball</option>
+        <option value = "track">Track</option>
+        <option value = "hockey">Hockey</option>
+        <option value = "multi-sport">Multi-Sport</option>
+        <option value = "other">Others</option>
+    </select>
+    <!-- <input class="form-control mb-3" type = "text" id = "athleteType" placeholder="What type of athlete are you?" required></input> -->
+    <textarea class="form-control mb-3" type = "text" id = "description" placeholder="Brief description of yourself and what you want to accomplish." required></textarea>
+    <input type = "submit" class="btn btn-primary btn-block mt-4" name = "submit" id = "submit"/>
+</form>
+
+
+
 ******Charging Customer Through Stripe*****
 
 ******Install Composer Information*****
