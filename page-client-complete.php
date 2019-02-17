@@ -4,6 +4,8 @@ if (empty($_POST)){
 header('Location: ' . site_url('purchase-options'));
 }else{
 require_once('charge.php');
+session_start();
+store_new_account($_SESSION['fName'], $_SESSION['lName'], $_SESSION['email'], $_SESSION['username'], $_SESSION['password']);
 }
 
 

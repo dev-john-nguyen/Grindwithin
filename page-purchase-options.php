@@ -1,22 +1,11 @@
 <?php
 
-	session_start();
+session_start();
 
-// Sanitize Post Array
-$POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
-
-if(empty($POST['username']) || empty($POST['password']) ||
-empty($POST['email'])){
+if(!isset($_SESSION['lead'])){
   header("location: " . site_url('signup'));
+  session_destroy();
 	exit();
-}else{
-
-    $_SESSION['fName'] = $POST['fName'];
-		$_SESSION['lName'] = $POST['lName'];
-		$_SESSION['email'] = $POST['email'];
-		$_SESSION['username'] = $POST['username'];
-		$_SESSION['password'] = $POST['password'];
-
 }
 
 /**
@@ -43,6 +32,8 @@ empty($POST['email'])){
 
 get_header();
 
+
+
 ?>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -50,7 +41,7 @@ get_header();
 
 		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
 			<div class="col align-items-center" id = "header-content-items">
-				<p><?php echo $_SESSION['fName']; ?></p>
+				<p><?php echo $_SESSION['email']; ?></p>
 					<h1 class = "page-header">Get Trained By The Best</h1>
 					<h2>Purchase Sessions Below</h2>
 					<p>Step 1/3</p>

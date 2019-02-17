@@ -809,14 +809,12 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 <li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="<?php echo esc_url( home_url( '/settings' ) ); ?>">Settings</a></li>
 </ul>
 
-<?php }else{ ?>
-
-	<?php
+<?php }elseif(isset($_SESSION['lead']) == "lead"){
+			tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
+		}else{
 	logout_user();
 	tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
-	?>
-
-<?php } ?>
+ }?>
           </nav>
 
           <!-- #site-navigation -->

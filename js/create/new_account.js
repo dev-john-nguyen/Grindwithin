@@ -1,7 +1,6 @@
 
-
 //Start load function that will load data by using ajax
-	jQuery('#new-account1').submit(function(event) {
+	jQuery('#new-account').submit(function(event) {
 		event.preventDefault();
 
 		jQuery(this).find(':input').each(function(index, value){
@@ -39,7 +38,7 @@
               type: "POST",
               url: ajaxurl,
               data: ({
-                action: "store_new_account",
+                action: "check_available",
                 fName: fName,
 								lName: lName,
 								email: email,
@@ -47,13 +46,19 @@
 								password: password
               }),
               success: function (response){
-								if(response == 1){
-									var url = document.URL + "/purchase-options";
-									window.location.replace(url);
-								}else{
-									alert(response);
+								if(response == 4){
+									alert("Please Enter Valid Characters For Your First Name and Last Name!");
+								}else if(response == 1){
+									alert("It Looks Like Your Email Is Invalid. Please Try Again!");
+								}else if(response == 2){
+									alert("It Looks Like Your Username Is Already Taken. Please Try Again!");
+								}else if(response == 3){
+									alert("It looks Like We have Your Email Registered with us already. Please Contact Us Directly!");
+              	}else{
+									var url = window.location.protocol+"//"+window.location.host + "/main/purchase-options";
+									window.location.href = url;
 								}
-              }
+							}
             });
 
 

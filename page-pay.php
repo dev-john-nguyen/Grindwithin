@@ -1,15 +1,16 @@
 <?php
 
-	session_start();
-
 // Sanitize Post Array
 $POST = filter_var_array($_POST, FILTER_SANITIZE_STRING);
+
+session_start();
 
 if(empty($POST['purchase-option-text']) || empty($POST['purchase-option-amount']) ||
 empty($POST['purchase-option-price'])){
   header("location: " . site_url('purchase-options'));
 	exit();
 }else{
+
 	$text = $POST['purchase-option-text'];
 		$amount = $POST['purchase-option-amount'];
 			$price = $POST['purchase-option-price'];
@@ -43,6 +44,7 @@ empty($POST['purchase-option-price'])){
 
 
 get_header();
+
 
 ?>
 

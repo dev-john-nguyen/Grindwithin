@@ -896,8 +896,9 @@ wp_die();
 add_action('wp_ajax_store_trainer_account', 'store_trainer_account');
 add_action('wp_ajax_nopriv_store_trainer_account', 'store_trainer_account');
 
-function store_new_account(){
-  global $wpdb;
+function check_available(){
+
+    global $wpdb;
 
   $fName = $_POST['fName'];
   $lName = $_POST['lName'];
@@ -907,11 +908,61 @@ function store_new_account(){
 
   $table = $wpdb->prefix . "members";
 
+
+  //validate input
+  if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
+    exit("4");
+  }else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  exit("1");
+}
+
+
+  $sql = $wpdb->prepare("SELECT t.username FROM $table t Where t.username = %s", array($username));
+  $result = $wpdb->get_results($sql);
+
+    if(!empty($result)){
+      exit("2");
+    }
+
+    $sql = $wpdb->prepare("SELECT t.email FROM $table t Where t.email = %s", array($email));
+    $result = $wpdb->get_results($sql);
+
+    if(!empty($result)){
+      exit("3");
+    }
+
+
+    session_start();
+
+    $_SESSION['lead'] = 'lead';
+    $_SESSION['fName'] = $fName;
+    $_SESSION['lName'] = $lName;
+    $_SESSION['email'] = $email;
+    $_SESSION['username'] = $username;
+    $_SESSION['password'] = $password;
+
+    wp_die();
+
+}
+add_action('wp_ajax_check_available', 'check_available');
+add_action('wp_ajax_nopriv_check_available', 'check_available');
+
+function store_new_account($fName, $lName, $email, $username, $password){
+  global $wpdb;
+
+  // $fName = $_POST['fName'];
+  // $lName = $_POST['lName'];
+  // $email = $_POST['email'];
+  // $username = $_POST['username'];
+  // $password = $_POST['password'];
+
+  $table = $wpdb->prefix . "members";
+
   //validate input
   if (preg_match('/[^A-Za-z0-9.#\\-$]/', $fName) || preg_match('/[^A-Za-z0-9.#\\-$]/', $lName)){
     exit("Please enter valid characters for First Name and Last Name");
   }else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  exit("Invalid email format");
+  exit($email);
 }
 
   //check if username exist
@@ -921,7 +972,7 @@ function store_new_account(){
 
     if(!empty($result)){
       exit("Username is already taken. Please try again.");
-    }
+    }else{
 
 //Create Table if it doesn't exist
   $charset_collate = $wpdb->get_charset_collate();
@@ -941,6 +992,8 @@ function store_new_account(){
   ) $charset_collate;";
   require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
   dbDelta( $sql );
+
+}
 
 $currentDate = current_time( 'mysql' );
 

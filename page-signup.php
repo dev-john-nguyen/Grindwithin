@@ -1,12 +1,8 @@
 <?php
 
 session_start();
-
-$_SESSION['fName'] = "hello";
-$_SESSION['lName'] = "hello";
-$_SESSION['email'] = "hello";
-$_SESSION['username'] = "hello";
-$_SESSION['password'] = "hello";
+//Destory Session Variables
+session_destroy();
 
 /**
 
@@ -32,6 +28,7 @@ $_SESSION['password'] = "hello";
 
 get_header();
 
+
 ?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -40,7 +37,6 @@ get_header();
 
     <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
       <div class="col align-items-center" id = "header-content-items">
-				<p><?php echo $_SESSION['fName']; ?></p>
 				<h1 class = "page-header">Join The Family</h1>
 				<h2>Be Trained By The Best</h2>
 				<p>Step 1/3</p>
@@ -54,13 +50,13 @@ get_header();
 
 			<h3 style = "margin-bottom: 1.5rem"><u>Sign Up</u></h3>
 
-		<form action="<?php echo site_url('purchase-options'); ?>" id = "new-account" name = "new-account" method = "post" >
-				<input class="form-control mb-3" type = "text" name = "fName" placeholder = "First Name" required/>
-	    	<input class="form-control mb-3" type = "text" name = "lName" placeholder = "Last Name" required/>
-				<input class="form-control mb-3" type = "text" name = "email" placeholder = "Email" required/>
-				<input class="form-control mb-3" type = "text" name = "username" placeholder="Username" required/>
-				<input class="form-control mb-3" type = "password" name = "password" placeholder="Password" required/>
-				<input class="form-control mb-3" type = "password" name = "re-password" placeholder="Re-enter Password" Password required/>
+		<form id = "new-account" name = "new-account" method = "post" >
+				<input class="form-control mb-3" type = "text" name = "fName" id = "fName" placeholder = "First Name" required/>
+	    	<input class="form-control mb-3" type = "text" name = "lName" id = "lName" placeholder = "Last Name" required/>
+				<input class="form-control mb-3" type = "text" name = "email" id = "email" placeholder = "Email" required/>
+				<input class="form-control mb-3" type = "text" name = "username" id = "username" placeholder="Username" required/>
+				<input class="form-control mb-3" type = "password" name = "password" id = "password" placeholder="Password" required/>
+				<input class="form-control mb-3" type = "password" name = "re-password" id = "re-password" placeholder="Re-enter Password" Password required/>
 				<input type = "submit" class="btn btn-primary btn-block" name = "submit" id = "submit"/>
 		</form>
 
