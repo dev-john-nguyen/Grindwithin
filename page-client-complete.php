@@ -5,8 +5,42 @@ header('Location: ' . site_url('purchase-options'));
 }else{
 require_once('charge.php');
 session_start();
-store_new_account($_SESSION['fName'], $_SESSION['lName'], $_SESSION['email'], $_SESSION['username'], $_SESSION['password']);
+// store_new_account($_SESSION['fName'], $_SESSION['lName'], $_SESSION['email'], $_SESSION['username'], $_SESSION['password'],
+// 									$customerId, $last4, $amount);
+
+$firstName = $_SESSION['fName'];
+
 }
+
+?>
+
+<script type="text/javascript">
+var gayboi = "<?php echo $firstName; ?>";
+	alert(gayboi);
+function store_new_client_account() {
+
+	// jQuery.ajax({
+	// 			type: "POST",
+	// 			url: ajaxurl,
+	// 			data: ({
+	// 				action: "store_new_account",
+	// 				fName: fName,
+	// 				lName: lName,
+	// 				email: email,
+	// 				username: username,
+	// 				password: password
+	// 			}),
+	// 			success: function (response){
+	// 			}
+	// 		});
+
+
+}
+
+</script>
+
+
+<?php
 
 
 /**

@@ -676,7 +676,7 @@ wp_die();
 add_action('wp_ajax_authenticate_user', 'authenticate_user');
 add_action('wp_ajax_nopriv_authenticate_user', 'authenticate_user');
 
-function store_new_profile($fName, $lName, $username, $currentDate, $email){
+function store_new_profile($fName, $lName, $username, $currentDate, $email, $last4, $stripeId, $amount){
 
   global $wpdb;
 
@@ -727,7 +727,10 @@ function store_new_profile($fName, $lName, $username, $currentDate, $email){
         'trainer' => "none",
         'annoucement' => $annoucement,
         'accountCreated' => $currentDate,
-        'email' => $email
+        'email' => $email,
+        'last4' => $last4,
+        'stripeId' => $stripeId,
+        'sessionAmount' => $amount
           )
       );
 
@@ -947,7 +950,7 @@ function check_available(){
 add_action('wp_ajax_check_available', 'check_available');
 add_action('wp_ajax_nopriv_check_available', 'check_available');
 
-function store_new_account($fName, $lName, $email, $username, $password){
+function store_new_account($fName, $lName, $email, $username, $password, $stripeId, $last4, $amount){
   global $wpdb;
 
   // $fName = $_POST['fName'];
@@ -1014,6 +1017,8 @@ $result = $wpdb->insert(
     'username' => $username,
     'damn' => $hashPass,
     'created' => $currentDate,
+    'last4' => $last4,
+    'stripeId' => $stripeId,
     'active' => 1
       )
   );
@@ -1023,7 +1028,7 @@ $result = $wpdb->insert(
     " Thank you for your understanding.");
   }else{
     //create profile
-    $result = store_new_profile($fName, $lName, $username, $currentDate, $email);
+    $result = store_new_profile($fName, $lName, $username, $currentDate, $email, $last4, $stripeId, $amount);
 
     if(!$result > 0 || !$result || $result === false){
       exit("I apologize, we are having issues creating your profile. Please contact us directly via email." .
