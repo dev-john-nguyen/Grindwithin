@@ -16,6 +16,53 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+function deactivate_client_account(){
+  global $wpdb;
+
+  $clientUser = $_POST['clientSelect'];
+
+  $currentDate = current_time( 'mysql' );
+
+  $table = $wpdb->prefix . "clients";
+
+  $result = $wpdb->update(
+    $table,
+    array('trainer' => none),
+    array('username' => $clientUser)
+  );
+
+  if($result === false){
+    exit("It looks like we are having trouble deactivating the account. Please contact us via email. Error Code 1");
+  }else{
+
+    $table = $wpdb->prefix . "members";
+
+    $result = $wpdb->update(
+      $table,
+      array('active' => 0,
+            'deactivated' => $currentDate
+            ),
+      array('username' => $clientUser)
+    );
+
+    if(!$result > 0 || !$result || $result === false){
+      exit("It looks like we are having trouble deactivating the account. Please contact us via email. Error Code 2");
+    }
+
+  }
+
+  session_start();
+
+  if($_SESSION['type'] == 'client'){
+    session_destroy();
+  }
+
+  echo "$clientUser membership has been successfully cancelled";
+
+  wp_die();
+}
+add_action('wp_ajax_deactivate_client_account', 'deactivate_client_account');
+add_action('wp_ajax_nopriv_deactivate_client_account', 'deactivate_client_account');
 
 function update_trainer_app(){
   global $wpdb;
@@ -647,28 +694,37 @@ $password = esc_sql($_POST['password']);
 
 $table = $wpdb->prefix . "members";
 
-$sql = $wpdb->prepare("SELECT t.username, t.damn, t.type FROM $table t Where t.username = %s", array($username));
+$sql = $wpdb->prepare("SELECT t.username, t.damn, t.type, t.active FROM $table t Where t.username = %s", array($username));
 $result = $wpdb->get_results($sql);
 
 if(empty($result)){
   echo "Incorrect username or password. Please try again.";
 }else{
-  foreach($result as $item){
-    $password_hashed = $item->damn;
-    $usernameSes = $item->username;
-    $type = $item->type;
 
-    //$password_hashed = apply_filters( 'salt', $password_hashed, 'bitch ass nigga!');
-          if(wp_check_password($password, $password_hashed)){
-            session_start();
-            $_SESSION['member'] = $usernameSes;
-            $_SESSION['type'] = $type;
-            echo 1;
-          }else{
-            echo "Incorrect username or password. Please try again.";
+      if(sizeof($result) > 1 ){
+        echo "Looks like there is multiple accounts with the same username. Please contact us directly via email. I apologize for the inconvenience.";
+      }else{
+
+            foreach($result as $item){
+              $password_hashed = $item->damn;
+              $usernameSes = $item->username;
+              $type = $item->type;
+              $status = $item->active;
+
+              //$password_hashed = apply_filters( 'salt', $password_hashed, 'bitch ass nigga!');
+                    if(wp_check_password($password, $password_hashed) && $status == 1){
+                      session_start();
+                      $_SESSION['member'] = $usernameSes;
+                      $_SESSION['type'] = $type;
+                      echo 1;
+                    }else if ($status == 0){
+                      echo "Looks like your account is deactivated! Please contact us via email if you want to reactive it. Thank you!";
+                    }else{
+                      echo "Incorrect username or password. Please try again.";
+                    }
+                }
+
           }
-      }
-
     }
 
 wp_die();
@@ -982,6 +1038,7 @@ function store_new_account($fName, $lName, $email, $username, $password, $stripe
   $sql = "CREATE TABLE IF NOT EXISTS $table (
       `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `created` date,
+  `deactivated` date,
   `active` boolean,
   `stripeId` text,
   `last4` text,

@@ -34,7 +34,7 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
 
  $table = $wpdb->prefix . "clients";
  $trainerUser = $_SESSION['member'];
- $sql = $wpdb->prepare("SELECT t.fName, t.lName, t.username FROM $table t WHERE t.trainer = %s", array($trainerUser));
+ $sql = $wpdb->prepare("SELECT t.username, t.sessionAmount FROM $table t WHERE t.trainer = %s", array($trainerUser));
  $results = $wpdb->get_results($sql);
 
  $sqlAnnoucement = $wpdb->prepare("SELECT t.annoucement FROM $table t WHERE t.trainer = %s", array($trainerUser));
@@ -83,7 +83,6 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
     </div>
 
 
-
             <div class = "row">
 
               <div class = "col"></div>
@@ -97,10 +96,14 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
         <?php
         foreach($results as $item){
           $username = $item->username;
-          $fName = $item->fName;
-          $lName = $item->lName;
+          $sessionAmount = $item->sessionAmount;
+          if($sessionAmount < 1) {
+            $sessionAmount = 0;
+          }
           ?>
-          <option value = "<?php echo $username ?>" ><?php echo $fName . " " . $lName ?> </option>
+          <option value = "<?php echo $username ?>" <?php if ($sessionAmount == 0){ echo "class = 'text-danger'";}else if ($sessionAmount == 1){ echo "class = 'text-warning'";}?>>
+            <?php echo $username . " (" . $sessionAmount . " sessions)"; ?>
+          </option>
           <?php
         }
         ?>
@@ -144,10 +147,17 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
 
                     <form id = "add-sessions-form" method = "post" style = "display: none;">
                       <input type = "text" name = "trainer-username" id = "trainer-username" value = "<?php echo $trainerUser; ?>" readonly hidden/>
-                      Add Sessions: <input type = "number" id = "add-sessions" min = "1"/>
-                      <input type = "submit"/>
+                      <p><b>Add Sessions</b></p>
+                      <input type = "number" id = "add-sessions" min = "1" style = "width: 30%;"/>
+                      <input type = "submit" value = "Update"/>
                     </form>
 
+              </div>
+
+              <div class = "col" style = "margin: 0 auto;">
+                <form id = "cancel-membership" method = "post">
+                  <button type = "submit" class = "btn btn-danger">Cancel Membership</button>
+                </form>
               </div>
 
         </div>
@@ -187,5 +197,6 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
   </select><button type="button" id="displayBtn">Display</button>
 </form> -->
 
+<script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/cancel_membership.js"></script>
 
 <?php get_footer('custes'); ?>

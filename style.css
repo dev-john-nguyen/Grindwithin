@@ -32,6 +32,8 @@ Updated: 2019-01-05 10:55:24
   padding: 20px;
 }
 
+
+
 .site-content {
   max-width: 100% !important;
 }
@@ -50,6 +52,10 @@ color: #ffffff;
 }
 
 input[type = "submit"], input[type = "button"]{
+  background-color: rgb(51, 72, 91);
+}
+
+button {
   background-color: rgb(51, 72, 91);
 }
 

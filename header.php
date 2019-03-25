@@ -813,10 +813,45 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 			tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
 		}else{
 	logout_user();
-	tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
- }?>
+	// tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
+	?>
+	<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url() ); ?>">Home</a></li>
+<li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a href="<?php echo esc_url( home_url() ); ?>">Sign Up</a>
+	<div id="myDropdown" class="dropdown-content">
+		<a href="<?php echo esc_url( home_url('signup') ); ?>">New Athlete</a>
+		<a href="<?php echo esc_url( home_url('signup-trainer') ); ?>">New Trainer</a>
+	</div>
+</li>
+<li id="menu-item-761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-761"><a href="<?php echo esc_url( home_url() ); ?>">About Us</a>
+	<div id="myDropdown" class="dropdown-content">
+		<a href="<?php echo esc_url( home_url('blog') ); ?>">Blog</a>
+		<a href="<?php echo esc_url( home_url('mission-statement') ); ?>">Mission Statement</a>
+		<a href="<?php echo esc_url( home_url('about-us') ); ?>">About Us</a>
+	</div></li>
+<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url() ); ?>">Help</a>
+	<div id="myDropdown" class="dropdown-content">
+		<a href="<?php echo esc_url( home_url('faq') ); ?>">FAQ</a>
+		<a href="<?php echo esc_url( home_url('privacy-policy') ); ?>">Privacy Policy</a>
+		<a href="<?php echo esc_url( home_url('terms-and-conditions') ); ?>">Terms and Conditions</a>
+		<a href="<?php echo esc_url( home_url('contact-us') ); ?>">Contact</a>
+	</div>
+</li>
+
+</ul>
+ <?php } ?>
           </nav>
 
+<style>
+.dropdown-content{
+	display: none;
+	position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		background-color: #2a2a2a;
+		opacity: .95;
+    z-index: 1;
+		width: max-content;
+}
+</style>
           <!-- #site-navigation -->
 
 
@@ -837,7 +872,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 						<input type = "text" class="form-control" id = "username-login" placeholder="username"/ required>
 						<input type = "password" class="form-control" id = "password-login" placeholder="password"/ required>
 						<input type = "submit" class="btn btn-primary form-control w-25" name = "submit-login" id = "submit-login" value = "Login"/>
-						<input type = "button" class="btn btn-primary form-control w-25" value = "Sign Up" onclick = "window.location = '<?php echo esc_url( home_url( '/purchase-options' ) ); ?>'"/>
+						<input type = "button" class="btn btn-primary form-control w-25" value = "Sign Up" onclick = "window.location = '<?php echo esc_url( home_url( '/signup' ) ); ?>'"/>
 						</input>
 
 					</form>

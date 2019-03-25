@@ -1,6 +1,12 @@
 //start of jQuery functions
 jQuery(document).ready(function(jQuery) {
 
+	var currentUrl = window.location.href;
+
+	if(currentUrl.includes("?inactive")){
+		alert("It looks like your account has been deactivated. Please contact us via email if this is incorrect.");
+	}
+
 //Start load function that will load data by using ajax
 	jQuery('#btnLogout').click(function(event) {
 
@@ -56,10 +62,12 @@ jQuery(document).ready(function(jQuery) {
   		});
 			//End Submit function
 
-			// jQuery("#signupBtn").click(function(e){
-			//
-			//
-			// });
+
+			jQuery(".menu-item").hover(function(e){
+				jQuery(this).find(".dropdown-content").css("display", "initial");
+			}, function(e){
+				jQuery(this).find(".dropdown-content").css("display", "none");
+			})
 
 });
 //End JQuery

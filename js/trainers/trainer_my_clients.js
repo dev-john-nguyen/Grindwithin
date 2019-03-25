@@ -332,7 +332,7 @@ function create_elements(str, num, clientData){
       var trainerUsername = jQuery("#trainer-username").val();
       var clientSelect = jQuery("#my-client-list").val();
       if(session.length === 0){
-        alert("Can't submit an empty reminder!");
+        alert("Please enter a number greater than 0");
         return;
       }
 

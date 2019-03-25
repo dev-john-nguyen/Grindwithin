@@ -1,13 +1,6 @@
 <?php
 
-session_start();
-
-
-if(!isset($_SESSION['member']) ){
-  header("location: " . site_url());
-  session_destroy();
-  exit();
-}else{
+require('active-member.php');
 
         $username = $_SESSION['member'];
 
@@ -56,7 +49,7 @@ if(!isset($_SESSION['member']) ){
         $annoucement = $item->annoucement;
       }
 
-}
+
 
 
 if($tableType == "client"){
@@ -223,6 +216,38 @@ if($tableType == "client"){
       <div class = "col"></div>
     </div>
 
+<?php }else if($tableType == "trainer"){
+  $tableClient = $wpdb->prefix . "clients";
+  $resultSessionClient = $wpdb->get_results("SELECT t.username, t.sessionAmount FROM $tableClient t WHERE t.trainer = '$username' AND t.sessionAmount is null OR t.sessionAmount = 0");
+  ?>
+  <div class = "row text-center margin-top-header">
+    <div class = "col"></div>
+    <div class = "col-sm-8 form-layout">
+
+      <?php if(empty($resultSessionClient)){ ?>
+        <h2>Keep It Up!<h2>
+      <?php }else{ ?>
+                <h2 class = "text-danger"><u>Warning: Clients Without Sessions!</u></h2>
+        <select>
+          <option value = "default">Clients</option>
+        <?php
+        foreach ($resultSessionClient as $item){
+          $username = $item->username;
+          $sessionAmount = $item->sessionAmount;
+
+          if($sessionAmount < 1) {
+            $sessionAmount = 0;
+          }
+
+          ?>
+          <option><?php echo $username . " (" . $sessionAmount . " sessions)"; ?>
+          </option>
+          <?php } ?>
+      </select>
+      <?php } ?>
+    </div>
+    <div class = "col"></div>
+  </div>
 <?php } ?>
 
 
@@ -272,8 +297,8 @@ if($tableType == "client"){
     if($trainer == "none"){
       ?>
   <div class = "col">
-    <div class = "col profile">
-        <div id = "profile-trainer" class = "row" style = "position: relative; top: 150px; text-align: center;">
+    <div class = "col profile text-center">
+        <div id = "profile-trainer" class = "row">
           <h1>A trainer will be assigned to you shortly</h1>
         </div>
     </div>

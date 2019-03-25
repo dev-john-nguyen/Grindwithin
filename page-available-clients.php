@@ -34,7 +34,7 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
 
  $table = $wpdb->prefix . "clients";
  $trainerUser = $_SESSION['member'];
- $results = $wpdb->get_results("SELECT t.fName, t.lName, t.imagePath, t.goal, t.username, t.annoucement FROM $table t WHERE t.trainer = 'none'");
+ $results = $wpdb->get_results("SELECT t.username, t.sessionAmount FROM $table t WHERE t.trainer = 'none'");
 
 ?>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -64,10 +64,12 @@ if(!isset($_SESSION['member']) || $_SESSION['type'] != 'trainer'){
         <?php
         foreach($results as $item){
           $username = $item->username;
-          $fName = $item->fName;
-          $lName = $item->lName;
+          $sessionAmount = $item->sessionAmount;
+          if($sessionAmount < 1) {
+            $sessionAmount = 0;
+          }
           ?>
-          <option value = "<?php echo $username ?>" ><?php echo $fName . " " . $lName ?> </option>
+          <option value = "<?php echo $username ?>" ><?php echo $username . " (" . $sessionAmount . " sessions)"; ?> </option>
           <?php
         }
         ?>

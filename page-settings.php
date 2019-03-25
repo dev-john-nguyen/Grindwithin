@@ -1,13 +1,8 @@
 <?php
 
-session_start();
+require('active-member.php');
 
 
-if(!isset($_SESSION['member']) ){
-  header("location: " . site_url());
-  session_destroy();
-  exit();
-}else{
   $tableType = $_SESSION['type'];
   $memberArray = get_member_profile($tableType, $_SESSION['member']);
 
@@ -25,7 +20,7 @@ if(!isset($_SESSION['member']) ){
     $phoneNumber = $item->phoneNumber;
   }
 
-}
+
 
 /**
 
@@ -62,7 +57,7 @@ if(!isset($_SESSION['member']) ){
     <h3 style = "margin-bottom: 1.5rem; text-align: center;"><u>Settings</u></h3>
 
   <label for = "member" style = "float: left; padding-right: 10px;"><b>Username: </b></Label>
-  <p name = 'member' id = 'member'> <?php echo $_SESSION['member'] ?> </p>
+  <p name = 'member'> <?php echo $_SESSION['member'] ?> </p>
 
   <form id = "member-settings" name = "member-settings" method = "post" enctype="multipart/form-data">
       <input type = "text" name = "member" id = "member" value = "<?php echo stripslashes($_SESSION['member']); ?>" readonly hidden/>
@@ -104,6 +99,10 @@ if(!isset($_SESSION['member']) ){
       <input type = "submit" name = "submit-member-settings" id = "submit-member-settings" style = "width: 100%;"/>
   </form>
 
+  <form id = "cancel-membership" method = "post">
+    <button type = "submit" class = "btn btn-danger">Cancel Membership</button>
+  </form>
+
 </div>
 </div>
 </div>
@@ -114,5 +113,7 @@ if(strpos($fullUrl, "failed") == true) {
   echo "failed";
 }
 ?>
+
+<script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/cancel_membership.js"></script>
 
 <?php get_footer('custes'); ?>

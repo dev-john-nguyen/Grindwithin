@@ -3,13 +3,7 @@
 session_start();
 
 
-if(!isset($_SESSION['member']) ){
-  header("location: http://localhost/main/");
-  session_destroy();
-  exit();
-}else{
-
-}
+include('active-member.php');
 
 /**
 
