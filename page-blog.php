@@ -32,37 +32,12 @@ get_header();
 
 	<div id="primary" class="content-area sidebar-left">
 
-		<main id="main" class="site-main" role="main">
-
-
-
-			<?php while ( have_posts() ) : the_post(); ?>
-
-
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-
-
-				<?php
-
-					// If comments are open or we have at least one comment, load up the comment template
-
-					if ( comments_open() || get_comments_number() ) :
-
-						comments_template();
-
-					endif;
-
-				?>
-
-
-
-			<?php endwhile; // end of the loop. ?>
-
-
-
-		</main><!-- #main -->
+		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
+			<div class="col align-items-center" id = "header-content-items">
+				<h1>Blog</h1>
+				<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
+			</div>
+		</div>
 
 		<div class = "blog-items">
 		<?php
@@ -123,6 +98,7 @@ get_header();
 		  </div>
 		<?php endforeach; wp_reset_postdata(); ?> </div> <?php } ?>
 </div>
+
 	</div><!-- #primary -->
 
 <style type="text/css">

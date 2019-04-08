@@ -31,7 +31,7 @@ get_header();
 
 		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
 			<div class="col align-items-center" id = "header-content-items">
-					<h1 class = "page-header">Frequently Asked Questions (FAQ)</h1>
+					<h1 class = "page-header">Here's What We've Been Up To!</h1>
 
 					<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
 				</div>
@@ -41,11 +41,14 @@ get_header();
 		<div class = "container margin-top-header margin-bottom">
 
 			<div class = "row align-items-start">
+				<button onclick="retrieve_content_feed()">Click</button>
+				<div class = "col"></div>
 
-<div class = "col form-layout text-left">
-	<h4 class = "text-center">FAQ</h4>
+<div class = "col-9 form-layout text-center">
 
 </div>
+
+<div class = "col"></div>
 
 </div>
 
@@ -54,5 +57,6 @@ get_header();
   </div>
 
   <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
+	<script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/feed/display-feed.js"></script>
 
 <?php get_footer('custes'); ?>

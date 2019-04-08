@@ -31,28 +31,30 @@ get_header();
 
 		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
 			<div class="col align-items-center" id = "header-content-items">
-					<h1 class = "page-header">Frequently Asked Questions (FAQ)</h1>
-
-					<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
+					<h1 class = "page-header">Upload Image or Video</h1>
 				</div>
 
 		</div>
 
 		<div class = "container margin-top-header margin-bottom">
+      <form id = "content-form-image"  method="post">
+        <p>Upload Image</p>
+      <input type = "file"/>
+			<input type = 'text' placeholder="description" id = "descriptionImage"/>
+      <input class = "mt-3" type = "submit" value = "Upload"/>
+    </form>
 
-			<div class = "row align-items-start">
-
-<div class = "col form-layout text-left">
-	<h4 class = "text-center">FAQ</h4>
-
-</div>
-
-</div>
+    <form class = "mt-3" id = "content-form-video"  method="post">
+      <p>Upload Video</p>
+    <input type = "text" id = "youtubeUrl" placeholder="Youtube URL"/>
+		<input type = 'text' placeholder="description" id = "descriptionVideo"/>
+    <input class = "mt-3" type = "submit" value = "Upload"/>
+  </form>
 
 </div>
 
   </div>
 
-  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
+  <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/feed/upload-feed.js"></script>
 
 <?php get_footer('custes'); ?>

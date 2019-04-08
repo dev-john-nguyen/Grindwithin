@@ -43,7 +43,7 @@ get_header();
 						please do not use this service.
 					</p>
 
-					<a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
+					<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
 				</div>
 
 		</div>

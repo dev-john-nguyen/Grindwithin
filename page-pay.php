@@ -63,7 +63,7 @@ get_header();
           <p>Please contact us if you have financial issues. We are here to help and offer
             special payment programs for individuals that fit the necessary requirements.</p>
           <p>Step 2/3</p>
-          <a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
+          <a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
         </div>
 
     </div>

@@ -16,6 +16,25 @@ add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles');
 // Your code goes below
 //
 
+// Automatic Updates
+
+add_filter( 'auto_update_plugin', '__return_true' );
+add_filter( 'auto_update_theme', '__return_true' );
+
+function get_content_feed(){
+  global $wpdb;
+
+  $table = $wpdb->prefix . "content-feed";
+
+  $results = $wpdb->get_results("SELECT t.url, t.description, t.type, t.date FROM $table t");
+
+  echo $results;
+
+  wp_die();
+}
+add_action('wp_ajax_get_content_feed', 'get_content_feed');
+add_action('wp_ajax_nopriv_get_content_feed', 'get_content_feed');
+
 function deactivate_client_account(){
   global $wpdb;
 
@@ -285,60 +304,122 @@ function update_client_sessions(){
 add_action('wp_ajax_update_client_sessions', 'update_client_sessions');
 add_action('wp_ajax_nopriv_update_client_sessions', 'update_client_sessions');
 
-// function store_workout_image(){
-//
-//   $trainerUsername = $_POST['trainerUsername'];
-//   $imageName = $_POST['imageName'];
-//
-//     $file = $_FILES['file'];
-//     $fileName = $_FILES['file']['name'];
-//     $fileTmpName = $_FILES['file']['tmp_name'];
-//     $fileSize = $_FILES['file']['size'];
-//     $fileError = $_FILES['file']['error'];
-//     $fileType = $_FILES['file']['type'];
-//
-//     $fileExt = explode('.', $fileName);
-//
-//     $fileActualExt = strtolower(end($fileExt));
-//
-//     $allowed = array('jpg','jpeg','png','pdf');
-//
-//     $fileNameStore = "workout/" . $imageName . ".jpg";
-//
-//     if(in_array($fileActualExt, $allowed)){
-//       if ($fileError === 0){
-//         if($fileSize < 100000000){
-//           $base = wp_upload_dir();
-//           $basedir = $base['basedir'];
-//           $fileDestination = $basedir . '/' . $fileNameStore;
-//           $fileDestinationStore = 'wp-content/uploads/' . $fileNameStore;
-//             if (move_uploaded_file($fileTmpName, $fileDestination)){
-//
-//                 image_crop($fileDestination, $fileNameStore);
-//
-//                 exit($fileDestinationStore);
-//
-//             }else{
-//               exit("0");
-//             }
-//
-//         }else{
-//           //Size is too big
-//           exit("1");
-//         }
-//
-//       }else{
-//           exit("0");
-//       }
-//
-//     }else{
-//           exit("2");
-//     }
-//
-//
-// }
-// add_action('wp_ajax_store_workout_image', 'store_workout_image');
-// add_action('wp_ajax_nopriv_store_workout_image', 'store_workout_image');
+function store_url_content_feed($url, $description, $type){
+
+  global $wpdb;
+
+  $table = $wpdb->prefix . "content_feed";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+    `date` date,
+    `description` text,
+    `type` text,
+    `url` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    $sql = $wpdb->prepare("SELECT t.url FROM $table t WHERE t.url = %s", array($url));
+    $result = $wpdb->get_results($sql);
+
+    if(!empty($result)){
+      return 'Looks like you have already uploaded ' . $url . ' url!';
+    }
+
+    $currentDate = current_time( 'mysql' );
+
+    $result = $wpdb->insert(
+          $table,
+          array(
+        'date' => $currentDate,
+        'description' => $description,
+        'type' => $type,
+        'url' => $url
+          )
+      );
+
+      if(!$result > 0 || !$result || $result === false){
+        return 'Failed to insert the url into the database';
+      }else{
+        return 'Successfully Uploaded Url!';
+      }
+
+wp_die();
+
+}
+
+function store_video_content_feed(){
+    global $wpdb;
+
+    $youtubeUrl = $_POST['youtubeURL'];
+    $description = $_POST['description'];
+
+  $storeUrl = store_url_content_feed($youtubeUrl, $description, 'video');
+
+  exit($storeUrl);
+
+  wp_die();
+}
+add_action('wp_ajax_store_video_content_feed', 'store_video_content_feed');
+add_action('wp_ajax_nopriv_store_video_content_feed', 'store_video_content_feed');
+
+
+function store_image_content_feed(){
+
+  // $trainerUsername = $_POST['trainerUsername'];
+  $description = $_POST['description'];
+
+    $file = $_FILES['file'];
+    $fileName = $_FILES['file']['name'];
+    $fileTmpName = $_FILES['file']['tmp_name'];
+    $fileSize = $_FILES['file']['size'];
+    $fileError = $_FILES['file']['error'];
+    $fileType = $_FILES['file']['type'];
+
+    $fileExt = explode('.', $fileName);
+
+    $fileActualExt = strtolower(end($fileExt));
+
+    $allowed = array('jpg','jpeg','png','pdf');
+
+    $fileNameStore = "feed/" . $fileName . ".jpg";
+
+    if(in_array($fileActualExt, $allowed)){
+      if ($fileError === 0){
+        if($fileSize < 100000000){
+          $base = wp_upload_dir();
+          $basedir = $base['basedir'];
+          $fileDestination = $basedir . '/' . $fileNameStore;
+          $fileDestinationStore = 'wp-content/uploads/' . $fileNameStore;
+            if (move_uploaded_file($fileTmpName, $fileDestination)){
+              $storeUrl = store_url_content_feed($fileDestinationStore, $description, 'image');
+              exit($storeUrl);
+
+            }else{
+              exit("0");
+            }
+
+        }else{
+          //Size is too big
+          exit("1");
+        }
+
+      }else{
+          exit('0');
+      }
+
+    }else{
+          exit("2");
+    }
+
+wp_die();
+}
+add_action('wp_ajax_store_image_content_feed', 'store_image_content_feed');
+add_action('wp_ajax_nopriv_store_image_content_feed', 'store_image_content_feed');
 
 function get_client_profile(){
   global $wpdb;

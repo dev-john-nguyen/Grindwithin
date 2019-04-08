@@ -31,7 +31,7 @@ get_header();
 
 		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
 			<div class="col align-items-center" id = "header-content-items">
-					<h1 class = "page-header">Frequently Asked Questions (FAQ)</h1>
+					<h1 class = "page-header">About Us</h1>
 
 					<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
 				</div>
@@ -42,10 +42,19 @@ get_header();
 
 			<div class = "row align-items-start">
 
-<div class = "col form-layout text-left">
-	<h4 class = "text-center">FAQ</h4>
+				<div class = "col"></div>
+
+<div class = "col-9 form-layout text-left">
+	<h3 class = "text-center">We Are A Family</h3>
+	<p class = "text-center">Our mission is what drives us to do everything possible to bring out the best in
+		every athlete. We do that by putting our athletes first. Not only do we provide high quality and unique
+		training programs, but we also value creating a family atmosphere. Once a GrindWithin Athlete, always a
+		GrindWithin Athlete.
+	</p>
 
 </div>
+
+<div class = "col"></div>
 
 </div>
 

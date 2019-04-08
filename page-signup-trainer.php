@@ -34,7 +34,7 @@ get_header();
 		<div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
 			<div class="col align-items-center" id = "header-content-items">
 				<h1>Thank You And Welcome!</h1>
-				<a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
+				<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
 			</div>
 		</div>
 

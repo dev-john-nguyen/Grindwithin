@@ -33,7 +33,7 @@ get_header();
 			<div class="col align-items-center" id = "header-content-items">
 					<h1 class = "page-header">Privacy Policy</h1>
 
-					<a id = "arrowDownBtn"><img src = "http://localhost/main/wp-content/uploads/2019/01/downpoint.png" style = "width: 10%;" /></a>
+					<a id = "arrowDownBtn"><img src = "<?php echo site_url('wp-content/uploads/2019/01/downpoint.png') ?>" style = "width: 10%;" /></a>
 				</div>
 
 		</div>

@@ -816,24 +816,26 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 	// tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
 	?>
 	<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url() ); ?>">Home</a></li>
-<li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a href="<?php echo esc_url( home_url() ); ?>">Sign Up</a>
+		<li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url('training-feed') ); ?>">Feed</a></li>
+<li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a>Sign Up</a>
 	<div id="myDropdown" class="dropdown-content">
 		<a href="<?php echo esc_url( home_url('signup') ); ?>">New Athlete</a>
-		<a href="<?php echo esc_url( home_url('signup-trainer') ); ?>">New Trainer</a>
+		<a href="<?php echo esc_url( home_url('become-trainer') ); ?>">New Trainer</a>
 	</div>
 </li>
-<li id="menu-item-761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-761"><a href="<?php echo esc_url( home_url() ); ?>">About Us</a>
+<li id="menu-item-761" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-761"><a>About Us</a>
 	<div id="myDropdown" class="dropdown-content">
-		<a href="<?php echo esc_url( home_url('blog') ); ?>">Blog</a>
+		<a href="<?php echo esc_url( home_url('testimonials') ); ?>">Testimonials</a>
 		<a href="<?php echo esc_url( home_url('mission-statement') ); ?>">Mission Statement</a>
 		<a href="<?php echo esc_url( home_url('about-us') ); ?>">About Us</a>
+		<a href="<?php echo esc_url( home_url('blog') ); ?>">Blog</a>
 	</div></li>
-<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="<?php echo esc_url( home_url() ); ?>">Help</a>
+<li id="menu-item-76" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a>Help</a>
 	<div id="myDropdown" class="dropdown-content">
 		<a href="<?php echo esc_url( home_url('faq') ); ?>">FAQ</a>
 		<a href="<?php echo esc_url( home_url('privacy-policy') ); ?>">Privacy Policy</a>
 		<a href="<?php echo esc_url( home_url('terms-and-conditions') ); ?>">Terms and Conditions</a>
-		<a href="<?php echo esc_url( home_url('contact-us') ); ?>">Contact</a>
+		<a href="<?php echo esc_url( home_url('contact-us') ); ?>">Contact Us</a>
 	</div>
 </li>
 
