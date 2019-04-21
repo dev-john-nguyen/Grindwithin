@@ -37,16 +37,16 @@ get_header();
 		</div>
 
 		<div class = "container margin-top-header margin-bottom">
-      <form id = "content-form-image"  method="post">
+      <form id = "content-form-image" enctype="multipart/form-data" method="post">
         <p>Upload Image</p>
-      <input type = "file"/>
+      <input type = "file" id = "file1"/>
 			<input type = 'text' placeholder="description" id = "descriptionImage"/>
       <input class = "mt-3" type = "submit" value = "Upload"/>
     </form>
 
     <form class = "mt-3" id = "content-form-video"  method="post">
       <p>Upload Video</p>
-    <input type = "text" id = "youtubeUrl" placeholder="Youtube URL"/>
+    <input type = "text" id = "youtubeUrl" placeholder="Youtube URL (Make Sure It's embedded Youtube Link)"/>
 		<input type = 'text' placeholder="description" id = "descriptionVideo"/>
     <input class = "mt-3" type = "submit" value = "Upload"/>
   </form>

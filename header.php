@@ -816,7 +816,7 @@ if ( is_plugin_active( 'tesseract-pro-plugin/fl-builder.php' ) ) { ?>
 	// tesseract_output_menu( FALSE, FALSE, 'primary', 0 );
 	?>
 	<ul id="menu-top-menu" class="nav-menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url() ); ?>">Home</a></li>
-		<li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url('training-feed') ); ?>">Feed</a></li>
+		<li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-73"><a href="<?php echo esc_url( home_url('athlete-feed') ); ?>">Feed</a></li>
 <li id="menu-item-760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-760"><a>Sign Up</a>
 	<div id="myDropdown" class="dropdown-content">
 		<a href="<?php echo esc_url( home_url('signup') ); ?>">New Athlete</a>

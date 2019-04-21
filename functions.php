@@ -24,13 +24,25 @@ add_filter( 'auto_update_theme', '__return_true' );
 function get_content_feed(){
   global $wpdb;
 
-  $table = $wpdb->prefix . "content-feed";
+	$table = $wpdb->prefix . "content_feed";
 
-  $results = $wpdb->get_results("SELECT t.url, t.description, t.type, t.date FROM $table t");
+//get_results for the whole table
+	$result = $wpdb->get_results("SELECT * FROM $table");
 
-  echo $results;
+//Store the variables to a two dm array
+	foreach($result as $item) {
+		$itemMain[] = array($item->url, $item->type, $item->description, $item->date);
+	}
 
-  wp_die();
+
+//json_encode to send it to javascript
+	if($result){
+		echo json_encode($itemMain);
+	}else{
+		echo "Problem Accessing The Videos";
+	}
+
+		wp_die();
 }
 add_action('wp_ajax_get_content_feed', 'get_content_feed');
 add_action('wp_ajax_nopriv_get_content_feed', 'get_content_feed');
@@ -384,20 +396,29 @@ function store_image_content_feed(){
 
     $fileActualExt = strtolower(end($fileExt));
 
-    $allowed = array('jpg','jpeg','png','pdf');
+    $allowed = array('jpg','jpeg','png','pdf', 'mts');
 
-    $fileNameStore = "feed/" . $fileName . ".jpg";
+    $fileNameStore = "feed/" . $fileName;
 
     if(in_array($fileActualExt, $allowed)){
       if ($fileError === 0){
-        if($fileSize < 100000000){
+        if($fileSize < 5000000){
           $base = wp_upload_dir();
           $basedir = $base['basedir'];
           $fileDestination = $basedir . '/' . $fileNameStore;
           $fileDestinationStore = 'wp-content/uploads/' . $fileNameStore;
             if (move_uploaded_file($fileTmpName, $fileDestination)){
+              //Crop the Image to Fit feed layout
+              $imageCropResult = image_crop($fileDestination, $fileNameStore, 300, 300);
+
+              if($imageCropResult == 'error'){
+                $cropResult = 'Error Cropping Image';
+              }else{
+                $cropResult = 'Successfully Cropped Image!';
+              }
+
               $storeUrl = store_url_content_feed($fileDestinationStore, $description, 'image');
-              exit($storeUrl);
+              exit($storeUrl . ' || Crop Result: ' . $cropResult . ' || File destination: ' . $fileDestination);
 
             }else{
               exit("0");
@@ -409,7 +430,7 @@ function store_image_content_feed(){
         }
 
       }else{
-          exit('0');
+          exit('3');
       }
 
     }else{
@@ -529,13 +550,13 @@ function GetAge($dob)
 }
 
 
-function image_crop($url, $name){
+function image_crop($url, $name, $width, $height){
 
       $image = wp_get_image_editor( $url );
 
     if ( ! is_wp_error( $image ) ) {
 
-      $image->resize( 150, 150, true );
+      $image->resize( $width, $height, true );
 
       $data = $image->save($url);
 
@@ -578,7 +599,11 @@ function get_member_profile($tableType, $username){
 }
 
 
+//Uploading Profile Image for Users
+
 if(isset($_POST['submit-member-settings'])){
+
+  global $wpdb;
 
   if(empty($_FILES['file-member'])){
     header("Location: ?empty");
@@ -620,7 +645,10 @@ if(isset($_POST['submit-member-settings'])){
 
   $allowed = array('jpg','jpeg','png','pdf');
 
-  $fileNameStore = "profile/" . $memberName . ".jpg";
+  //add this time ext to image
+  $currentDate = current_time( 'timestamp' );
+
+  $fileNameStore = "profile/" . $memberName . $currentDate . ".jpg";
 
   if(in_array($fileActualExt, $allowed)){
     if ($fileError === 0){
@@ -629,31 +657,57 @@ if(isset($_POST['submit-member-settings'])){
         $basedir = $base['basedir'];
         $fileDestination = $basedir . '/' . $fileNameStore;
         $fileDestinationStore = 'wp-content/uploads/' . $fileNameStore;
+        //Successfully moved to file destination
           if (move_uploaded_file($fileTmpName, $fileDestination)){
-            //Successfully moved to file destination
 
+            // ****** Delete Previous Profile Image *******
+            $tableType = $_POST['type'];
+
+            $clientTable = $wpdb->prefix . $tableType . "s";
+
+            $sql = $wpdb->prepare("SELECT t.imagePath FROM $clientTable t Where t.username = %s", array($memberName));
+            $selectImagePath = $wpdb->get_results($sql);
+
+            //make sure size of array is one
+            if(sizeof($selectImagePath) == 1){
+              $previousImagePath = $selectImagePath[0]->imagePath ;
+              //Delete the previous image
+              $deletePreviousImage = unlink($previousImagePath);
+
+              if($deletePreviousImage){
+                $resultDeletePreviousImage = "passprevimg";
+              }else{
+                $resultDeletePreviousImage = "failprevimg2";
+              }
+
+            }else{
+              $resultDeletePreviousImage = "failprevimg1";
+            }
+
+
+            //Update New Image Path and All Updated Information
             $result = update_to_profile($fileDestinationStore);
 
-            if($result === false){
-              //If the query fails
-              $message = "I apologize, but we had trouble resizing your image.";
-              header("Location: ?failed-update");
-              exit();
-            }elseif(!$result){
-              //No changes were made but still updated
-              $imageCResults = image_crop($fileDestination, $fileNameStore);
-              header("Location: ?$imageCResults");
-              exit();
-            }else if($result > 1){
-                  //email myself to notify that there are multiple users with the same username
-                  header("Location: ?Duplicates");
+                if($result === false){
+                  //If the query fails
+                  $message = "I apologize, but we had trouble resizing your image.";
+                  header("Location: ?failed-update/$resultDeletePreviousImage");
                   exit();
-            }else{
-              //Changes were made and updated
-                  $imageCResults = image_crop($fileDestination, $fileNameStore);
-                  header("Location: ?$imageCResults");
+                }elseif(!$result){
+                  //No changes were made but still updated
+                  $imageCResults = image_crop($fileDestination, $fileNameStore, 150, 150);
+                  header("Location: ?$imageCResults/$resultDeletePreviousImage");
                   exit();
-            }
+                }else if($result > 1){
+                      //email myself to notify that there are multiple users with the same username
+                      header("Location: ?Duplicates/$resultDeletePreviousImage");
+                      exit();
+                }else{
+                  //Changes were made and updated
+                      $imageCResults = image_crop($fileDestination, $fileNameStore, 150, 150);
+                      header("Location: ?$imageCResults/$resultDeletePreviousImage");
+                      exit();
+                }
 
           }else{
             //Unable to move the image to the file folder
@@ -683,7 +737,7 @@ if(isset($_POST['submit-member-settings'])){
         exit();
   }
 
-
+  wp_die();
 }
 
 function update_to_profile($fileDestination){

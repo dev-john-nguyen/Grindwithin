@@ -44,7 +44,7 @@ get_header();
 				<button onclick="retrieve_content_feed()">Click</button>
 				<div class = "col"></div>
 
-<div class = "col-9 form-layout text-center">
+<div class = "col-9 form-layout text-center" id = "athlete-content">
 
 </div>
 
