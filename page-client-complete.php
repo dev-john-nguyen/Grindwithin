@@ -5,42 +5,10 @@ header('Location: ' . site_url('purchase-options'));
 }else{
 require_once('charge.php');
 session_start();
-// store_new_account($_SESSION['fName'], $_SESSION['lName'], $_SESSION['email'], $_SESSION['username'], $_SESSION['password'],
-// 									$customerId, $last4, $amount);
-
-$firstName = $_SESSION['fName'];
 
 }
 
-?>
 
-<script type="text/javascript">
-var gayboi = "<?php echo $firstName; ?>";
-	alert(gayboi);
-function store_new_client_account() {
-
-	// jQuery.ajax({
-	// 			type: "POST",
-	// 			url: ajaxurl,
-	// 			data: ({
-	// 				action: "store_new_account",
-	// 				fName: fName,
-	// 				lName: lName,
-	// 				email: email,
-	// 				username: username,
-	// 				password: password
-	// 			}),
-	// 			success: function (response){
-	// 			}
-	// 		});
-
-
-}
-
-</script>
-
-
-<?php
 
 
 /**
@@ -75,7 +43,7 @@ get_header();
 
     <div id = "display-sessions" class="row align-items-center" style = "text-align: center; padding-bottom: 50px;">
       <div class="col align-items-center" id = "header-content-items">
-				<h1>Thank You And Welcome!</h1>
+				<h1>Thank You And Welcome <?php ehco $_SESSION['fName']; ?>!</h1>
 				<hr>
 				<p><?php echo $product; ?>.
 					Your transaction ID is <?php echo $tid; ?>.
@@ -92,6 +60,7 @@ get_header();
 <?php if ( !is_plugin_active('woocommerce/woocommerce.php') || ( is_plugin_active('woocommerce/woocommerce.php') && ( !isset( $layout_default ) || !$layout_default || ( $layout_default == 'sidebar-left' ) || ( $layout_default == 'sidebar-right' ) ) ) ) get_sidebar(); ?>
 
   <script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/arrow_down.js"></script>
+	<script src= "<?php echo get_stylesheet_directory_uri(); ?>/js/create/new_account.js"></script>
 
 <?php //get_footer(); ?>
 

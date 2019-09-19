@@ -25,7 +25,6 @@ session_destroy();
  */
 
 
-
 get_header();
 
 

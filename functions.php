@@ -1094,6 +1094,9 @@ function check_available(){
 
     global $wpdb;
 
+    //Create Tables if They Do Not Exist
+      create_tables();
+
   $fName = $_POST['fName'];
   $lName = $_POST['lName'];
   $email = $_POST['email'];
@@ -1141,14 +1144,80 @@ function check_available(){
 add_action('wp_ajax_check_available', 'check_available');
 add_action('wp_ajax_nopriv_check_available', 'check_available');
 
+function create_tables(){
+  global $wpdb;
+  //Create Member Table
+  $table = $wpdb->prefix . "members";
+
+  //Create Table if it doesn't exist
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table (
+        `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+    `created` date,
+    `deactivated` date,
+    `active` boolean,
+    `stripeId` text,
+    `last4` text,
+    `fName` text,
+    `lName` text,
+    `type` text,
+    `email` text,
+    `username` text,
+    `damn` text,
+    UNIQUE (`id`)
+    ) $charset_collate;";
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    //Create Client Table
+    $table = $wpdb->prefix . "clients";
+    //Create Table if it doesn't exist
+      $charset_collate = $wpdb->get_charset_collate();
+      $sql = "CREATE TABLE IF NOT EXISTS $table (
+          `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+      `accountCreated` date,
+      `stripeId` text,
+      `last4` text,
+      `username` text,
+      `email` text,
+      `fName` text,
+      `lName` text,
+      `phoneNumber` text,
+      `trainer` text,
+      `athleteType` text,
+      `annoucement` text,
+      `birthday` date,
+      `imagePath` text,
+      `heightFeet` int,
+      `heightInch` int,
+      `weight` int,
+      `purpose` text,
+      `goal` text,
+      `description` text,
+      `sessionAmount` int,
+      UNIQUE (`id`)
+      ) $charset_collate;";
+      require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+      dbDelta( $sql );
+
+}
+
+function create_new_account(){
+global $wpdb;
+echo 'called';
+wp_die();
+}
+add_action('wp_ajax_create_new_account', 'create_new_account');
+add_action('wp_ajax_nopriv_create_new_account', 'create_new_account');
+
 function store_new_account($fName, $lName, $email, $username, $password, $stripeId, $last4, $amount){
   global $wpdb;
 
-  // $fName = $_POST['fName'];
-  // $lName = $_POST['lName'];
-  // $email = $_POST['email'];
-  // $username = $_POST['username'];
-  // $password = $_POST['password'];
+  $fName = $_POST['fName'];
+  $lName = $_POST['lName'];
+  $email = $_POST['email'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
   $table = $wpdb->prefix . "members";
 

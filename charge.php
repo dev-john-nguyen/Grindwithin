@@ -72,4 +72,50 @@ if(empty($tid) || empty($product)){
 }
 
 
+//Store New Users Information Into Member Table
+
+session_start();
+
+$username = $_SESSION['username'];
+$password = $_SESSION['password'];
+$fName = $_SESSION['fName'];
+$lName = $_SESSION['lName'];
+$email = $_SESSION['email'];
+
+$table = $wpdb->prefix . "members";
+
+
+$currentDate = current_time( 'mysql' );
+
+$hashPass = wp_hash_password( $password );
+// $salt = wp_salt($hashPass);
+//
+// $hashPass = $salt;
+
+$type = "client";
+
+$result = $wpdb->insert(
+      $table,
+      array(
+    'fName' => $fName,
+    'lName' => $lName,
+    'type' => $type,
+    'email' => $email,
+    'username' => $username,
+    'damn' => $hashPass,
+    'created' => $currentDate,
+    'last4' => $last4,
+    'stripeId' => $customerId,
+    'active' => 1
+      )
+  );
+
+//Check if result executed correctly
+if(!$result > 0 || !$result || $result === false){
+  //log error and send notification
+}
+
+
+
+
 ?>

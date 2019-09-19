@@ -1,3 +1,19 @@
+// jQuery(document).ready(function(jQuery) {
+
+	jQuery.ajax({
+				type: "POST",
+				url: ajaxurl,
+				async: false,
+				data: ({
+					action: "create_new_account",
+				}),
+				success: function (data){
+					console.log(data);
+				}
+			});
+
+// });
+
 
 //Start load function that will load data by using ajax
 	jQuery('#new-account').submit(function(event) {
@@ -55,7 +71,7 @@
 								}else if(response == 3){
 									alert("It looks Like We have Your Email Registered with us already. Please Contact Us Directly!");
               	}else{
-									var url = window.location.protocol+"//"+window.location.host + "/main/purchase-options";
+									var url = window.location.protocol+"//"+window.location.hostname + "/training/purchase-options";
 									window.location.href = url;
 								}
 							}
